@@ -275,6 +275,21 @@
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js";
+        const firebaseConfig = {
+            apiKey: "AIzaSyAGOm5hHiP--oIysC0fBYCYvh28ZeAV2Qs",
+            authDomain: "hotel-data-scientist.firebaseapp.com",
+            projectId: "hotel-data-scientist",
+            storageBucket: "hotel-data-scientist.appspot.com",
+            messagingSenderId: "601902554606",
+            appId: "1:601902554606:web:39b4ca88ba40b185c4c2ff",
+            measurementId: "G-2VPJWVCH5M"
+        };
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+    </script>
 </body>
 
 </html>
