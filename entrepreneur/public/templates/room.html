@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Entrepreneur</title>
-    <link rel="icon" href="../static/icons8-hotel-64 (1).png">
-    <link rel="stylesheet" href="../static/style.css">
+    <link rel="icon" href="../static/logo.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -20,7 +19,7 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
             <div class="container">
                 <a class="navbar-brand" href="../index.html">
-                    <img src="../static/icons8-hotel-64 (1).png" width="40" alt="Hotel Data Science Logo" />
+                    <img src="../static/logo.png" width="40" alt="Hotel Data Science Logo" />
                     <h3 class="pt-2"><span class="navbar-text px-2">HTDS</span></h3>
                 </a>
                 <div class="collapse navbar-collapse" id="navbarToggleExternalContent">
@@ -31,12 +30,12 @@
                             </a>
                         </li>
                         <li class="nav-item px-2">
-                            <a class="nav-link active text-primary" href="../templates/reserva.html">
+                            <a class="nav-link" href="../templates/reserva.html">
                                 <i class="fa-solid fa-table-list"></i> Reservation info.
                             </a>
                         </li>
                         <li class="nav-item px-2">
-                            <a class="nav-link" href="../templates/room.html">
+                            <a class="nav-link active text-primary" href="../templates/room.html">
                                 <i class="fas fa-list-check px-2"></i> Room info.
                             </a>
                         </li>
@@ -63,14 +62,14 @@
             </div>
         </nav>
         <div class="p-5 text-center bg-image" style="
-        background-image: url('../static/reserva.jpg');
+        background-image: url('../static/roomlist.jpg');
         height: 450px;
         margin-top: 58px;
       ">
             <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
                 <div class="d-flex justify-content-center align-items-center h-100">
                     <div class="text-white">
-                        <h1 class="mb-3">Reserva Information</h1>
+                        <h1 class="mb-3">Room Information</h1>
                     </div>
                 </div>
             </div>
@@ -79,194 +78,116 @@
 
     <div class="container mt-5 mb-5">
         <div class="mt-5 shadow-5 bg-light bg-gradient">
-            <h1 class="p-3">Customer booking information table</h1>
+            <h1 class="p-3">Room List</h1>
 
             <div class="p-3">
-                <ul class="nav nav-pills mb-3" id="pills-tab2" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="pills-home-tab2" data-mdb-toggle="pill"
-                            data-mdb-target="#pills-home2" type="button" role="tab" aria-controls="pills-home"
-                            aria-selected="true">
-                            Wait for Check-In List
-                        </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="pills-profile-tab2" data-mdb-toggle="pill"
-                            data-mdb-target="#pills-profile2" type="button" role="tab" aria-controls="pills-profile"
-                            aria-selected="false">
-                            Check-In List
-                        </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="pills-contact-tab2" data-mdb-toggle="pill"
-                            data-mdb-target="#pills-contact2" type="button" role="tab" aria-controls="pills-contact"
-                            aria-selected="false">
-                            Check-Out List
-                        </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="pills-contact-tab2" data-mdb-toggle="pill"
-                            data-mdb-target="#pills-contact2" type="button" role="tab" aria-controls="pills-contact"
-                            aria-selected="false">
-                            Refresh Data List
-                        </button>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="row p-3">
-                <div class="col-6">
-                    <div class="float-left">
-                        <label for="record">Show </label>
-                        <input id="record" name="record" type="number">
-                        <label for="record"> entries</label>
-                    </div>
-                </div>
-
-                <div class="col-6">
-                    <div class="float-right">
-                        <label for="search">Search: </label>
-                        <input id="search" name="search" type="text">
-                    </div>
-                </div>
-            </div>
-
-            <div class="p-3">
-                <table class="table table-bordered border-primary">
-                    <thead class="bg-light">
-                        <tr>
-                            <th>booking_id</th>
-                            <th>name_surname</th>
-                            <th>phone_num</th>
-                            <th>Email</th>
-                            <th>time_of_booking</th>
-                            <th>period_of_stay</th>
-                            <th>booking_status</th>
-                        </tr>
-                    </thead>
+                <table class="table table-borderless">
                     <tbody>
                         <tr>
                             <td>
-                                <p>50251</p>
+                                <span class="badge badge-success">
+                                    <h5 class="fw-bold mb-1">Pha101 (S)</h5>
+                                    <h5 class="text-muted mb-0">available</h5>
+                                </span>
                             </td>
                             <td>
-                                <p>กุต่างโลก ชาคัตบดี</p>
+                                <span class="badge badge-danger">
+                                    <h5 class="fw-bold mb-1">Pim201 (M)</h5>
+                                    <h5 class="text-muted mb-0">unavailable</h5>
+                                </span>
                             </td>
                             <td>
-                                <p>0889999999</p>
+                                <span class="badge badge-success">
+                                    <h5 class="fw-bold mb-1">Ku301 (L)</h5>
+                                    <h5 class="text-muted mb-0">available</h5>
+                                </span>
                             </td>
                             <td>
-                                <p>guza_556@gmail.com</p>
-                            </td>
-                            <td>
-                                <p>ว/ด/ป: 9/19/2023 19:40:45</p>
-                            </td>
-                            <td>
-                                <p>9/21/2023 - 9/23/2023</p>
-                            </td>
-                            <td>
-                                <span class="badge badge-primary rounded-pill d-inline">
-                                    wait for check-in</span>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <p>50252</p>
-                            </td>
-                            <td>
-                                <p>ใบดาว พิมโทยะ</p>
-                            </td>
-                            <td>
-                                <p>0665253401</p>
-                            </td>
-                            <td>
-                                <p>pimtongya_4312@gmail.com</p>
-                            </td>
-                            <td>
-                                <p>ว/ด/ป: 9/19/2023 19:40:45</p>
-                            </td>
-                            <td>
-                                <p>9/22/2023 - 9/24/2023</p>
-                            </td>
-                            <td>
-                                <span class="badge badge-primary rounded-pill d-inline">
-                                    wait for check-in</span>
+                                <span class="badge badge-danger">
+                                    <h5 class="fw-bold mb-1">Art401 (XL)</h5>
+                                    <h5 class="text-muted mb-0">unavailable</h5>
+                                </span>
                             </td>
                         </tr>
 
                         <tr>
                             <td>
-                                <p>50253</p>
+                                <span class="badge badge-success">
+                                    <h5 class="fw-bold mb-1">Pha102 (S)</h5>
+                                    <h5 class="text-muted mb-0">available</h5>
+                                </span>
                             </td>
                             <td>
-                                <p>ปลาใหญ่ กินปลาเล็ก</p>
+                                <span class="badge badge-success">
+                                    <h5 class="fw-bold mb-1">Pim202 (M)</h5>
+                                    <h5 class="text-muted mb-0">available</h5>
+                                </span>
                             </td>
                             <td>
-                                <p>0xxyyyzzzz</p>
+                                <span class="badge badge-danger">
+                                    <h5 class="fw-bold mb-1">Boss302 (L)</h5>
+                                    <h5 class="text-muted mb-0">unavailable</h5>
+                                </span>
                             </td>
                             <td>
-                                <p>fishmonger_505@gmail.com</p>
-                            </td>
-                            <td>
-                                <p>ว/ด/ป: 9/19/2023 19:40:45</p>
-                            </td>
-                            <td>
-                                <p>9/23/2023 - 9/25/2023</p>
-                            </td>
-                            <td>
-                                <span class="badge badge-success rounded-pill d-inline">
-                                    check-in</span>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <p>50254</p>
-                            </td>
-                            <td>
-                                <p>ทะนงทวย ชัยมงคล</p>
-                            </td>
-                            <td>
-                                <p>0aabbbccc</p>
-                            </td>
-                            <td>
-                                <p>richman_8888@gmail.com</p>
-                            </td>
-                            <td>
-                                <p>ว/ด/ป: 9/19/2023 19:40:45</p>
-                            </td>
-                            <td>
-                                <p>9/24/2023 - 9/26/2023</p>
-                            </td>
-                            <td>
-                                <span class="badge badge-success rounded-pill d-inline">
-                                    check-in</span>
+                                <span class="badge badge-success">
+                                    <h5 class="fw-bold mb-1">Art402 (XL)</h5>
+                                    <h5 class="text-muted mb-0">available</h5>
+                                </span>
                             </td>
                         </tr>
 
                         <tr>
                             <td>
-                                <p>50255</p>
+                                <span class="badge badge-danger">
+                                    <h5 class="fw-bold mb-1">Pha103 (S)</h5>
+                                    <h5 class="text-muted mb-0">unavailable</h5>
+                                </span>
                             </td>
                             <td>
-                                <p>มานพ ตั้งหวังเจ๊ง</p>
+                                <span class="badge badge-success">
+                                    <h5 class="fw-bold mb-1">Ku203 (M)</h5>
+                                    <h5 class="text-muted mb-0">available</h5>
+                                </span>
                             </td>
                             <td>
-                                <p>0123456789</p>
+                                <span class="badge badge-danger">
+                                    <h5 class="fw-bold mb-1">Boss303 (L)</h5>
+                                    <h5 class="text-muted mb-0">unavailable</h5>
+                                </span>
                             </td>
                             <td>
-                                <p>manop_999@gmail.com</p>
+                                <span class="badge badge-success">
+                                    <h5 class="fw-bold mb-1">Art403 (XL)</h5>
+                                    <h5 class="text-muted mb-0">available</h5>
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <span class="badge badge-success">
+                                    <h5 class="fw-bold mb-1">Pim104 (S)</h5>
+                                    <h5 class="text-muted mb-0">available</h5>
+                                </span>
                             </td>
                             <td>
-                                <p>ว/ด/ป: 9/19/2023 19:40:45</p>
+                                <span class="badge badge-danger">
+                                    <h5 class="fw-bold mb-1">Ku204 (M)</h5>
+                                    <h5 class="text-muted mb-0">unavailable</h5>
+                                </span>
                             </td>
                             <td>
-                                <p>9/25/2023 - 9/27/2023</p>
+                                <span class="badge badge-success">
+                                    <h5 class="fw-bold mb-1">Boss304 (L)</h5>
+                                    <h5 class="text-muted mb-0">available</h5>
+                                </span>
                             </td>
                             <td>
-                                <span class="badge badge-warning rounded-pill d-inline">
-                                    check-out</span>
+                                <span class="badge badge-success">
+                                    <h5 class="fw-bold mb-1">Manop404 (XL)</h5>
+                                    <h5 class="text-muted mb-0">available</h5>
+                                </span>
                             </td>
                         </tr>
                     </tbody>
@@ -274,13 +195,19 @@
             </div>
 
             <div class="row p-3">
-                <div class="col-6">
+                <div class="col-4">
                     <div class="float-left">
-                        Showing 1 to 5 of 56 entries
+                        Showing 1 to 16 of 48 rooms
                     </div>
                 </div>
 
-                <div class="col-6">
+                <div class="col-4">
+                    <div class="float-center">
+                        <input type="button" value="Refresh Data" class="btn btn-warning">
+                    </div>
+                </div>
+
+                <div class="col-4">
                     <div class="float-right">
                         <nav aria-label="Page navigation example">
                             <ul class="pagination">

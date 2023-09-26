@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Entrepreneur</title>
-    <link rel="icon" href="../static/icons8-hotel-64 (1).png">
-    <link rel="stylesheet" href="../static/icons8-hotel-64 (1).png">
+    <link rel="icon" href="../static/logo.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -20,7 +19,7 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
             <div class="container">
                 <a class="navbar-brand" href="../index.html">
-                    <img src="../static/icons8-hotel-64 (1).png" width="40" alt="Hotel Data Science Logo" />
+                    <img src="../static/logo.png" width="40" alt="Hotel Data Science Logo" />
                     <h3 class="pt-2"><span class="navbar-text px-2">HTDS</span></h3>
                 </a>
                 <div class="collapse navbar-collapse" id="navbarToggleExternalContent">
@@ -36,7 +35,7 @@
                             </a>
                         </li>
                         <li class="nav-item px-2">
-                            <a class="nav-link active text-primary" href="../templates/room.html">
+                            <a class="nav-link" href="../templates/room.html">
                                 <i class="fas fa-list-check px-2"></i> Room info.
                             </a>
                         </li>
@@ -46,7 +45,7 @@
                             </a>
                         </li>
                         <li class="nav-item px-2">
-                            <a class="nav-link" href="../templates/manage_room.html">
+                            <a class="nav-link active text-primary" href="../templates/manage_room.html">
                                 <i class="fas fa-list-check px-2"></i> Manage Room
                             </a>
                         </li>
@@ -63,14 +62,14 @@
             </div>
         </nav>
         <div class="p-5 text-center bg-image" style="
-        background-image: url('../static/roomList.jpg');
-        height: 450px;
-        margin-top: 58px;
-      ">
+      background-image: url('../static/quickbooks-beginners.jpg');
+      height: 450px;
+      margin-top: 58px;
+    ">
             <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
                 <div class="d-flex justify-content-center align-items-center h-100">
                     <div class="text-white">
-                        <h1 class="mb-3">Room Information</h1>
+                        <h1 class="mb-3">Manage Room</h1>
                     </div>
                 </div>
             </div>
@@ -78,149 +77,88 @@
     </header>
 
     <div class="container mt-5 mb-5">
-        <div class="mt-5 shadow-5 bg-light bg-gradient">
-            <h1 class="p-3">Room List</h1>
-
-            <div class="p-3">
-                <table class="table table-borderless">
-                    <tbody>
-                        <tr>
-                            <td>
-                                <span class="badge badge-success">
-                                    <h5 class="fw-bold mb-1">Pha101 (S)</h5>
-                                    <h5 class="text-muted mb-0">available</h5>
-                                </span>
-                            </td>
-                            <td>
-                                <span class="badge badge-danger">
-                                    <h5 class="fw-bold mb-1">Pim201 (M)</h5>
-                                    <h5 class="text-muted mb-0">unavailable</h5>
-                                </span>
-                            </td>
-                            <td>
-                                <span class="badge badge-success">
-                                    <h5 class="fw-bold mb-1">Ku301 (L)</h5>
-                                    <h5 class="text-muted mb-0">available</h5>
-                                </span>
-                            </td>
-                            <td>
-                                <span class="badge badge-danger">
-                                    <h5 class="fw-bold mb-1">Art401 (XL)</h5>
-                                    <h5 class="text-muted mb-0">unavailable</h5>
-                                </span>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <span class="badge badge-success">
-                                    <h5 class="fw-bold mb-1">Pha102 (S)</h5>
-                                    <h5 class="text-muted mb-0">available</h5>
-                                </span>
-                            </td>
-                            <td>
-                                <span class="badge badge-success">
-                                    <h5 class="fw-bold mb-1">Pim202 (M)</h5>
-                                    <h5 class="text-muted mb-0">available</h5>
-                                </span>
-                            </td>
-                            <td>
-                                <span class="badge badge-danger">
-                                    <h5 class="fw-bold mb-1">Boss302 (L)</h5>
-                                    <h5 class="text-muted mb-0">unavailable</h5>
-                                </span>
-                            </td>
-                            <td>
-                                <span class="badge badge-success">
-                                    <h5 class="fw-bold mb-1">Art402 (XL)</h5>
-                                    <h5 class="text-muted mb-0">available</h5>
-                                </span>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <span class="badge badge-danger">
-                                    <h5 class="fw-bold mb-1">Pha103 (S)</h5>
-                                    <h5 class="text-muted mb-0">unavailable</h5>
-                                </span>
-                            </td>
-                            <td>
-                                <span class="badge badge-success">
-                                    <h5 class="fw-bold mb-1">Ku203 (M)</h5>
-                                    <h5 class="text-muted mb-0">available</h5>
-                                </span>
-                            </td>
-                            <td>
-                                <span class="badge badge-danger">
-                                    <h5 class="fw-bold mb-1">Boss303 (L)</h5>
-                                    <h5 class="text-muted mb-0">unavailable</h5>
-                                </span>
-                            </td>
-                            <td>
-                                <span class="badge badge-success">
-                                    <h5 class="fw-bold mb-1">Art403 (XL)</h5>
-                                    <h5 class="text-muted mb-0">available</h5>
-                                </span>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <span class="badge badge-success">
-                                    <h5 class="fw-bold mb-1">Pim104 (S)</h5>
-                                    <h5 class="text-muted mb-0">available</h5>
-                                </span>
-                            </td>
-                            <td>
-                                <span class="badge badge-danger">
-                                    <h5 class="fw-bold mb-1">Ku204 (M)</h5>
-                                    <h5 class="text-muted mb-0">unavailable</h5>
-                                </span>
-                            </td>
-                            <td>
-                                <span class="badge badge-success">
-                                    <h5 class="fw-bold mb-1">Boss304 (L)</h5>
-                                    <h5 class="text-muted mb-0">available</h5>
-                                </span>
-                            </td>
-                            <td>
-                                <span class="badge badge-success">
-                                    <h5 class="fw-bold mb-1">Manop404 (XL)</h5>
-                                    <h5 class="text-muted mb-0">available</h5>
-                                </span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="row p-3">
-                <div class="col-4">
-                    <div class="float-left">
-                        Showing 1 to 16 of 48 rooms
+        <div class="card">
+            <div class="card-body">
+                <form>
+                    <div class="row">
+                        <div class="col">
+                            <label class="form-label">Room Name</label>
+                            <div class="form-outline mb-4">
+                                <input type="text" class="form-control" id="formName" />
+                                <label class="form-label" id="formName">Name</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form mb-4">
+                                <label class="form-label">Room Type</label>
+                                <select class="form-select">
+                                    <option value="1">Very Good</option>
+                                    <option value="2">Good</option>
+                                    <option value="3">Bad</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                </div>
-
-                <div class="col-4">
-                    <div class="float-center">
-                        <input type="button" value="Refresh Data" class="btn btn-warning">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form mb-4">
+                                <label class="form-label">Room Price (baht)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    <input type="text" class="form-control"
+                                        aria-label="Amount (to the nearest dollar)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form mb-4">
+                                <label class="form-label">Room Size</label>
+                                <div class="form-outline mb-4">
+                                    <input type="number" class="form-control" id="formSize" />
+                                    <label class="form-label" id="formSize">Square Meters</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form mb-4">
+                                <label class="form-label">Room Capacity</label>
+                                <div class="form-outline mb-4">
+                                    <input type="number" class="form-control" id="formCapacity" />
+                                    <label class="form-label" id="formCapacity">People</label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-
-                <div class="col-4">
-                    <div class="float-right">
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination">
-                                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                            </ul>
-                        </nav>
+                    <div class="form mb-4">
+                        <label class="form-label">Room Bed</label>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" value="" name="flexBed" id="flexBed1"
+                                        checked />
+                                    <label class="form-check-label" for="flexBed1">Single</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" value="" name="flexBed"
+                                        id="flexBed2" />
+                                    <label class="form-check-label" for="flexBed2">Double</label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                    <label class="form-label">Additional information</label>
+                    <div class="form-outline mb-4">
+                        <textarea class="form-control" id="form6Example7" rows="4"></textarea>
+                        <label class="form-label" for="form6Example7">Other details about the rooms</label>
+                    </div>
+                    <div class="form mb-4">
+                        <label class="form-label" for="customFile">Room Image</label>
+                        <input type="file" class="form-control" id="customFile" />
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block mb-4">Update Information</button>
+                </form>
             </div>
         </div>
     </div>
@@ -309,10 +247,12 @@
         </div>
     </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.js"></script>
+    <script src="../static/main.js"></script>
 </body>
 
 </html>

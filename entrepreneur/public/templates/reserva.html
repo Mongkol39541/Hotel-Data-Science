@@ -19,7 +19,7 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
             <div class="container">
                 <a class="navbar-brand" href="../index.html">
-                    <img src="../static/icons8-hotel-64 (1).png" width="40" alt="Hotel Data Science Logo" />
+                    <img src="../static/logo.png" width="40" alt="Hotel Data Science Logo" />
                     <h3 class="pt-2"><span class="navbar-text px-2">HTDS</span></h3>
                 </a>
                 <div class="collapse navbar-collapse" id="navbarToggleExternalContent">
@@ -30,7 +30,7 @@
                             </a>
                         </li>
                         <li class="nav-item px-2">
-                            <a class="nav-link" href="../templates/reserva.html">
+                            <a class="nav-link active text-primary" href="../templates/reserva.html">
                                 <i class="fa-solid fa-table-list"></i> Reservation info.
                             </a>
                         </li>
@@ -40,7 +40,7 @@
                             </a>
                         </li>
                         <li class="nav-item px-2">
-                            <a class="nav-link active text-primary" href="../templates/dashboard.html">
+                            <a class="nav-link" href="../templates/dashboard.html">
                                 <i class="fas fa-chart-line px-2"></i> Dashboard
                             </a>
                         </li>
@@ -62,177 +62,236 @@
             </div>
         </nav>
         <div class="p-5 text-center bg-image" style="
-      background-image: url('../static/dashboard.png');
-      height: 450px;
-      margin-top: 58px;
-    ">
+        background-image: url('../static/reserva.jpg');
+        height: 450px;
+        margin-top: 58px;
+      ">
             <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
                 <div class="d-flex justify-content-center align-items-center h-100">
                     <div class="text-white">
-                        <h1 class="mb-3">Dashboard</h1>
+                        <h1 class="mb-3">Reserva Information</h1>
                     </div>
                 </div>
             </div>
         </div>
     </header>
 
-    <div class="container mt-5">
-        <div class="card">
-            <div class="card-body">
-                <form id="datetimeForm">
-                    <div class="row">
-                        <div class="col-md-6 mb-4">
-                            <label for="checkinDate" class="form-label">วันที่เช็คอิน :</label>
-                            <input type="date" id="checkinDate" name="checkinDate" class="form-control">
-                        </div>
-                        <div class="col-md-6 mb-4">
-                            <label for="checkinTime" class="form-label">เวลาเช็คอิน:</label>
-                            <input type="time" id="checkinTime" name="checkinTime" class="form-control">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-4">
-                            <label for="checkoutDate" class="form-label">วันที่เช็คเอ้า :</label>
-                            <input type="date" id="checkoutDate" name="checkoutDate" class="form-control">
-                        </div>
-                        <div class="col-md-6 mb-4">
-                            <label for="checkoutTime" class="form-label">เวลาเช็คเอ้า:</label>
-                            <input type="time" id="checkoutTime" name="checkoutTime" class="form-control">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 text-center">
-                            <button type="button" class="btn btn-success px-3 me-2">
-                                <i class="fas fa-check"></i> แสดงข้อมูลสรุปผลการจอง
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+    <div class="container mt-5 mb-5">
+        <div class="mt-5 shadow-5 bg-light bg-gradient">
+            <h1 class="p-3">Customer booking information table</h1>
 
-    <div class="container mt-5">
-        <div class="rows">
-            <center>
-                <div class="col p-3">
-                    <div class="card" style="max-width: 50rem;">
-                        <div class="card-body">
-                            <canvas id="Bar-Charts" style="width:100%;"></canvas>
-                        </div>
+            <div class="p-3">
+                <ul class="nav nav-pills mb-3" id="pills-tab2" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="pills-home-tab2" data-mdb-toggle="pill"
+                            data-mdb-target="#pills-home2" type="button" role="tab" aria-controls="pills-home"
+                            aria-selected="true">
+                            Wait for Check-In List
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="pills-profile-tab2" data-mdb-toggle="pill"
+                            data-mdb-target="#pills-profile2" type="button" role="tab" aria-controls="pills-profile"
+                            aria-selected="false">
+                            Check-In List
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="pills-contact-tab2" data-mdb-toggle="pill"
+                            data-mdb-target="#pills-contact2" type="button" role="tab" aria-controls="pills-contact"
+                            aria-selected="false">
+                            Check-Out List
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="pills-contact-tab2" data-mdb-toggle="pill"
+                            data-mdb-target="#pills-contact2" type="button" role="tab" aria-controls="pills-contact"
+                            aria-selected="false">
+                            Refresh Data List
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="row p-3">
+                <div class="col-6">
+                    <div class="float-left">
+                        <label for="record">Show </label>
+                        <input id="record" name="record" type="number">
+                        <label for="record"> entries</label>
                     </div>
                 </div>
-                <div class="col p-3">
-                    <div class="card" style="max-width: 50rem;"">
-                        <div class=" card-body">
-                        <canvas id="Pie-Charts" style="width:100%;"></canvas>
+
+                <div class="col-6">
+                    <div class="float-right">
+                        <label for="search">Search: </label>
+                        <input id="search" name="search" type="text">
                     </div>
                 </div>
-        </div>
-        <div class="col p-3">
-            <div class="card" style="max-width: 50rem;"">
-                        <div class=" card-body">
-                <canvas id="Multiple-Lines" style="width:100%;"></canvas>
             </div>
-        </div>
-    </div>
-    </center>
-    </div>
-    </div>
 
-    <div class="container my-5 mb-5">
-        <div class="card">
-            <div class="card-body">
-                <table class="table align-middle mb-0 bg-white">
-                    <thead>
+            <div class="p-3">
+                <table class="table table-bordered border-primary">
+                    <thead class="bg-light">
                         <tr>
-                            <th>Name</th>
-                            <th>Title</th>
-                            <th>Status</th>
-                            <th>Position</th>
-                            <th>Actions</th>
+                            <th>booking_id</th>
+                            <th>name_surname</th>
+                            <th>phone_num</th>
+                            <th>Email</th>
+                            <th>time_of_booking</th>
+                            <th>period_of_stay</th>
+                            <th>booking_status</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>
-                                <div class="d-flex align-items-center">
-                                    <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt=""
-                                        style="width: 45px; height: 45px" class="rounded-circle" />
-                                    <div class="ms-3">
-                                        <p class="fw-bold mb-1">John Doe</p>
-                                        <p class="text-muted mb-0">john.doe@gmail.com</p>
-                                    </div>
-                                </div>
+                                <p>50251</p>
                             </td>
                             <td>
-                                <p class="fw-normal mb-1">Software engineer</p>
-                                <p class="text-muted mb-0">IT department</p>
+                                <p>กุต่างโลก ชาคัตบดี</p>
                             </td>
                             <td>
-                                <span class="badge badge-success rounded-pill d-inline">Active</span>
-                            </td>
-                            <td>Senior</td>
-                            <td>
-                                <button type="button" class="btn btn-link btn-sm btn-rounded">
-                                    Edit
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <img src="https://mdbootstrap.com/img/new/avatars/6.jpg" class="rounded-circle"
-                                        alt="" style="width: 45px; height: 45px" />
-                                    <div class="ms-3">
-                                        <p class="fw-bold mb-1">Alex Ray</p>
-                                        <p class="text-muted mb-0">alex.ray@gmail.com</p>
-                                    </div>
-                                </div>
+                                <p>0889999999</p>
                             </td>
                             <td>
-                                <p class="fw-normal mb-1">Consultant</p>
-                                <p class="text-muted mb-0">Finance</p>
+                                <p>guza_556@gmail.com</p>
                             </td>
                             <td>
-                                <span class="badge badge-primary rounded-pill d-inline">Onboarding</span>
+                                <p>ว/ด/ป: 9/19/2023 19:40:45</p>
                             </td>
-                            <td>Junior</td>
                             <td>
-                                <button type="button" class="btn btn-link btn-rounded btn-sm fw-bold"
-                                    data-mdb-ripple-color="dark">
-                                    Edit
-                                </button>
+                                <p>9/21/2023 - 9/23/2023</p>
+                            </td>
+                            <td>
+                                <span class="badge badge-primary rounded-pill d-inline">
+                                    wait for check-in</span>
                             </td>
                         </tr>
+
                         <tr>
                             <td>
-                                <div class="d-flex align-items-center">
-                                    <img src="https://mdbootstrap.com/img/new/avatars/7.jpg" class="rounded-circle"
-                                        alt="" style="width: 45px; height: 45px" />
-                                    <div class="ms-3">
-                                        <p class="fw-bold mb-1">Kate Hunington</p>
-                                        <p class="text-muted mb-0">kate.hunington@gmail.com</p>
-                                    </div>
-                                </div>
+                                <p>50252</p>
                             </td>
                             <td>
-                                <p class="fw-normal mb-1">Designer</p>
-                                <p class="text-muted mb-0">UI/UX</p>
+                                <p>ใบดาว พิมโทยะ</p>
                             </td>
                             <td>
-                                <span class="badge badge-warning rounded-pill d-inline">Awaiting</span>
+                                <p>0665253401</p>
                             </td>
-                            <td>Senior</td>
                             <td>
-                                <button type="button" class="btn btn-link btn-rounded btn-sm fw-bold"
-                                    data-mdb-ripple-color="dark">
-                                    Edit
-                                </button>
+                                <p>pimtongya_4312@gmail.com</p>
+                            </td>
+                            <td>
+                                <p>ว/ด/ป: 9/19/2023 19:40:45</p>
+                            </td>
+                            <td>
+                                <p>9/22/2023 - 9/24/2023</p>
+                            </td>
+                            <td>
+                                <span class="badge badge-primary rounded-pill d-inline">
+                                    wait for check-in</span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <p>50253</p>
+                            </td>
+                            <td>
+                                <p>ปลาใหญ่ กินปลาเล็ก</p>
+                            </td>
+                            <td>
+                                <p>0xxyyyzzzz</p>
+                            </td>
+                            <td>
+                                <p>fishmonger_505@gmail.com</p>
+                            </td>
+                            <td>
+                                <p>ว/ด/ป: 9/19/2023 19:40:45</p>
+                            </td>
+                            <td>
+                                <p>9/23/2023 - 9/25/2023</p>
+                            </td>
+                            <td>
+                                <span class="badge badge-success rounded-pill d-inline">
+                                    check-in</span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <p>50254</p>
+                            </td>
+                            <td>
+                                <p>ทะนงทวย ชัยมงคล</p>
+                            </td>
+                            <td>
+                                <p>0aabbbccc</p>
+                            </td>
+                            <td>
+                                <p>richman_8888@gmail.com</p>
+                            </td>
+                            <td>
+                                <p>ว/ด/ป: 9/19/2023 19:40:45</p>
+                            </td>
+                            <td>
+                                <p>9/24/2023 - 9/26/2023</p>
+                            </td>
+                            <td>
+                                <span class="badge badge-success rounded-pill d-inline">
+                                    check-in</span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <p>50255</p>
+                            </td>
+                            <td>
+                                <p>มานพ ตั้งหวังเจ๊ง</p>
+                            </td>
+                            <td>
+                                <p>0123456789</p>
+                            </td>
+                            <td>
+                                <p>manop_999@gmail.com</p>
+                            </td>
+                            <td>
+                                <p>ว/ด/ป: 9/19/2023 19:40:45</p>
+                            </td>
+                            <td>
+                                <p>9/25/2023 - 9/27/2023</p>
+                            </td>
+                            <td>
+                                <span class="badge badge-warning rounded-pill d-inline">
+                                    check-out</span>
                             </td>
                         </tr>
                     </tbody>
                 </table>
+            </div>
+
+            <div class="row p-3">
+                <div class="col-6">
+                    <div class="float-left">
+                        Showing 1 to 5 of 56 entries
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="float-right">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -321,12 +380,10 @@
         </div>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.js"></script>
-    <script src="../static/main.js"></script>
 </body>
 
 </html>
