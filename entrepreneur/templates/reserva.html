@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrepreneur</title>
+    <link rel="icon" href="../static/logo.png">
+    <link rel="stylesheet" href="../static/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css" rel="stylesheet" />
+</head>
+
+<body>
+    <header>
+        <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
+            <div class="position-sticky">
+                <div class="list-group list-group-flush mx-3 mt-4">
+                    <a href="../index.php" class="list-group-item list-group-item-action py-2 ripple"
+                        aria-current="true">
+                        <i class="fas fa-user-group fa-fw me-3"></i><span>Administrator</span>
+                    </a>
+                    <a href="../templates/reserva.html"
+                        class="list-group-item list-group-item-action py-2 ripple active">
+                        <i class="fa-solid fa-table-list fa-fw me-3"></i><span>Reservation info.</span>
+                    </a>
+                    <a href="../templates/room.html" class="list-group-item list-group-item-action py-2 ripple">
+                        <i class="fas fa-list-check fa-fw me-3"></i><span>Room info.</span></a>
+                    <a href="../templates/dashboard.php" class="list-group-item list-group-item-action py-2 ripple">
+                        <i class="fas fa-chart-line fa-fw me-3"></i><span>Dashboard</span></a>
+                    <a href="../templates/manage_room.php" class="list-group-item list-group-item-action py-2 ripple">
+                        <i class="fa-solid fa-network-wired fa-fw me-3"></i><span>Manage Room</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+        <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="../index.php">
+                    <img src="../static/logo.png" width="40" alt="Hotel Data Science Logo" />
+                    <h3 class="pt-2"><span class="navbar-text px-2">HTDS</span></h3>
+                </a>
+                <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#sidebarMenu"
+                    aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="navbar-nav ms-auto d-flex flex-row">
+                    <a class="nav-link me-3 me-lg-0" href="#">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a class="nav-link me-3 me-lg-0" href="#">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a class="nav-link me-3 me-lg-0" href="#">
+                        <i class="fab fa-google"></i>
+                    </a>
+                    <a class="nav-link me-3 me-lg-0" href="#">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a class="nav-link me-3 me-lg-0" href="#">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a class="nav-link me-3 me-lg-0" href="#">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a class="nav-link me-3 me-lg-0" href="#">
+                        <img src="../static/M088.jpg" class="rounded-circle" height="30" />
+                    </a>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main style="margin-top: 58px">
+        <div class="text-center bg-image" style="background-image: url('../static/reserva.jpg');height: 450px;">
+            <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
+                <div class="d-flex justify-content-center align-items-center h-100">
+                    <div class="text-white">
+                        <h1 class="mb-3">Reserva Information</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container p-5">
+            <div class="shadow-5 bg-light bg-gradient">
+                <h1 class="p-3">Customer booking information table</h1>
+
+                <div class="p-3">
+                    <ul class="nav nav-pills mb-3" id="pills-tab2" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="pills-home-tab2" data-mdb-toggle="pill"
+                                data-mdb-target="#pills-home2" type="button" role="tab" aria-controls="pills-home"
+                                aria-selected="true">
+                                Wait for Check-In List
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="pills-profile-tab2" data-mdb-toggle="pill"
+                                data-mdb-target="#pills-profile2" type="button" role="tab" aria-controls="pills-profile"
+                                aria-selected="false">
+                                Check-In List
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="pills-contact-tab2" data-mdb-toggle="pill"
+                                data-mdb-target="#pills-contact2" type="button" role="tab" aria-controls="pills-contact"
+                                aria-selected="false">
+                                Check-Out List
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="pills-contact-tab2" data-mdb-toggle="pill"
+                                data-mdb-target="#pills-contact2" type="button" role="tab" aria-controls="pills-contact"
+                                aria-selected="false">
+                                Refresh Data List
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="row p-3">
+                    <div class="col-6">
+                        <div class="float-left">
+                            <label for="record">Show </label>
+                            <input id="record" name="record" type="number">
+                            <label for="record"> entries</label>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="float-right">
+                            <label for="search">Search: </label>
+                            <input id="search" name="search" type="text">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-3">
+                    <div class="table-responsive">
+                        <table class="table table-bordered border-primary">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th>booking_id</th>
+                                    <th>name_surname</th>
+                                    <th>phone_num</th>
+                                    <th>Email</th>
+                                    <th>time_of_booking</th>
+                                    <th>period_of_stay</th>
+                                    <th>booking_status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <p>50251</p>
+                                    </td>
+                                    <td>
+                                        <p>กุต่างโลก ชาคัตบดี</p>
+                                    </td>
+                                    <td>
+                                        <p>0889999999</p>
+                                    </td>
+                                    <td>
+                                        <p>guza_556@gmail.com</p>
+                                    </td>
+                                    <td>
+                                        <p>ว/ด/ป: 9/19/2023 19:40:45</p>
+                                    </td>
+                                    <td>
+                                        <p>9/21/2023 - 9/23/2023</p>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-primary rounded-pill d-inline">
+                                            wait for check-in</span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <p>50252</p>
+                                    </td>
+                                    <td>
+                                        <p>ใบดาว พิมโทยะ</p>
+                                    </td>
+                                    <td>
+                                        <p>0665253401</p>
+                                    </td>
+                                    <td>
+                                        <p>pimtongya_4312@gmail.com</p>
+                                    </td>
+                                    <td>
+                                        <p>ว/ด/ป: 9/19/2023 19:40:45</p>
+                                    </td>
+                                    <td>
+                                        <p>9/22/2023 - 9/24/2023</p>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-primary rounded-pill d-inline">
+                                            wait for check-in</span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <p>50253</p>
+                                    </td>
+                                    <td>
+                                        <p>ปลาใหญ่ กินปลาเล็ก</p>
+                                    </td>
+                                    <td>
+                                        <p>0xxyyyzzzz</p>
+                                    </td>
+                                    <td>
+                                        <p>fishmonger_505@gmail.com</p>
+                                    </td>
+                                    <td>
+                                        <p>ว/ด/ป: 9/19/2023 19:40:45</p>
+                                    </td>
+                                    <td>
+                                        <p>9/23/2023 - 9/25/2023</p>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-success rounded-pill d-inline">
+                                            check-in</span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <p>50254</p>
+                                    </td>
+                                    <td>
+                                        <p>ทะนงทวย ชัยมงคล</p>
+                                    </td>
+                                    <td>
+                                        <p>0aabbbccc</p>
+                                    </td>
+                                    <td>
+                                        <p>richman_8888@gmail.com</p>
+                                    </td>
+                                    <td>
+                                        <p>ว/ด/ป: 9/19/2023 19:40:45</p>
+                                    </td>
+                                    <td>
+                                        <p>9/24/2023 - 9/26/2023</p>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-success rounded-pill d-inline">
+                                            check-in</span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <p>50255</p>
+                                    </td>
+                                    <td>
+                                        <p>มานพ ตั้งหวังเจ๊ง</p>
+                                    </td>
+                                    <td>
+                                        <p>0123456789</p>
+                                    </td>
+                                    <td>
+                                        <p>manop_999@gmail.com</p>
+                                    </td>
+                                    <td>
+                                        <p>ว/ด/ป: 9/19/2023 19:40:45</p>
+                                    </td>
+                                    <td>
+                                        <p>9/25/2023 - 9/27/2023</p>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-warning rounded-pill d-inline">
+                                            check-out</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row p-3">
+                    <div class="col">
+                        <div class="float-left">
+                            Showing 1 to 5 of 56 entries
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="float-right">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination">
+                                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="text-center text-lg-start bg-light text-muted">
+        <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+            <div class="me-5 d-none d-lg-block">
+                <span>Get connected with us on social networks:</span>
+            </div>
+        </section>
+        <div class="container text-center text-md-start mt-5">
+            <div class="row mt-3">
+                <div class="col-md-3 mx-auto mb-4">
+                    <h6 class="text-uppercase fw-bold mb-4">
+                        <i class="fas fa-gem me-3"></i>Hotel Data Scientist
+                    </h6>
+                    <p>
+                        Hotel Data Scientists leverage data analytics and machine learning to enhance hotel
+                        operations and guest experiences, optimizing revenue and efficiency. They require
+                        proficiency in data analysis tools, domain knowledge, and strong communication skills.
+                    </p>
+                </div>
+                <div class="col-md-2 mx-auto">
+                    <h6 class="text-uppercase fw-bold mb-4">
+                        Tools
+                    </h6>
+                    <div class='row'>
+                        <p class='col'>
+                            <a href="#!" class="text-reset">HTML</a>
+                        </p>
+                        <p class='col'>
+                            <a href="#!" class="text-reset">CSS</a>
+                        </p>
+                        <p class='col'>
+                            <a href="#!" class="text-reset">Javascript</a>
+                        </p>
+                        <p class='col'>
+                            <a href="#!" class="text-reset">MDBootstrap</a>
+                        </p>
+                        <p class='col'>
+                            <a href="#!" class="text-reset">PHP</a>
+                        </p>
+                        <p class='col'>
+                            <a href="#!" class="text-reset">MySQL</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-3 mx-auto mb-md-0">
+                    <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
+                    <p><i class="fas fa-home me-3"></i>King Mongkut's Institute of Technology Ladkrabang</p>
+                    <p>
+                        <i class="fas fa-envelope me-3"></i>
+                        it@kmitl.ac.th
+                    </p>
+                    <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
+                    <p><i class="fas fa-print me-3"></i> + 01 234 567 89</p>
+                </div>
+            </div>
+        </div>
+        <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+            © 2023 Copyright:
+            <a class="text-reset fw-bold" href="#">HTDS.com</a>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.js"></script>
+</body>
+
+</html>
