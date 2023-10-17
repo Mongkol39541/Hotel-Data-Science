@@ -11,6 +11,8 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css" rel="stylesheet" />
   <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_green.css">
 </head>
 
 <body>
@@ -95,7 +97,7 @@
             <div class="card-body">
               <h2>Enter Month and Year</h2>
               <div class="input-group mb-3">
-                <input type="month" id="selectedMonth" name="selectedMonth" class="form-control mx-3">
+                <input type="month" name="selectedMonth" class="form-control mx-3">
                 <div class="input-group-append">
                   <button class="btn btn-primary mx-3 me-2" id="submitBtn" type="submit">Submit</button>
                 </div>
@@ -258,6 +260,7 @@
                     </div>
                     <div class="align-self-center">
                       <h4>Total Revenue</h4>
+                      <p class="mb-0">(Price * Tax) - Discount</p>
                     </div>
                   </div>
                   <div class="align-self-center">
@@ -293,7 +296,7 @@
             <h2>Reservation list and Payment list</h2>
             <br>
             <div class="table-responsive">
-              <table class="table" id="tableSearch">
+              <table class="table table-hover" id="tableSearch">
                 <thead>
                   <tr>
                     <th>Reserve ID</th>
@@ -348,20 +351,26 @@
 
         <div class="card mt-3">
           <div class="card-body">
+            <h2>Data Visualization</h2>
+          </div>
+        </div>
+
+        <div class="card mt-3">
+          <div class="card-body">
             <form enctype="multipart/form-data" action="" method="POST">
               <div class="row">
                 <div class="col-md-6 mb-4">
                   <label for="startDate" class="form-label">Start Date :</label>
-                  <input type="date" id="startDate" name="startDate" class="form-control">
+                  <input type="text" id="startDate" name="startDate" class="form-control" data-toggle="flatpickr">
                 </div>
                 <div class="col-md-6 mb-4">
                   <label for="endDate" class="form-label">End Date :</label>
-                  <input type="date" id="endDate" name="endDate" class="form-control">
+                  <input type="text" id="endDate" name="endDate" class="form-control" data-toggle="flatpickr">
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-12 text-center mb-4">
-                  <button type="submit" class="btn btn-info px-3 me-2">Analyze Bookings By Time Period</button>
+                  <button type="submit" name="analyze" class="btn btn-info px-3 me-2">Analyze Bookings By Time Period</button>
                 </div>
               </div>
             </form>
@@ -369,7 +378,7 @@
         </div>
 
         <?php
-          if (isset($_POST["startDate"]) and isset($_POST["endDate"])) {
+          if (isset($_POST["analyze"])) {
             $servername = "localhost";
             $username = "root";
             $password = "";
@@ -635,6 +644,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script src="../static/dashboard2.js"></script>
 </body>
 

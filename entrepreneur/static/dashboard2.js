@@ -1,12 +1,53 @@
-$(document).ready(function() {
-  var table = $('#tableSearch').DataTable( {
-      lengthChange: true,
-      buttons: [ 'copy', 'excel', 'pdf', 'csv', 'colvis' ],
-      lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
-  } );
+$(document).ready(function () {
+  var table = $('#tableSearch').DataTable({
+    lengthChange: true,
+    buttons: ['copy', 'excel', 'pdf', 'csv', 'colvis'],
+    lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+  });
   table.buttons().container()
-      .appendTo( '#tableSearch_wrapper .col-md-6:eq(0)');
-} );
+    .appendTo('#tableSearch_wrapper .col-md-6:eq(0)');
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  var startDateInput = document.getElementById("startDate");
+  var endDateInput = document.getElementById("endDate");
+  var selectedMonthInput = document.getElementById("selectedMonth");
+
+  var startDatePicker = flatpickr(startDateInput, {
+    dateFormat: "Y-m-d",
+    enableTime: false,
+    time_24hr: true,
+    onChange: function (selectedDates, dateStr) {
+      startDatePicker.set("maxDate", endDateInput.value);
+      if (selectedDates[0] > new Date(endDateInput.value)) {
+        endDateInput.value = dateStr;
+      }
+    },
+  });
+
+  var endDatePicker = flatpickr(endDateInput, {
+    dateFormat: "Y-m-d",
+    enableTime: false,
+    time_24hr: true,
+    onChange: function (selectedDates, dateStr) {
+      endDatePicker.set("minDate", startDateInput.value);
+      if (selectedDates[0] < new Date(startDateInput.value)) {
+        startDateInput.value = dateStr;
+      }
+    },
+  });
+
+  flatpickr(selectedMonthInput, {
+    dateFormat: "Y-m-d",
+    enableTime: false,
+    time_24hr: true,
+    disable: [
+      function(date) {
+        return (date.getDay() || date.getDay() == 0);
+      }
+    ],
+  });
+});
 
 const xpie = document.getElementById('days-pie').value;
 x_pie = xpie.split(" ").slice(0, -1);

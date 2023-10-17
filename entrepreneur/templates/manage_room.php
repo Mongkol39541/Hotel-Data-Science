@@ -85,8 +85,21 @@
             </div>
         </div>
         <?php
-        $chang = '';
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
+            $dbname = "9hotel_reservation";
+            $conn = mysqli_connect($servername, $username, $password, $dbname);
+            $sql = "SELECT COUNT(room_id) AS num_id FROM `room`;";
+            $result = mysqli_query($conn, $sql);
+            function generateRandomID($result) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $randomID = $row["num_id"] + 1;
+                }
+                return 'R' . sprintf("%03d", $randomID);
+            }
+            $randomID = generateRandomID($result);
             $chang = $_POST['Chang'];
             $formType = $_POST['formType'];
             $formPrice = $_POST['formPrice'];
@@ -95,29 +108,7 @@
             $formCapacity = $_POST['formCapacity'];
             $formAdditional = $_POST['formAdditional'];
             $formImage = $_POST['formImage'];
-            $servername = "localhost";
-            $username = "root";
-            $password = "";
-            $dbname = "9hotel_reservation";
-            $conn = mysqli_connect($servername, $username, $password, $dbname);
-            if ($chang == "Check") {
-                $sql = "SELECT COUNT(room_id) AS num_id FROM `room`;";
-                $result = mysqli_query($conn, $sql);
-                function generateRandomID($result) {
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        $randomID = $row["num_id"] + 1;
-                    }
-                    return 'R' . sprintf("%03d", $randomID);
-                }
-            $randomID = generateRandomID($result);
-            echo '<div class="alert alert-info m-3 alert-dismissible alert-absolute fade show" id="alertExample" role="alert" data-mdb-color="success">';
-            echo '<i class="fas fa-check me-2"></i>';
-            echo 'ID: ' . $randomID . ' The information is correct and complete ';
-            echo '<strong>Continue to click Display and Record Information.</strong>';
-            echo '<button type="button" class="btn-close ms-2" data-mdb-dismiss="alert" aria-label="Close"></button>';
-            echo '</div><br><br>';
-            } elseif ($chang == "Additional") {
-                $randomID = $_POST['randomID'];
+            if ($chang == "Insert") {
                 $sql = "INSERT INTO room (room_id, room_type, size, bed_type, capacity, price_per_night, facility, room_img) VALUES ('$randomID', '$formType', '$formSize', '$formBed', '$formCapacity', '$formPrice', '$formAdditional', '$formImage')";
                 if ($conn->query($sql) === TRUE and $randomID != '') {
                     echo '<div class="alert alert-success m-3 alert-dismissible alert-absolute fade show" id="alertExample" role="alert" data-mdb-color="success">';
@@ -135,143 +126,269 @@
                 }
                 mysqli_close($conn);
             }
-        } else {
-            $randomID = '';
-            $formType = '';
-            $formPrice = '';
-            $formSize = '';
-            $formBed = '';
-            $formCapacity = '';
-            $formAdditional = '';
-            $formImage = '';
         }
-        
         ?>
         <div class="container p-5">
             <div class="card">
                 <div class="card-body">
-                    <h2 class='text-center py-2'>Add room information</h2><br>
-                    <form class="g-3 needs-validation" novalidate enctype="multipart/form-data" action="" method="POST">
-                        <div class="row">
-                            <div class="col">
-                                <div class="form mb-5">
-                                    <label class="form-label">Room Type</label>
-                                    <br>
-                                    <div class="btn-group-toggle d-flex flex-column" data-toggle="buttons">
-                                        <input type="radio" class="btn-check" name="formType" id="Standard"
-                                            value="Standard" autocomplete="off" checked />
-                                        <label class="btn btn-secondary" for="Standard">Standard</label>
-                                        <input type="radio" class="btn-check" name="formType" id="Deluxe" value="Deluxe"
-                                            autocomplete="off" />
-                                        <label class="btn btn-secondary" for="Deluxe">Deluxe</label>
-                                        <input type="radio" class="btn-check" name="formType" id="Suite" value="Suite"
-                                            autocomplete="off" />
-                                        <label class="btn btn-secondary" for="Suite">Suite</label>
-                                        <input type="radio" class="btn-check" name="formType" id="Executive"
-                                            value="Executive" autocomplete="off" />
-                                        <label class="btn btn-secondary" for="Executive">Executive</label>
-                                        <input type="radio" class="btn-check" name="formType" id="Family" value="Family"
-                                            autocomplete="off" />
-                                        <label class="btn btn-secondary" for="Family">Family</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="form mb-5">
-                                    <label class="form-label" for="formPrice">Room Price ($)</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text">$</span>
-                                        <input type="text" class="form-control"
-                                            aria-label="Amount (to the nearest dollar)" name="formPrice"
-                                            value="<?php echo $formPrice;?>" required />
-                                        <div class="invalid-tooltip">Please provide a valid price.</div>
-                                    </div>
-                                </div>
-                                <div class="form mb-5">
-                                    <label class="form-label">Room Size (SQM)</label>
-                                    <div class="form-outline mb-4">
-                                        <input type="text" class="form-control" name="formSize"
-                                            value="<?php echo $formSize;?>" required />
-                                        <label class="form-label" for="formSize">Square Meters</label>
-                                        <div class="invalid-tooltip">Please provide a valid size.</div>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="row">
+                        <div class="col">
+                            <button type="button" class="btn btn-primary btn-block mb-4" data-mdb-toggle="modal"
+                                data-mdb-target="#InsertModal">Insert Information</button>
                         </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="form mb-5">
-                                    <label class="form-label">Room Bed</label>
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" value="Single"
-                                                    name="formBed" checked />
-                                                <label class="form-check-label" for="formBed">Single</label>
+                        <div class="col">
+                            <button type="button" class="btn btn-success btn-block mb-4" data-mdb-toggle="modal"
+                                data-mdb-target="#UpdateModal">Update Information</button>
+                        </div>
+                        <div class="col">
+                            <button type="button" class="btn btn-danger btn-block mb-4" data-mdb-toggle="modal"
+                                data-mdb-target="#DeleteModal">Delete Information</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="InsertModal" tabindex="-1" aria-labelledby="InsertModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <form enctype="multipart/form-data" action="" method="POST">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Insert Information</h5>
+                                <button type="button" class="btn-close" data-mdb-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form mb-5">
+                                            <label class="form-label">Room Type</label>
+                                            <br>
+                                            <div class="btn-group-toggle d-flex flex-column" data-toggle="buttons">
+                                                <div class="p-0">
+                                                    <input type="radio" class="btn-check" name="formType" id="Standard"
+                                                        value="Standard" autocomplete="off" checked />
+                                                    <label class="btn btn-secondary m-2" for="Standard">Standard</label>
+                                                    <input type="radio" class="btn-check" name="formType" id="Deluxe"
+                                                        value="Deluxe" autocomplete="off" />
+                                                    <label class="btn btn-secondary m-2" for="Deluxe">Deluxe</label>
+                                                    <input type="radio" class="btn-check" name="formType" id="Suite"
+                                                        value="Suite" autocomplete="off" />
+                                                    <label class="btn btn-secondary m-2" for="Suite">Suite</label>
+                                                    <input type="radio" class="btn-check" name="formType" id="Executive"
+                                                        value="Executive" autocomplete="off" />
+                                                    <label class="btn btn-secondary m-2" for="Executive">Executive</label>
+                                                    <input type="radio" class="btn-check" name="formType" id="Family"
+                                                        value="Family" autocomplete="off" />
+                                                    <label class="btn btn-secondary m-2" for="Family">Family</label>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" value="Double"
-                                                    name="formBed" />
-                                                <label class="form-check-label" for="formBed">Double</label>
+                                        <div class="form mb-5">
+                                            <label class="form-label">Room Bed</label>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" value="Single"
+                                                            name="formBed" checked />
+                                                        <label class="form-check-label" for="formBed">Single</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" value="Double"
+                                                            name="formBed" />
+                                                        <label class="form-check-label" for="formBed">Double</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" value="Twin"
+                                                            name="formBed" />
+                                                        <label class="form-check-label" for="formBed">Twin</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" value="King"
+                                                            name="formBed" />
+                                                        <label class="form-check-label" for="formBed">King</label>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" value="Twin"
-                                                    name="formBed" />
-                                                <label class="form-check-label" for="formBed">Twin</label>
+                                        <div class="form mb-5">
+                                            <label class="form-label">Room Capacity (People)</label>
+                                            <div class="form-outline">
+                                                <div class="range">
+                                                    <input type="range" class="form-range" id="formCapacity" name="formCapacity" required min="1" max="5" />
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" value="King"
-                                                    name="formBed" />
-                                                <label class="form-check-label" for="formBed">King</label>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form mb-5">
+                                            <label class="form-label" for="formPrice">Room Price ($)</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">$</span>
+                                                <input type="text" class="form-control"
+                                                    aria-label="Amount (to the nearest dollar)" name="formPrice" required />
+                                                <div class="invalid-tooltip">Please provide a valid price.</div>
                                             </div>
+                                        </div>
+                                        <div class="form mb-5">
+                                            <label class="form-label">Room Size (SQM)</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">SQM</span>
+                                                <input type="text" class="form-control" name="formSize" required />
+                                                <div class="invalid-tooltip">Please provide a valid size.</div>
+                                            </div>
+                                        </div>
+                                        <div class="form mb-5">
+                                            <label class="form-label">Additional items (Other details about the rooms)</label>
+                                            <div class="form">
+                                                <textarea name="formAdditional" class="form-control" rows="4" required></textarea>
+                                                <div class="invalid-tooltip">Please provide a valid additional.</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form mb-5 position-relative">
+                                        <label class="form-label">Room Image</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">URL</span>
+                                            <input name="formImage" type="text" class="form-control" required />
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col">
-                                <div class="form mb-5">
-                                    <label class="form-label">Room Capacity (People)</label>
-                                    <div class="form-outline mb-4">
-                                        <div class="range">
-                                            <input type="range" class="form-range" id="formCapacity" name="formCapacity"
-                                                value="<?php echo $formCapacity;?>" required min="1" max="5" />
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-primary" value="Insert" name="Chang">OK</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="UpdateModal" tabindex="-1" aria-labelledby="UpdateModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <form enctype="multipart/form-data" action="" method="POST">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Update Information</h5>
+                                <button type="button" class="btn-close" data-mdb-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form mb-5">
+                                            <label class="form-label">Room Type</label>
+                                            <br>
+                                            <div class="btn-group-toggle d-flex flex-column" data-toggle="buttons">
+                                                <div class="p-0">
+                                                    <input type="radio" class="btn-check" name="formType" id="Standard"
+                                                        value="Standard" autocomplete="off" checked />
+                                                    <label class="btn btn-secondary m-2" for="Standard">Standard</label>
+                                                    <input type="radio" class="btn-check" name="formType" id="Deluxe"
+                                                        value="Deluxe" autocomplete="off" />
+                                                    <label class="btn btn-secondary m-2" for="Deluxe">Deluxe</label>
+                                                    <input type="radio" class="btn-check" name="formType" id="Suite"
+                                                        value="Suite" autocomplete="off" />
+                                                    <label class="btn btn-secondary m-2" for="Suite">Suite</label>
+                                                    <input type="radio" class="btn-check" name="formType" id="Executive"
+                                                        value="Executive" autocomplete="off" />
+                                                    <label class="btn btn-secondary m-2" for="Executive">Executive</label>
+                                                    <input type="radio" class="btn-check" name="formType" id="Family"
+                                                        value="Family" autocomplete="off" />
+                                                    <label class="btn btn-secondary m-2" for="Family">Family</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form mb-5">
+                                            <label class="form-label">Room Bed</label>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" value="Single"
+                                                            name="formBed" checked />
+                                                        <label class="form-check-label" for="formBed">Single</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" value="Double"
+                                                            name="formBed" />
+                                                        <label class="form-check-label" for="formBed">Double</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" value="Twin"
+                                                            name="formBed" />
+                                                        <label class="form-check-label" for="formBed">Twin</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" value="King"
+                                                            name="formBed" />
+                                                        <label class="form-check-label" for="formBed">King</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form mb-5">
+                                            <label class="form-label">Room Capacity (People)</label>
+                                            <div class="form-outline">
+                                                <div class="range">
+                                                    <input type="range" class="form-range" id="formCapacity" name="formCapacity" required min="1" max="5" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form mb-5">
+                                            <label class="form-label" for="formPrice">Room Price ($)</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">$</span>
+                                                <input type="text" class="form-control"
+                                                    aria-label="Amount (to the nearest dollar)" name="formPrice" required />
+                                                <div class="invalid-tooltip">Please provide a valid price.</div>
+                                            </div>
+                                        </div>
+                                        <div class="form mb-5">
+                                            <label class="form-label">Room Size (SQM)</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">SQM</span>
+                                                <input type="text" class="form-control" name="formSize" required />
+                                                <div class="invalid-tooltip">Please provide a valid size.</div>
+                                            </div>
+                                        </div>
+                                        <div class="form mb-5">
+                                            <label class="form-label">Additional items (Other details about the rooms)</label>
+                                            <div class="form">
+                                                <textarea name="formAdditional" class="form-control" rows="4" required></textarea>
+                                                <div class="invalid-tooltip">Please provide a valid additional.</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form mb-5 position-relative">
+                                        <label class="form-label">Room Image</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">URL</span>
+                                            <input name="formImage" type="text" class="form-control" required />
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <label class="form-label">Additional items</label>
-                        <div class="form-outline mb-5">
-                            <textarea name="formAdditional" class="form-control" rows="4"
-                                required><?php echo $formAdditional;?></textarea>
-                            <label class="form-label">Other details about the rooms</label>
-                            <div class="invalid-tooltip">Please provide a valid additional.</div>
-                        </div>
-                        <div class="form mb-5 position-relative">
-                            <label class="form-label">Room Image</label>
-                            <div class="input-group mb-3">
-                                <span class="input-group-text">URL</span>
-                                <input name="formImage" type="text" class="form-control"
-                                    value="<?php echo $formImage;?>" required />
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-primary" value="Update" name="Chang">OK</button>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <button type="submit" value="Check" class="btn btn-warning btn-block mb-4"
-                                    name="Chang">Check Accuracy and Save Data</button>
-                            </div>
-                            <div class="col">
-                                <button type="button" class="btn btn-success btn-block mb-4" data-mdb-toggle="modal"
-                                    data-mdb-target="#exampleModal">Display and Record Information</button>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
 
@@ -281,7 +398,7 @@
                         <h2>Room list</h2>
                         <br>
                         <div class="table-responsive">
-                            <table class="table" id="tableSearch">
+                            <table class="table table-hover" id="tableSearch">
                                 <thead>
                                     <tr>
                                         <th>Room ID</th>
@@ -295,7 +412,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <?php
+                                    <?php
                                 $servername = "localhost";
                                 $username = "root";
                                 $password = "";
@@ -348,56 +465,6 @@
             </center>
         </div>
     </main>
-
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form enctype="multipart/form-data" action="" method="POST">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Check the correctness of the information</h5>
-                        <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <h6>room_id:
-                            <?php echo $randomID;?>
-                            <input type="text" value='<?php echo $randomID;?>' name="randomID" hidden>
-                        </h6>
-                        <h6>room_type:
-                            <?php echo $formType;?>
-                            <input type="text" value='<?php echo $formType;?>' name="formType" hidden>
-                        </h6>
-                        <h6>size:
-                            <?php echo $formSize;?> sqm
-                            <input type="text" value='<?php echo $formSize;?>' name="formSize" hidden>
-                        </h6>
-                        <h6>bed_type:
-                            <?php echo $formBed;?>
-                            <input type="text" value='<?php echo $formBed;?>' name="formBed" hidden>
-                        </h6>
-                        <h6>capacity:
-                            <?php echo $formCapacity;?> person
-                            <input type="text" value='<?php echo $formCapacity;?>' name="formCapacity" hidden>
-                        </h6>
-                        <h6>price_per_night :
-                            <?php echo $formPrice;?> $
-                            <input type="text" value='<?php echo $formPrice;?>' name="formPrice" hidden>
-                        </h6>
-                        <h6>facility:
-                            <?php echo $formAdditional;?>
-                            <input type="text" value='<?php echo $formAdditional;?>' name="formAdditional" hidden>
-                        </h6>
-                        <h6>room_img:</h6>
-                        <img src="<?php echo $formImage;?>" class="img-thumbnail" height="200px" width="350px" />
-                        <input type="text" value='<?php echo $formImage;?>' name="formImage" hidden>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary" value="Additional" name="Chang">Additional Information</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 
     <footer class="text-center text-lg-start bg-light text-muted">
         <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
@@ -476,7 +543,7 @@
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.js"></script>
-    <script src="../static/manage_room2.js"></script>
+    <script src="../static/manage_room.js"></script>
 </body>
 
 </html>
