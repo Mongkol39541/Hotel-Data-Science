@@ -88,138 +88,152 @@
       // Create connection
       $conn = mysqli_connect($servername, $username, $password, $dbname) 
           or die("Connection failed: " . mysqli_connect_error());
-      
+
+      $con_2 = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+      $con_2->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       // --- SQL SELECT statement
       $sql = "SELECT * FROM room
           ORDER BY room_id;";
 
       $result = mysqli_query($conn, $sql);
-      ?>
+    ?>
 
     <div class="container p-5">
-      <center>
-        <div class="card">
-          <div class="card-body">
-            <h2>Room List</h2>
-          </div>
+      <div class="card">
+        <div class="card-body">
+          <h2>Room List</h2>
         </div>
-        <div class="card mt-3">
-          <div class="card-body">
-            <div class="row">
-                <?php
-                if (mysqli_num_rows($result) > 0) {
-                  // output data of each row
-                  while($row = mysqli_fetch_assoc($result)) {
-                    echo '<div class="col-md-2 mb-3">';
-                    echo '<form method="get"';
-                    echo "<span class='badge badge-primary btn-rounded'>";
-                    echo '<button type="submit" class="btn btn-primary btn-rounded"'.'name="room_id" value="'. $row["room_id"] . '">';
-                    echo "<h5>" . $row["room_id"] ."</h5>";      
-                    echo "</button><span></form></div>";    
-                  }
-                } else {
-                  echo "0 results";
-                }
-                ?>
-            </div>
-          </div>
-        </div>
-      </center>
-            <?php
-            if (isset($_GET['room_id'])) {
-              $room_id = $_GET['room_id'];
-              $sql_2 = "SELECT * FROM room WHERE room_id = '$room_id';";
-              $result_2 = mysqli_query($conn, $sql_2);
-              $col = mysqli_fetch_assoc($result_2);
-              echo '<div class="row p-5">';
-              echo '<div class="col-md-6 mb-2">';
-              echo '<div class="card">';
-              echo '<img src="'.$col["room_img"].'" class="card-img-top">';
-              echo '<div class="card-body">';
-              echo '<h4 class="card-title">'.$col['room_id'].'</h5>';
-              echo '<p class="card-text">Room Type: '.$col['room_type'].'</p>';    
-              echo '<p class="card-text">Size: '.$col['size'].'</p>';    
-              echo '<p class="card-text">Bed Type: '.$col['bed_type'].'</p>';    
-              echo '<p class="card-text">Price per Night: '.$col['price_per_night'].'</p>';    
-              echo '<p class="card-text">Facility: '.$col['facility'].'</p>';    
-              echo '</div></div></div>';
-              $sql_3 = "SELECT * FROM room_status JOIN reservation USING (reserve_id, room_id) WHERE room_id = '$room_id' ORDER BY reserve_id;";
-              $result_3 = mysqli_query($conn, $sql_3);         
-              echo '<div class="col-md-6 mb-2">';
-              while ($sta = mysqli_fetch_assoc($result_3)) {
-                  echo '<div class="container mb-3 p-3 shadow-5 bg-gradient">';
-                  echo '<p>Reserve ID: <b>' . $sta['reserve_id'] . '</b></p>';
-                  echo '<p>check-in: ' . $sta['check_in'] . '</p>';
-                  echo '<p>check-out: ' . $sta['check_out'] . '</p>';
+      </div>
+      
 
-                  echo '<form action="" method="post">';
+      <?php
+      if (isset($_POST['room_id'])) {
+        $room_id = $_POST['room_id'];
+        $sql_2 = "SELECT * FROM room WHERE room_id = '$room_id';";
+        $result_2 = mysqli_query($conn, $sql_2);
+        $col = mysqli_fetch_assoc($result_2);
+        echo '<div class="row p-5">';
+        echo '<div class="col-md-6 mb-2">';
+        echo '<div class="card">';
+        echo '<img src="'.$col["room_img"].'" class="card-img-top">';
+        echo '<div class="card-body">';
+        echo '<h4 class="card-title">'.$col['room_id'].'</h5>';
+        echo '<p class="card-text">Room Type: '.$col['room_type'].'</p>';    
+        echo '<p class="card-text">Size: '.$col['size'].'</p>';    
+        echo '<p class="card-text">Bed Type: '.$col['bed_type'].'</p>';    
+        echo '<p class="card-text">Price per Night: '.$col['price_per_night'].'</p>';    
+        echo '<p class="card-text">Facility: '.$col['facility'].'</p>';    
+        echo '</div></div></div>';
 
-                  echo '<label for="cc_in_'.$sta['reserve_id'].'">Counter check-in: </label>';
-                  echo '<input type="text" id="startDate" name="cc_in_'.$sta['reserve_id'].'" data-toggle="flatpickr" required><br>';
-                  echo '<sub class="text-primary">'.$sta['counter_checkin'].'</sub><br><br>';
+        $stt_rom = array();
+        $sql_3 = "SELECT * FROM room_status JOIN reservation USING (reserve_id, room_id) WHERE room_id = '$room_id' ORDER BY reserve_id;";
+        $result_3 = mysqli_query($conn, $sql_3);         
+        echo '<div class="col-md-6 mb-2">';
+        while ($sta = mysqli_fetch_assoc($result_3)) {
+          echo '<div class="container mb-3 p-3 shadow-5 bg-gradient">';
+          echo '<p>Reserve ID: <b>' . $sta['reserve_id'] . '</b></p>';
+          echo '<p>check-in: ' . $sta['check_in'] . '</p>';
+          echo '<p>check-out: ' . $sta['check_out'] . '</p>';
+          array_push($stt_rom,$sta['status']);
 
-                  echo '<label for="cc_out_'.$sta['reserve_id'].'">Counter check-out: </label>';
-                  echo '<input type="text" id="endDate" name="cc_out_'.$sta['reserve_id'].'" data-toggle="flatpickr" required><br>';
-                  echo '<sub class="text-primary">'.$sta['counter_checkout'].'</sub><br><br>';
+          echo '<form action="" method="post">';
+          if ($sta['counter_checkin']=="0000-00-00 00:00:00") {
+            echo '<label for="cc_in_'.$sta['reserve_id'].'">Counter check-in: ';
+            echo '<button type="submit" class="btn btn-info btn-rounded" name="cc_in_'.$sta["reserve_id"].
+            '" value="'.$sta["reserve_id"].'"><i class="fa-solid fa-check"></i></button></label>';
 
-                  echo '<p>Status: ';
-                  echo '<input type="radio" class="btn-check" id="'.$sta['reserve_id'].
-                      '_G" name="sta_'.$sta['reserve_id'].'" autocomplete="off" value="0" required/>';
-                  echo '<label class="btn btn-secondary" for="'.$sta['reserve_id'].
-                      '_G">available</label>';
+            $chang_1 = "cc_in_". $sta["reserve_id"];
+            if (isset($_POST[$chang_1])) {
+              $r_id = $sta["reserve_id"];
 
-                  echo '<input type="radio" class="btn-check" id="'.$sta['reserve_id']. 
-                      '_R" name="sta_'.$sta['reserve_id'].'" autocomplete="off" value="1" required/>';
-                  echo '<label class="btn btn-secondary" for="'.$sta['reserve_id'].
-                      '_R">unavailable</label><br>';
-                  if ($sta['status'] == 0) {
-                      echo '<sub class="text-success">available</sub><br></p>';
-                  } else {
-                      echo '<sub class="text-danger">unavailable</sub><br></p>';
-                  }                       
+              date_default_timezone_set('Asia/Bangkok');
+              $new_in = strftime("%Y-%m-%d %T");
 
-                  echo '<button type="submit" class="btn btn-info btn-rounded"'.
-                          'name="upd_st_'. $sta["reserve_id"] . '" value="'
-                          . $sta["reserve_id"] . '">save</button></form></div>';
-                            
-                  $change = "upd_st_". $sta["reserve_id"];
-                  if (isset($_POST[$change])) {
-                      $r_id = $sta["reserve_id"];
-
-                      $nm_ccin = "cc_in_".$sta['reserve_id'];
-                      $new_in = $_POST[$nm_ccin];
-
-                      $nm_ccout = "cc_out_".$sta['reserve_id'];
-                      $new_out = $_POST[$nm_ccout];
-
-                      $nm_st = "sta_".$sta['reserve_id'];
-                      $new_sta = $_POST[$nm_st];
-
-                      $con_2 = new PDO("mysql:host=$servername;dbname=$dbname", 
-                              $username, $password);
-                      $con_2->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-                      $sql_4 = "UPDATE room_status
-                      SET counter_checkin = :new_in,
-                          counter_checkout = :new_out,
-                          status = :new_sta
-                      WHERE reserve_id = :r_id";
-                  
-                      $stmt = $con_2->prepare($sql_4);
-                      $stmt->bindParam(':new_in', $new_in, PDO::PARAM_STR);
-                      $stmt->bindParam(':new_out', $new_out, PDO::PARAM_STR);
-                      $stmt->bindParam(':new_sta', $new_sta, PDO::PARAM_INT);
-                      $stmt->bindParam(':r_id', $r_id, PDO::PARAM_STR);
-                      
-                      $stmt->execute();
-
-                  }
-              }
-              echo '</div>';
+              $sql_4 = "UPDATE room_status
+                        SET counter_checkin = :new_in, status = 1
+                        WHERE reserve_id = :r_id";
+                    
+              $stmt = $con_2->prepare($sql_4);
+              $stmt->bindParam(':new_in', $new_in, PDO::PARAM_STR);
+              $stmt->bindParam(':r_id', $r_id, PDO::PARAM_STR);
+                        
+              $stmt->execute();
             }
-            ?>
+            
+          } else if (($sta['counter_checkin']!="0000-00-00 00:00:00") and ($sta['counter_checkout']=="0000-00-00 00:00:00")) {
+            echo 'Counter check-in: <i>'.$sta['counter_checkin'].'</i><br>';
+            echo '<label for="cc_out_'.$sta['reserve_id'].'">Counter check-out: ';
+            echo '<button type="submit" class="btn btn-info btn-rounded" name="cc_out_'.$sta["reserve_id"].
+            '" value="'.$sta["reserve_id"].'"><i class="fa-solid fa-check"></i></button></label>';
+
+            $chang_2 = "cc_out_". $sta["reserve_id"];
+            if (isset($_POST[$chang_2])) {
+              $r_id = $sta["reserve_id"];
+
+              date_default_timezone_set('Asia/Bangkok');
+              $new_out = strftime("%Y-%m-%d %T");
+
+              $sql_5 = "UPDATE room_status
+                        SET counter_checkout = :new_out, status = 0
+                        WHERE reserve_id = :r_id";
+                    
+              $stmt = $con_2->prepare($sql_5);
+              $stmt->bindParam(':new_out', $new_out, PDO::PARAM_STR);
+              $stmt->bindParam(':r_id', $r_id, PDO::PARAM_STR);
+                        
+              $stmt->execute();
+            }
+          } else if (($sta['counter_checkin']!="0000-00-00 00:00:00") and ($sta['counter_checkout']!="0000-00-00 00:00:00")) {
+            echo 'Counter check-in: <i>'.$sta['counter_checkin'].'</i><br>';
+            echo 'Counter check-out: <i>'.$sta['counter_checkout'].'</i>';
+          }
+      
+        echo '</div>';
+        }
+
+        $output = "";
+        foreach ($stt_rom as $s) {
+          if ($s == 1) {
+            $output = "maiwang";
+            break;
+          }
+        }
+
+        if ($output == "") {
+          echo "<div class='card border border-success w-50 p-1'><center>";
+          echo '<h5 class="text-success">Available</h5>';
+          echo "</center></div>";
+        } else {
+          echo "<div class='card border border-danger w-50 p-1'><center>";
+          echo '<h5 class="text-danger">Unavailable</h5>';
+          echo "</center></div>";
+        }
+      }?>
     </div>
+
+    <div class="card mt-3">
+      <div class="card-body">
+        <div class="row">
+          <?php
+            if (mysqli_num_rows($result) > 0) {
+            // output data of each row
+              while($row = mysqli_fetch_assoc($result)) {
+                echo '<div class="col-md-2 mb-3">';
+                echo '<form method="post"';
+                echo "<span class='badge badge-primary btn-rounded'>";
+                echo '<button type="submit" class="btn btn-primary btn-rounded"'.'name="room_id" value="'. $row["room_id"] . '">';
+                echo "<h5>" . $row["room_id"] ."</h5>";      
+                echo "</button><span></form></div>";    
+              }
+            } else {
+              echo "0 results";
+            }
+          ?>
+        </div>
+      </div>
+    </div>
+    
   </main>
 
   <footer class="text-center text-lg-start bg-light text-muted">
@@ -294,5 +308,4 @@
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script src="../static/room.js"></script>
 </body>
-
 </html>
