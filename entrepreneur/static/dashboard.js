@@ -8,10 +8,141 @@ $(document).ready(function () {
     .appendTo('#tableSearch_wrapper .col-md-6:eq(0)');
 });
 
+document.addEventListener('DOMContentLoaded', function () {
+  let controller = new ScrollMagic.Controller();
+
+  let timeline1 = gsap.timeline();
+  timeline1.from("#animation1", { duration: 1, x: -1500, opacity: 0 });
+  new ScrollMagic.Scene({
+    triggerElement: "#animation1",
+    triggerHook: 1,
+    reverse: true
+  })
+    .setTween(timeline1)
+    .addTo(controller);
+
+  let timeline2 = gsap.timeline();
+  timeline2.from("#animation2", { duration: 1, x: 1500, opacity: 0 });
+  new ScrollMagic.Scene({
+    triggerElement: "#animation2",
+    triggerHook: 1,
+    reverse: true
+  })
+    .setTween(timeline2)
+    .addTo(controller);
+
+  let timeline3 = gsap.timeline();
+  timeline3.from("#animation3", { duration: 1, y: 200, opacity: 0 });
+  new ScrollMagic.Scene({
+    triggerElement: "#animation3",
+    triggerHook: 1,
+    reverse: true
+  })
+    .setTween(timeline3)
+    .addTo(controller);
+
+  let timeline4 = gsap.timeline();
+  timeline4.from("#animation4", { duration: 1, x: 1500, opacity: 0 });
+  new ScrollMagic.Scene({
+    triggerElement: "#animation4",
+    triggerHook: 1,
+    reverse: true
+  })
+    .setTween(timeline4)
+    .addTo(controller);
+
+  let timeline5 = gsap.timeline();
+  timeline5.from("#animation5", { duration: 1, x: -1500, opacity: 0 });
+  new ScrollMagic.Scene({
+    triggerElement: "#animation5",
+    triggerHook: 1,
+    reverse: true
+  })
+    .setTween(timeline5)
+    .addTo(controller);
+
+  let timeline6 = gsap.timeline();
+  timeline6.from("#animation6", { duration: 1, x: 1500, opacity: 0 });
+  new ScrollMagic.Scene({
+    triggerElement: "#animation6",
+    triggerHook: 1,
+    reverse: true
+  })
+    .setTween(timeline6)
+    .addTo(controller);
+
+  let timeline7 = gsap.timeline();
+  timeline7.from("#animation7", { duration: 1, x: -1500, opacity: 0 });
+  new ScrollMagic.Scene({
+    triggerElement: "#animation7",
+    triggerHook: 1,
+    reverse: true
+  })
+    .setTween(timeline7)
+    .addTo(controller);
+
+  let timeline8 = gsap.timeline();
+  timeline8.from("#animation8", { duration: 1, x: 1500, opacity: 0 });
+  new ScrollMagic.Scene({
+    triggerElement: "#animation8",
+    triggerHook: 1,
+    reverse: true
+  })
+    .setTween(timeline8)
+    .addTo(controller);
+
+  let timeline9 = gsap.timeline();
+  timeline9.from("#animation9", { duration: 1, x: -1500, opacity: 0 });
+  new ScrollMagic.Scene({
+    triggerElement: "#animation9",
+    triggerHook: 1,
+    reverse: true
+  })
+    .setTween(timeline9)
+    .addTo(controller);
+
+  let timeline10 = gsap.timeline();
+  timeline10.from("#animation10", { duration: 1, x: 1500, opacity: 0 });
+  new ScrollMagic.Scene({
+    triggerElement: "#animation10",
+    triggerHook: 1,
+    reverse: true
+  })
+    .setTween(timeline10)
+    .addTo(controller);
+
+  let timeline11 = gsap.timeline();
+  timeline11.from("#animation11", { duration: 1, y: -200, opacity: 0 });
+  new ScrollMagic.Scene({
+    triggerElement: "#animation11",
+    triggerHook: 1,
+    reverse: true
+  })
+    .setTween(timeline11)
+    .addTo(controller);
+
+  let timeline12 = gsap.timeline();
+  timeline12.from("#animation12", { duration: 1, y: 100, opacity: 0 });
+  new ScrollMagic.Scene({
+    triggerElement: "#animation12",
+    triggerHook: 1,
+    reverse: true
+  })
+    .setTween(timeline12)
+    .addTo(controller);
+
+  let image = document.querySelector('.bg-image');
+  let text = document.querySelector('.text-white');
+  gsap.set([image, text], { autoAlpha: 0, y: 100 });
+  let timeline = gsap.timeline({ defaults: { duration: 1 } });
+  timeline
+    .to(image, { autoAlpha: 1, y: 0 })
+    .to(text, { autoAlpha: 1, y: 0 }, '-=0.5');
+});
+
 document.addEventListener("DOMContentLoaded", function () {
   var startDateInput = document.getElementById("startDate");
   var endDateInput = document.getElementById("endDate");
-  var selectedMonthInput = document.getElementById("selectedMonth");
 
   var startDatePicker = flatpickr(startDateInput, {
     dateFormat: "Y-m-d",
@@ -35,17 +166,6 @@ document.addEventListener("DOMContentLoaded", function () {
         startDateInput.value = dateStr;
       }
     },
-  });
-
-  flatpickr(selectedMonthInput, {
-    dateFormat: "Y-m-d",
-    enableTime: false,
-    time_24hr: true,
-    disable: [
-      function(date) {
-        return (date.getDay() || date.getDay() == 0);
-      }
-    ],
   });
 });
 

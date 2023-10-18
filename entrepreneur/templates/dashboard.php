@@ -47,22 +47,22 @@
           <i class="fas fa-bars"></i>
         </button>
         <ul class="navbar-nav ms-auto d-flex flex-row">
-          <a class="nav-link me-3 me-lg-0" href="#">
+          <a class="nav-link me-3 me-lg-0" href="#" target="_blank">
             <i class="fab fa-facebook-f"></i>
           </a>
-          <a class="nav-link me-3 me-lg-0" href="#">
+          <a class="nav-link me-3 me-lg-0" href="#" target="_blank">
             <i class="fab fa-twitter"></i>
           </a>
-          <a class="nav-link me-3 me-lg-0" href="#">
+          <a class="nav-link me-3 me-lg-0" href="#" target="_blank">
             <i class="fab fa-google"></i>
           </a>
-          <a class="nav-link me-3 me-lg-0" href="#">
+          <a class="nav-link me-3 me-lg-0" href="#" target="_blank">
             <i class="fab fa-instagram"></i>
           </a>
-          <a class="nav-link me-3 me-lg-0" href="#">
+          <a class="nav-link me-3 me-lg-0" href="#" target="_blank">
             <i class="fab fa-linkedin"></i>
           </a>
-          <a class="nav-link me-3 me-lg-0" href="#">
+          <a class="nav-link me-3 me-lg-0" href="https://github.com/Mongkol39541/Hotel-Data-Science.git" target="_blank">
             <i class="fab fa-github"></i>
           </a>
           <a class="nav-link me-3 me-lg-0" href="#">
@@ -86,25 +86,11 @@
 
     <div class="container p-5">
       <center>
-        <div class="card">
+        <div id="animation1" class="card">
           <div class="card-body">
             <h2>Summary Report</h2>
           </div>
         </div>
-
-        <form method="POST" action="">
-          <div class="card mt-3">
-            <div class="card-body">
-              <h2>Enter Month and Year</h2>
-              <div class="input-group mb-3">
-                <input type="month" name="selectedMonth" class="form-control mx-3">
-                <div class="input-group-append">
-                  <button class="btn btn-primary mx-3 me-2" id="submitBtn" type="submit">Submit</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </form>
 
         <?php
         $servername = "localhost";
@@ -146,102 +132,160 @@
         }
         ?>
 
-        <div class="row">
-          <div class="col mt-3">
-            <div class="card">
-              <div class="card-body">
-                <div class="d-flex justify-content-between px-md-1">
-                  <div>
-                  <p class="mb-0">Customers (person)</p>
-                  <h3 class="text-primary"><?php echo $num_preple[0]; ?></h3>
-                  </div>
-                  <div class="align-self-center">
-                    <i class="fa-solid fa-user text-primary fa-3x"></i>
-                  </div>
-                </div>
-                <div class="px-md-1">
-                  <div class="progress mt-3 mb-1 rounded" style="height: 7px">
-                    <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo ($num_preple[0]/array_sum($num_preple))*100; ?>%"></div>
-                  </div>
+        <form id="animation2" method="POST" action="">
+          <div class="card mt-3">
+            <div class="card-body">
+              <h2>Enter Month and Year</h2>
+              <div class="input-group mb-3">
+                <input type="month" name="selectedMonth" class="form-control mx-3" value="<?php echo $desiredMonth; ?>" >
+                <div class="input-group-append">
+                  <button class="btn btn-primary mx-3 me-2" id="submitBtn" type="submit">Submit</button>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col mt-3">
-            <div class="card">
-              <div class="card-body">
-                <div class="d-flex justify-content-between px-md-1">
-                  <div>
-                    <p class="mb-0">Owners (person)</p>
-                    <h3 class="text-secondary"><?php echo $num_preple[1]; ?></h3>
+        </form>
+
+        <div id="animation3">
+          <div class="row">
+            <div class="col mt-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between px-md-1">
+                    <div>
+                    <p class="mb-0">Customers (person)</p>
+                    <h3 class="text-primary"><?php echo $num_preple[0]; ?></h3>
+                    </div>
+                    <div class="align-self-center">
+                      <i class="fa-solid fa-user text-primary fa-3x"></i>
+                    </div>
                   </div>
-                  <div class="align-self-center">
-                    <i class="fa-solid fa-user-tie text-secondary fa-3x"></i>
-                  </div>
-                </div>
-                <div class="px-md-1">
-                  <div class="progress mt-3 mb-1 rounded" style="height: 7px">
-                    <div class="progress-bar bg-secondary" role="progressbar" style="width: <?php echo ($num_preple[1]/array_sum($num_preple))*100; ?>%"></div>
+                  <div class="px-md-1">
+                    <div class="progress mt-3 mb-1 rounded" style="height: 7px">
+                      <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo ($num_preple[0]/array_sum($num_preple))*100; ?>%"></div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="col mt-3">
-            <div class="card">
-              <div class="card-body">
-                <div class="d-flex justify-content-between px-md-1">
-                  <div>
-                    <p class="mb-0">Receptions (person)</p>
-                    <h3 class="text-dark"><?php echo $num_preple[2]; ?></h3>
+            <div class="col mt-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between px-md-1">
+                    <div>
+                      <p class="mb-0">Owners (person)</p>
+                      <h3 class="text-secondary"><?php echo $num_preple[1]; ?></h3>
+                    </div>
+                    <div class="align-self-center">
+                      <i class="fa-solid fa-user-tie text-secondary fa-3x"></i>
+                    </div>
                   </div>
-                  <div class="align-self-center">
-                    <i class="fa-solid fa-user-secret text-dark fa-3x"></i>
+                  <div class="px-md-1">
+                    <div class="progress mt-3 mb-1 rounded" style="height: 7px">
+                      <div class="progress-bar bg-secondary" role="progressbar" style="width: <?php echo ($num_preple[1]/array_sum($num_preple))*100; ?>%"></div>
+                    </div>
                   </div>
                 </div>
-                <div class="px-md-1">
-                  <div class="progress mt-3 mb-1 rounded" style="height: 7px">
-                    <div class="progress-bar bg-dark" role="progressbar" style="width: <?php echo ($num_preple[2]/array_sum($num_preple))*100; ?>%"></div>
+              </div>
+            </div>
+            <div class="col mt-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between px-md-1">
+                    <div>
+                      <p class="mb-0">Receptions (person)</p>
+                      <h3 class="text-dark"><?php echo $num_preple[2]; ?></h3>
+                    </div>
+                    <div class="align-self-center">
+                      <i class="fa-solid fa-user-secret text-dark fa-3x"></i>
+                    </div>
+                  </div>
+                  <div class="px-md-1">
+                    <div class="progress mt-3 mb-1 rounded" style="height: 7px">
+                      <div class="progress-bar bg-dark" role="progressbar" style="width: <?php echo ($num_preple[2]/array_sum($num_preple))*100; ?>%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          <div class="row">
+            <div class="col mt-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between p-md-1">
+                    <div class="d-flex flex-row">
+                      <div class="align-self-center">
+                        <i class="fa-solid fa-book text-info fa-3x me-4"></i>
+                      </div>
+                      <div class="align-self-center">
+                        <h4>Total Reservations</h4>
+                      </div>
+                    </div>
+                    <div class="align-self-center">
+                      <h2 class="h1 mb-0"><?php echo $reserve; ?></h2>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col mt-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between p-md-1">
+                    <div class="d-flex flex-row">
+                      <div class="align-self-center">
+                        <i class="fa-brands fa-buromobelexperte  text-danger fa-3x px-2"></i>
+                      </div>
+                      <div class="align-self-center">
+                        <h4>Reserved Rooms</h4>
+                      </div>
+                    </div>
+                    <div class="align-self-center">
+                      <h2 class="h1 mb-0"><?php echo $numroom; ?></h2>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-        <div class="row">
-          <div class="col mt-3">
-            <div class="card">
-              <div class="card-body">
-                <div class="d-flex justify-content-between p-md-1">
-                  <div class="d-flex flex-row">
-                    <div class="align-self-center">
-                      <i class="fa-solid fa-book text-info fa-3x me-4"></i>
+          <div class="row">
+            <div class="col mt-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between p-md-1">
+                    <div class="d-flex flex-row">
+                      <div class="align-self-center">
+                        <h2 class="h1 mb-0 me-4">$<?php echo number_format($income); ?></h2>
+                      </div>
+                      <div class="align-self-center">
+                        <h4>Total Revenue</h4>
+                        <p class="mb-0">(Price * Tax) - Discount</p>
+                      </div>
                     </div>
                     <div class="align-self-center">
-                      <h4>Total Reservations</h4>
+                      <i class="fa-solid fa-hand-holding-dollar text-warning fa-3x me-4"></i>
                     </div>
-                  </div>
-                  <div class="align-self-center">
-                    <h2 class="h1 mb-0"><?php echo $reserve; ?></h2>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="col mt-3">
-            <div class="card">
-              <div class="card-body">
-                <div class="d-flex justify-content-between p-md-1">
-                  <div class="d-flex flex-row">
-                    <div class="align-self-center">
-                      <i class="fa-brands fa-buromobelexperte  text-danger fa-3x px-2"></i>
+            <div class="col mt-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between p-md-1">
+                    <div class="d-flex flex-row">
+                      <div class="align-self-center">
+                        <h2 class="h1 mb-0 me-4">$<?php echo number_format($expenses); ?></h2>
+                      </div>
+                      <div class="align-self-center">
+                        <h4>Total Expenses</h4>
+                      </div>
                     </div>
                     <div class="align-self-center">
-                      <h4>Reserved Rooms</h4>
+                      <i class="fa-solid fa-basket-shopping text-success fa-3x"></i>
                     </div>
-                  </div>
-                  <div class="align-self-center">
-                    <h2 class="h1 mb-0"><?php echo $numroom; ?></h2>
                   </div>
                 </div>
               </div>
@@ -249,49 +293,7 @@
           </div>
         </div>
 
-        <div class="row">
-          <div class="col mt-3">
-            <div class="card">
-              <div class="card-body">
-                <div class="d-flex justify-content-between p-md-1">
-                  <div class="d-flex flex-row">
-                    <div class="align-self-center">
-                      <h2 class="h1 mb-0 me-4">$<?php echo number_format($income); ?></h2>
-                    </div>
-                    <div class="align-self-center">
-                      <h4>Total Revenue</h4>
-                      <p class="mb-0">(Price * Tax) - Discount</p>
-                    </div>
-                  </div>
-                  <div class="align-self-center">
-                    <i class="fa-solid fa-hand-holding-dollar text-warning fa-3x me-4"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col mt-3">
-            <div class="card">
-              <div class="card-body">
-                <div class="d-flex justify-content-between p-md-1">
-                  <div class="d-flex flex-row">
-                    <div class="align-self-center">
-                      <h2 class="h1 mb-0 me-4">$<?php echo number_format($expenses); ?></h2>
-                    </div>
-                    <div class="align-self-center">
-                      <h4>Total Expenses</h4>
-                    </div>
-                  </div>
-                  <div class="align-self-center">
-                    <i class="fa-solid fa-basket-shopping text-success fa-3x"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card mt-3">
+        <div class="card mt-3" id="animation4">
           <div class="card-body">
             <h2>Reservation list and Payment list</h2>
             <br>
@@ -299,7 +301,7 @@
               <table class="table table-hover" id="tableSearch">
                 <thead>
                   <tr>
-                    <th>Reserve ID</th>
+                    <th>Payment ID</th>
                     <th>Check IN</th>
                     <th>Check OUT</th>
                     <th>Payment Date</th>
@@ -311,13 +313,13 @@
                 <tbody>
                   <?php
                     $number_of_results = mysqli_num_rows($result);
-                    $sql = "SELECT r.reserve_id, r.room_type, r.check_in, r.check_out, t.payment_date, t.total_price, t.payment_type FROM `reservation` r JOIN `transaction` t USING(reserve_id);";
+                    $sql = "SELECT t.payment_id, r.room_type, r.check_in, r.check_out, t.payment_date, t.total_price, t.payment_type FROM `reservation` r JOIN `transaction` t USING(reserve_id);";
                     $result = mysqli_query($conn, $sql);
 
                     if (mysqli_num_rows($result) > 0) {
                         while ($row = mysqli_fetch_assoc($result)) {
                             echo '<tr>';
-                            echo '<td><p class="fw-bold mb-1">' . $row["reserve_id"] . '</p></td>';
+                            echo '<td><p class="fw-bold mb-1">' . $row["payment_id"] . '</p></td>';
                             echo '<td><p class="text-muted mb-0">' . $row["check_in"] . '</p></td>';
                             echo '<td><p class="text-muted mb-0">' . $row["check_out"] . '</p></td>';
                             echo '<td><p class="text-muted mb-0">' . $row["payment_date"] . '</p></td>';
@@ -349,23 +351,58 @@
           </div>
         </div>
 
-        <div class="card mt-3">
+        <div class="card mt-3" id="animation5">
           <div class="card-body">
             <h2>Data Visualization</h2>
           </div>
         </div>
 
-        <div class="card mt-3">
+        <?php
+          $servername = "localhost";
+          $username = "root";
+          $password = "";
+          $dbname = "9hotel_reservation";
+          $conn = mysqli_connect($servername, $username, $password, $dbname);
+          $sql = "SELECT r.room_type, r.check_in, r.check_out, t.payment_date, t.total_price, t.payment_type, m.title FROM `reservation` r JOIN `transaction` t USING(reserve_id) JOIN `guest` g USING(reserve_id) JOIN `customer` c USING(customer_id) JOIN `member` m USING(member_id);";
+          $sqlDate = "SELECT MIN(payment_date) as earliest_date1, MAX(payment_date) as earliest_date2 FROM `transaction`;";
+          $sqlSex = "SELECT  FROM `transaction` JOIN `guest` USING(reserve_id) JOIN `customer` USING(customer_id) JOIN `customer` USING(member_id);";
+          $result = mysqli_query($conn, $sqlDate);
+          $row = mysqli_fetch_assoc($result);
+          $startDate = $row['earliest_date1'];
+          $endDate = $row['earliest_date2'];
+          if (isset($_POST["startDate"]) || isset($_POST['endDate'])) {
+            $startDate = $_POST['startDate'];
+            $endDate = $_POST['endDate'];
+            if ($startDate == '') {
+              $sql = "SELECT r.room_type, r.check_in, r.check_out, t.payment_date, t.total_price, t.payment_type, m.title FROM `reservation` r JOIN `transaction` t USING(reserve_id) JOIN `guest` g USING(reserve_id) JOIN `customer` c USING(customer_id) JOIN `member` m USING(member_id) WHERE t.payment_date <= '$endDate' ORDER BY t.payment_date ASC;";
+              $sqlDate = "SELECT MIN(payment_date) as earliest_date FROM `transaction` WHERE payment_date <= '$endDate'";
+              $result = mysqli_query($conn, $sqlDate);
+              $row = mysqli_fetch_assoc($result);
+              $startDate = $row['earliest_date'];
+            } elseif ($endDate == '') {
+              $sql = "SELECT r.room_type, r.check_in, r.check_out, t.payment_date, t.total_price, t.payment_type, m.title FROM `reservation` r JOIN `transaction` t USING(reserve_id) JOIN `guest` g USING(reserve_id) JOIN `customer` c USING(customer_id) JOIN `member` m USING(member_id) WHERE t.payment_date >= '$startDate' ORDER BY t.payment_date ASC;";
+              $sqlDate = "SELECT MAX(payment_date) as earliest_date FROM `transaction` WHERE payment_date >= '$startDate'";
+              $result = mysqli_query($conn, $sqlDate);
+              $row = mysqli_fetch_assoc($result);
+              $endDate = $row['earliest_date'];
+            } elseif ($startDate != '' && $endDate != '') {
+              $sql = "SELECT r.room_type, r.check_in, r.check_out, t.payment_date, t.total_price, t.payment_type, m.title FROM `reservation` r JOIN `transaction` t USING(reserve_id) JOIN `guest` g USING(reserve_id) JOIN `customer` c USING(customer_id) JOIN `member` m USING(member_id) WHERE t.payment_date >= '$startDate' AND t.payment_date <= '$endDate' ORDER BY t.payment_date ASC;";
+            }
+          }
+          $result = mysqli_query($conn, $sql);
+        ?>
+
+        <div class="card mt-3" id="animation6">
           <div class="card-body">
             <form enctype="multipart/form-data" action="" method="POST">
               <div class="row">
                 <div class="col-md-6 mb-4">
                   <label for="startDate" class="form-label">Start Date :</label>
-                  <input type="text" id="startDate" name="startDate" class="form-control" data-toggle="flatpickr">
+                  <input type="text" id="startDate" name="startDate" value="<?php echo $startDate; ?>" class="form-control" data-toggle="flatpickr">
                 </div>
                 <div class="col-md-6 mb-4">
                   <label for="endDate" class="form-label">End Date :</label>
-                  <input type="text" id="endDate" name="endDate" class="form-control" data-toggle="flatpickr">
+                  <input type="text" id="endDate" name="endDate" value="<?php echo $endDate; ?>" class="form-control" data-toggle="flatpickr">
                 </div>
               </div>
               <div class="row">
@@ -378,198 +415,163 @@
         </div>
 
         <?php
-          if (isset($_POST["analyze"])) {
-            $servername = "localhost";
-            $username = "root";
-            $password = "";
-            $dbname = "9hotel_reservation";
-            $conn = mysqli_connect($servername, $username, $password, $dbname);
+          $daysOfWeek = array(
+            'Sunday' => 0,
+            'Monday' => 0,
+            'Tuesday' => 0,
+            'Wednesday' => 0,
+            'Thursday' => 0,
+            'Friday' => 0,
+            'Saturday' => 0,
+          );
 
-            $startDate = $_POST['startDate'];
-            $endDate = $_POST['endDate'];
-            if ($startDate == '' and $endDate == '') {
-              $sql = "SELECT r.reserve_id, r.room_type, r.check_in, r.check_out, t.payment_date, t.total_price, t.payment_type, m.title FROM `reservation` r JOIN `transaction` t USING(reserve_id) JOIN `guest` g USING(reserve_id) JOIN `customer` c USING(customer_id) JOIN `member` m USING(member_id);";
-              $sqlDate = "SELECT MIN(payment_date) as earliest_date1, MAX(payment_date) as earliest_date2 FROM `transaction`;";
-              $sqlSex = "SELECT  FROM `transaction` JOIN `guest` USING(reserve_id) JOIN `customer` USING(customer_id) JOIN `customer` USING(member_id);";
-              $result = mysqli_query($conn, $sqlDate);
-              $row = mysqli_fetch_assoc($result);
-              $startDate = $row['earliest_date1'];
-              $endDate = $row['earliest_date2'];
-            } elseif ($startDate == '') {
-              $sql = "SELECT r.reserve_id, r.room_type, r.check_in, r.check_out, t.payment_date, t.total_price, t.payment_type, m.title FROM `reservation` r JOIN `transaction` t USING(reserve_id) JOIN `guest` g USING(reserve_id) JOIN `customer` c USING(customer_id) JOIN `member` m USING(member_id) WHERE t.payment_date <= '$endDate' ORDER BY t.payment_date ASC;";
-              $sqlDate = "SELECT MIN(payment_date) as earliest_date FROM `transaction` WHERE payment_date <= '$endDate'";
-              $result = mysqli_query($conn, $sqlDate);
-              $row = mysqli_fetch_assoc($result);
-              $startDate = $row['earliest_date'];
-            } elseif ($endDate == '') {
-              $sql = "SELECT r.reserve_id, r.room_type, r.check_in, r.check_out, t.payment_date, t.total_price, t.payment_type, m.title FROM `reservation` r JOIN `transaction` t USING(reserve_id) JOIN `guest` g USING(reserve_id) JOIN `customer` c USING(customer_id) JOIN `member` m USING(member_id) WHERE t.payment_date >= '$startDate' ORDER BY t.payment_date ASC;";
-              $sqlDate = "SELECT MAX(payment_date) as earliest_date FROM `transaction` WHERE payment_date >= '$startDate'";
-              $result = mysqli_query($conn, $sqlDate);
-              $row = mysqli_fetch_assoc($result);
-              $endDate = $row['earliest_date'];
-            } else {
-              $sql = "SELECT r.reserve_id, r.room_type, r.check_in, r.check_out, t.payment_date, t.total_price, t.payment_type, m.title FROM `reservation` r JOIN `transaction` t USING(reserve_id) JOIN `guest` g USING(reserve_id) JOIN `customer` c USING(customer_id) JOIN `member` m USING(member_id) WHERE t.payment_date >= '$startDate' AND t.payment_date <= '$endDate' ORDER BY t.payment_date ASC;";
-            }
-            $result = mysqli_query($conn, $sql);
-
-            $daysOfWeek = array(
-              'Sunday' => 0,
-              'Monday' => 0,
-              'Tuesday' => 0,
-              'Wednesday' => 0,
-              'Thursday' => 0,
-              'Friday' => 0,
-              'Saturday' => 0,
-              );
-
-              $daysOfWeek_male = array(
-                'Sunday' => 0,
-                'Monday' => 0,
-                'Tuesday' => 0,
-                'Wednesday' => 0,
-                'Thursday' => 0,
-                'Friday' => 0,
-                'Saturday' => 0,
-              );
+          $daysOfWeek_male = array(
+            'Sunday' => 0,
+            'Monday' => 0,
+            'Tuesday' => 0,
+            'Wednesday' => 0,
+            'Thursday' => 0,
+            'Friday' => 0,
+            'Saturday' => 0,
+          );
               
-              $daysOfWeek_female = array(
-                'Sunday' => 0,
-                'Monday' => 0,
-                'Tuesday' => 0,
-                'Wednesday' => 0,
-                'Thursday' => 0,
-                'Friday' => 0,
-                'Saturday' => 0,
-              );
+          $daysOfWeek_female = array(
+            'Sunday' => 0,
+            'Monday' => 0,
+            'Tuesday' => 0,
+            'Wednesday' => 0,
+            'Thursday' => 0,
+            'Friday' => 0,
+            'Saturday' => 0,
+          );
 
-              $linesday = "";
-              $totalday = "";
-              $payment_cash = 0;
-              $payment_credit = 0;
-              $room_standard = 0;
-              $room_suite = 0;
-              $room_deluxe = 0;
-              $room_executive = 0;
-              $room_family = 0;
-              if (mysqli_num_rows($result) > 0) {
-                while($row = mysqli_fetch_assoc($result)) {
-                  $paymentDate = new DateTime($row['payment_date']);
-                  $dayOfWeek = $paymentDate->format('l');
-                  $daysOfWeek[$dayOfWeek] += $row['total_price'];
-                  if ($row['title'] == 'Mr.') {
-                    $daysOfWeek_male[$dayOfWeek] += $row['total_price'];
-                  } elseif ($row['title'] == 'Mrs.') {
-                    $daysOfWeek_female[$dayOfWeek] += $row['total_price'];
-                  }
-                  $linesday .= $row['payment_date'] ." ";
-                  $totalday .= $row['total_price'] ." ";
-                  if ($row['payment_type'] == 'Cash') {
-                    $payment_cash += $row['total_price'];
-                  } else {
-                    $payment_credit += $row['total_price'];
-                  }
-                  if ($row['room_type'] == 'Standard') {
-                    $room_standard += $row['total_price'];
-                  } elseif ($row['room_type'] == 'Suite') {
-                    $room_suite += $row['total_price'];
-                  } elseif ($row['room_type'] == 'Deluxe') {
-                    $room_deluxe += $row['total_price'];
-                  } elseif ($row['room_type'] == 'Executive') {
-                    $room_executive += $row['total_price'];
-                  } else {
-                    $room_family += $row['total_price'];
-                  }
-                }
+          $linesday = "";
+          $totalday = "";
+          $payment_cash = 0;
+          $payment_credit = 0;
+          $room_standard = 0;
+          $room_suite = 0;
+          $room_deluxe = 0;
+          $room_executive = 0;
+          $room_family = 0;
+          if (mysqli_num_rows($result) > 0) {
+            while($row = mysqli_fetch_assoc($result)) {
+              $paymentDate = new DateTime($row['payment_date']);
+              $dayOfWeek = $paymentDate->format('l');
+              $daysOfWeek[$dayOfWeek] += $row['total_price'];
+              if ($row['title'] == 'Mr.') {
+                $daysOfWeek_male[$dayOfWeek] += $row['total_price'];
+              } elseif ($row['title'] == 'Mrs.') {
+                $daysOfWeek_female[$dayOfWeek] += $row['total_price'];
               }
-
-              $days = "";
-              $pays = "";
-              foreach ($daysOfWeek as $day => $total) {
-                $days .= $day ." ";
-                $pays .= $total ." ";
+              $linesday .= $row['payment_date'] ." ";
+              $totalday .= $row['total_price'] ." ";
+              if ($row['payment_type'] == 'Cash') {
+                $payment_cash += $row['total_price'];
+              } else {
+                $payment_credit += $row['total_price'];
               }
-
-              $pays_male = "";
-              foreach ($daysOfWeek_male as $day => $total) {
-                $pays_male .= $total ." ";
+              if ($row['room_type'] == 'Standard') {
+                $room_standard += $row['total_price'];
+              } elseif ($row['room_type'] == 'Suite') {
+                $room_suite += $row['total_price'];
+              } elseif ($row['room_type'] == 'Deluxe') {
+                $room_deluxe += $row['total_price'];
+              } elseif ($row['room_type'] == 'Executive') {
+                $room_executive += $row['total_price'];
+              } else {
+                $room_family += $row['total_price'];
               }
-
-              $pays_female = "";
-              foreach ($daysOfWeek_female as $day => $total) {
-                $pays_female .= $total ." ";
-              }
-
-              echo '<input type="text" id="start-date" value="' .$startDate . '" hidden>';
-              echo '<input type="text" id="end-date" value="' .$endDate . '" hidden>';
-              echo '<input type="text" id="days-pie" value="' .$days . '" hidden>';
-              echo '<input type="text" id="pays-pie" value="' .$pays . '" hidden>';
-              echo '<input type="text" id="paysmale-pie" value="' .$pays_male . '" hidden>';
-              echo '<input type="text" id="paysfemale-pie" value="' .$pays_female . '" hidden>';
-              echo '<input type="text" id="cash-bar" value="' .$payment_cash . '" hidden>';
-              echo '<input type="text" id="credit-bar" value="' .$payment_credit . '" hidden>';
-              echo '<input type="text" id="standard-bar" value="' .$room_standard . '" hidden>';
-              echo '<input type="text" id="suite-bar" value="' .$room_suite . '" hidden>';
-              echo '<input type="text" id="deluxe-bar" value="' .$room_deluxe . '" hidden>';
-              echo '<input type="text" id="executive-bar" value="' .$room_executive . '" hidden>';
-              echo '<input type="text" id="family-bar" value="' .$room_family . '" hidden>';
-              echo '<input type="text" id="lines-lines" value="' .$linesday . '" hidden>';
-              echo '<input type="text" id="total-lines" value="' .$totalday . '" hidden>';
-
-              echo '<div class="row mt-3">
-                      <div class="col">
-                        <div class="card">
-                          <div class="card-body">
-                            <canvas id="Chart-polarArea"></canvas>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col">
-                        <div class="card">
-                          <div class="card-body">
-                            <canvas id="Chart-radar"></canvas>
-                          </div>
-                        </div>
-                      </div>
-                    </div>';
-
-              echo '<div class="row mt-3">
-                      <div class="col">
-                        <div class="card">
-                          <div class="card-body">
-                            <canvas id="Chart-Bar-P"></canvas>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col">
-                        <div class="card">
-                          <div class="card-body">
-                            <canvas id="Chart-Bar-R"></canvas>
-                          </div>
-                        </div>
-                      </div>
-                    </div>';
-
-              echo '<div class="row mt-3">
-                      <div class="col">
-                        <div class="card">
-                          <div class="card-body">
-                            <canvas id="Multiple-Lines"></canvas>
-                          </div>
-                        </div>
-                      </div>
-                    </div>';
-              echo '</center>';
-              echo '</div>';
-
-              mysqli_close($conn);
             }
+          }
+
+          $days = "";
+          $pays = "";
+          foreach ($daysOfWeek as $day => $total) {
+            $days .= $day ." ";
+            $pays .= $total ." ";
+          }
+
+          $pays_male = "";
+          foreach ($daysOfWeek_male as $day => $total) {
+            $pays_male .= $total ." ";
+          }
+
+          $pays_female = "";
+            foreach ($daysOfWeek_female as $day => $total) {
+              $pays_female .= $total ." ";
+            }
+
+          echo '<input type="text" id="start-date" value="' .$startDate . '" hidden>';
+          echo '<input type="text" id="end-date" value="' .$endDate . '" hidden>';
+          echo '<input type="text" id="days-pie" value="' .$days . '" hidden>';
+          echo '<input type="text" id="pays-pie" value="' .$pays . '" hidden>';
+          echo '<input type="text" id="paysmale-pie" value="' .$pays_male . '" hidden>';
+          echo '<input type="text" id="paysfemale-pie" value="' .$pays_female . '" hidden>';
+          echo '<input type="text" id="cash-bar" value="' .$payment_cash . '" hidden>';
+          echo '<input type="text" id="credit-bar" value="' .$payment_credit . '" hidden>';
+          echo '<input type="text" id="standard-bar" value="' .$room_standard . '" hidden>';
+          echo '<input type="text" id="suite-bar" value="' .$room_suite . '" hidden>';
+          echo '<input type="text" id="deluxe-bar" value="' .$room_deluxe . '" hidden>';
+          echo '<input type="text" id="executive-bar" value="' .$room_executive . '" hidden>';
+          echo '<input type="text" id="family-bar" value="' .$room_family . '" hidden>';
+          echo '<input type="text" id="lines-lines" value="' .$linesday . '" hidden>';
+          echo '<input type="text" id="total-lines" value="' .$totalday . '" hidden>';
+
+          echo '<div class="row mt-3">
+                  <div class="col" id="animation7">
+                    <div class="card">
+                      <div class="card-body">
+                        <canvas id="Chart-polarArea"></canvas>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col" id="animation8">
+                    <div class="card">
+                      <div class="card-body">
+                        <canvas id="Chart-radar"></canvas>
+                      </div>
+                    </div>
+                  </div>
+                </div>';
+
+          echo '<div class="row mt-3">
+                  <div class="col" id="animation9">
+                    <div class="card">
+                      <div class="card-body">
+                        <canvas id="Chart-Bar-P"></canvas>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col" id="animation10">
+                    <div class="card">
+                      <div class="card-body">
+                        <canvas id="Chart-Bar-R"></canvas>
+                      </div>
+                    </div>
+                  </div>
+                </div>';
+
+           echo '<div class="row mt-3">
+                  <div class="col" id="animation11">
+                    <div class="card">
+                      <div class="card-body">
+                        <canvas id="Multiple-Lines"></canvas>
+                      </div>
+                    </div>
+                  </div>
+                </div>';
+          echo '</center>';
+          echo '</div>';
+
+           mysqli_close($conn);
           ?>
       </center>
     </div>
   </main>
 
 
-  <footer class="text-center text-lg-start bg-light text-muted">
+  <footer id="animation12" class="text-center text-lg-start bg-light text-muted">
     <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
       <div class="me-5 d-none d-lg-block">
         <span>Get connected with us on social networks:</span>
@@ -593,22 +595,22 @@
           </h6>
           <div class='row'>
             <p class='col'>
-              <a href="#!" class="text-reset">HTML</a>
+              <a href="https://www.w3schools.com/html/default.asp" class="text-reset" target="_blank">HTML</a>
             </p>
             <p class='col'>
-              <a href="#!" class="text-reset">CSS</a>
+              <a href="https://www.w3schools.com/css/default.asp" class="text-reset" target="_blank">CSS</a>
             </p>
             <p class='col'>
-              <a href="#!" class="text-reset">Javascript</a>
+              <a href="https://www.w3schools.com/js/default.asp" class="text-reset" target="_blank">Javascript</a>
             </p>
             <p class='col'>
-              <a href="#!" class="text-reset">MDBootstrap</a>
+              <a href="https://mdbootstrap.com/docs/standard/getting-started/installation/" class="text-reset" target="_blank">MDBootstrap</a>
             </p>
             <p class='col'>
-              <a href="#!" class="text-reset">PHP</a>
+              <a href="https://www.w3schools.com/php/default.asp" class="text-reset" target="_blank">PHP</a>
             </p>
             <p class='col'>
-              <a href="#!" class="text-reset">MySQL</a>
+              <a href="https://www.w3schools.com/mysql/default.asp" class="text-reset" target="_blank">MySQL</a>
             </p>
           </div>
         </div>
@@ -645,7 +647,10 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  <script src="../static/dashboard2.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/ScrollMagic.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/plugins/animation.gsap.min.js"></script>
+  <script src="../static/dashboard.js"></script>
 </body>
 
 </html>

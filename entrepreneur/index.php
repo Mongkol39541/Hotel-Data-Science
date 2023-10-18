@@ -44,22 +44,22 @@
                     <i class="fas fa-bars"></i>
                 </button>
                 <ul class="navbar-nav ms-auto d-flex flex-row">
-                    <a class="nav-link me-3 me-lg-0" href="#">
+                    <a class="nav-link me-3 me-lg-0" href="#" target="_blank">
                         <i class="fab fa-facebook-f"></i>
                     </a>
-                    <a class="nav-link me-3 me-lg-0" href="#">
+                    <a class="nav-link me-3 me-lg-0" href="#" target="_blank">
                         <i class="fab fa-twitter"></i>
                     </a>
-                    <a class="nav-link me-3 me-lg-0" href="#">
+                    <a class="nav-link me-3 me-lg-0" href="#" target="_blank">
                         <i class="fab fa-google"></i>
                     </a>
-                    <a class="nav-link me-3 me-lg-0" href="#">
+                    <a class="nav-link me-3 me-lg-0" href="#" target="_blank">
                         <i class="fab fa-instagram"></i>
                     </a>
-                    <a class="nav-link me-3 me-lg-0" href="#">
+                    <a class="nav-link me-3 me-lg-0" href="#" target="_blank">
                         <i class="fab fa-linkedin"></i>
                     </a>
-                    <a class="nav-link me-3 me-lg-0" href="#">
+                    <a class="nav-link me-3 me-lg-0" href="https://github.com/Mongkol39541/Hotel-Data-Science.git" target="_blank">
                         <i class="fab fa-github"></i>
                     </a>
                     <a class="nav-link me-3 me-lg-0" href="#">
@@ -92,9 +92,11 @@
                 $sql = "SELECT m.member_id, m.title, m.first_name, m.last_name, m.email, m.birthdate, o.position FROM member m JOIN owner o USING(member_id);";
                 $result = mysqli_query($conn, $sql);
             
+                $num = 1;
                 if (mysqli_num_rows($result) > 0) {
                     while($row = mysqli_fetch_assoc($result)) {
-                        echo '<div class="col p-3">';
+                        echo '<div class="col p-3" id="animation' . $num . '">';
+                        $num += 1;
                         echo '<div class="card" style="width: 18rem;">';
                         echo '<img src="static/' .$row["member_id"] .'.jpg" style="height: 18rem;" class="card-img-top" alt="Fissure in Sandstone">';
                         echo '<div class="card-body">';
@@ -135,7 +137,7 @@
         </div>
     </main>
 
-    <footer class="text-center text-lg-start bg-light text-muted">
+    <footer id="animation6" class="text-center text-lg-start bg-light text-muted">
         <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
             <div class="me-5 d-none d-lg-block">
                 <span>Get connected with us on social networks:</span>
@@ -159,22 +161,22 @@
                     </h6>
                     <div class='row'>
                         <p class='col'>
-                            <a href="#!" class="text-reset">HTML</a>
+                            <a href="https://www.w3schools.com/html/default.asp" class="text-reset" target="_blank">HTML</a>
                         </p>
                         <p class='col'>
-                            <a href="#!" class="text-reset">CSS</a>
+                            <a href="https://www.w3schools.com/css/default.asp" class="text-reset" target="_blank">CSS</a>
                         </p>
                         <p class='col'>
-                            <a href="#!" class="text-reset">Javascript</a>
+                            <a href="https://www.w3schools.com/js/default.asp" class="text-reset" target="_blank">Javascript</a>
                         </p>
                         <p class='col'>
-                            <a href="#!" class="text-reset">MDBootstrap</a>
+                            <a href="https://mdbootstrap.com/docs/standard/getting-started/installation/" class="text-reset" target="_blank">MDBootstrap</a>
                         </p>
                         <p class='col'>
-                            <a href="#!" class="text-reset">PHP</a>
+                            <a href="https://www.w3schools.com/php/default.asp" class="text-reset" target="_blank">PHP</a>
                         </p>
                         <p class='col'>
-                            <a href="#!" class="text-reset">MySQL</a>
+                            <a href="https://www.w3schools.com/mysql/default.asp" class="text-reset" target="_blank">MySQL</a>
                         </p>
                     </div>
                 </div>
@@ -200,6 +202,10 @@
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/ScrollMagic.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/plugins/animation.gsap.min.js"></script>
+    <script src="static/index.js"></script>
 </body>
 
 </html>

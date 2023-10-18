@@ -13,7 +13,7 @@
     <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
 </head>
 
-<body>
+<body class="scroller">
     <header>
         <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
             <div class="position-sticky">
@@ -47,25 +47,25 @@
                     <i class="fas fa-bars"></i>
                 </button>
                 <ul class="navbar-nav ms-auto d-flex flex-row">
-                    <a class="nav-link me-3 me-lg-0" href="#">
+                    <a class="nav-link me-3 me-lg-0" href="#" target="_blank">
                         <i class="fab fa-facebook-f"></i>
                     </a>
-                    <a class="nav-link me-3 me-lg-0" href="#">
+                    <a class="nav-link me-3 me-lg-0" href="#" target="_blank">
                         <i class="fab fa-twitter"></i>
                     </a>
-                    <a class="nav-link me-3 me-lg-0" href="#">
+                    <a class="nav-link me-3 me-lg-0" href="#" target="_blank">
                         <i class="fab fa-google"></i>
                     </a>
-                    <a class="nav-link me-3 me-lg-0" href="#">
+                    <a class="nav-link me-3 me-lg-0" href="#" target="_blank">
                         <i class="fab fa-instagram"></i>
                     </a>
-                    <a class="nav-link me-3 me-lg-0" href="#">
+                    <a class="nav-link me-3 me-lg-0" href="#" target="_blank">
                         <i class="fab fa-linkedin"></i>
                     </a>
-                    <a class="nav-link me-3 me-lg-0" href="#">
+                    <a class="nav-link me-3 me-lg-0" href="#" target="_blank">
                         <i class="fab fa-github"></i>
                     </a>
-                    <a class="nav-link me-3 me-lg-0" href="#">
+                    <a class="nav-link me-3 me-lg-0" href="https://github.com/Mongkol39541/Hotel-Data-Science.git" target="_blank">
                         <img src="../static/M088.jpg" class="rounded-circle" height="30" />
                     </a>
                 </ul>
@@ -85,7 +85,7 @@
             </div>
         </div>
         <?php
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if(isset($_POST['Chang'])) {
             $servername = "localhost";
             $username = "root";
             $password = "";
@@ -93,28 +93,65 @@
             $conn = mysqli_connect($servername, $username, $password, $dbname);
             $sql = "SELECT COUNT(room_id) AS num_id FROM `room`;";
             $result = mysqli_query($conn, $sql);
-            function generateRandomID($result) {
-                while ($row = mysqli_fetch_assoc($result)) {
-                    $randomID = $row["num_id"] + 1;
-                }
-                return 'R' . sprintf("%03d", $randomID);
-            }
-            $randomID = generateRandomID($result);
             $chang = $_POST['Chang'];
-            $formType = $_POST['formType'];
-            $formPrice = $_POST['formPrice'];
-            $formSize = $_POST['formSize'];
-            $formBed = $_POST['formBed'];
-            $formCapacity = $_POST['formCapacity'];
-            $formAdditional = $_POST['formAdditional'];
-            $formImage = $_POST['formImage'];
             if ($chang == "Insert") {
+                $randomID = $_POST['formID'];
+                $formType = $_POST['formType'];
+                $formPrice = $_POST['formPrice'];
+                $formSize = $_POST['formSize'];
+                $formBed = $_POST['formBed'];
+                $formCapacity = $_POST['formCapacity'];
+                $formAdditional = $_POST['formAdditional'];
+                $formImage = $_POST['formImage'];
                 $sql = "INSERT INTO room (room_id, room_type, size, bed_type, capacity, price_per_night, facility, room_img) VALUES ('$randomID', '$formType', '$formSize', '$formBed', '$formCapacity', '$formPrice', '$formAdditional', '$formImage')";
                 if ($conn->query($sql) === TRUE and $randomID != '') {
                     echo '<div class="alert alert-success m-3 alert-dismissible alert-absolute fade show" id="alertExample" role="alert" data-mdb-color="success">';
                     echo '<i class="fas fa-check me-2"></i>';
                     echo 'ID: ' . $randomID . ' 🎉 ';
-                    echo '<strong>Congratulations, you have successfully added your room information.</strong>';
+                    echo '<strong>Congratulations, you have successfully insert your room information.</strong>';
+                    echo '<button type="button" class="btn-close ms-2" data-mdb-dismiss="alert" aria-label="Close"></button>';
+                    echo '</div><br><br>';
+                } else {
+                    echo '<div class="alert alert-danger m-3 alert-dismissible alert-absolute fade show" id="alertExample" role="alert" data-mdb-color="success">';
+                    echo '<i class="fas fa-check me-2"></i>';
+                    echo "Error: " . $sql . "<br>" . $conn->error;
+                    echo '<button type="button" class="btn-close ms-2" data-mdb-dismiss="alert" aria-label="Close"></button>';
+                    echo '</div><br><br>';
+                }
+                mysqli_close($conn);
+            } elseif ($chang == "Update") {
+                $randomID = $_POST['formID'];
+                $formType = $_POST['formType'];
+                $formPrice = $_POST['formPrice'];
+                $formSize = $_POST['formSize'];
+                $formBed = $_POST['formBed'];
+                $formCapacity = $_POST['formCapacity'];
+                $formAdditional = $_POST['formAdditional'];
+                $formImage = $_POST['formImage'];
+                $sql = "UPDATE room SET room_type = '$formType', size = '$formSize', bed_type = '$formBed', capacity = '$formCapacity', price_per_night = '$formPrice', facility = '$formAdditional', room_img = '$formImage' WHERE room_id = '$randomID'";
+                if ($conn->query($sql) === TRUE and $randomID != '') {
+                    echo '<div class="alert alert-success m-3 alert-dismissible alert-absolute fade show" id="alertExample" role="alert" data-mdb-color="success">';
+                    echo '<i class="fas fa-check me-2"></i>';
+                    echo 'ID: ' . $randomID . ' 🎉 ';
+                    echo '<strong>Congratulations, you have successfully update your room information.</strong>';
+                    echo '<button type="button" class="btn-close ms-2" data-mdb-dismiss="alert" aria-label="Close"></button>';
+                    echo '</div><br><br>';
+                } else {
+                    echo '<div class="alert alert-danger m-3 alert-dismissible alert-absolute fade show" id="alertExample" role="alert" data-mdb-color="success">';
+                    echo '<i class="fas fa-check me-2"></i>';
+                    echo "Error: " . $sql . "<br>" . $conn->error;
+                    echo '<button type="button" class="btn-close ms-2" data-mdb-dismiss="alert" aria-label="Close"></button>';
+                    echo '</div><br><br>';
+                }
+                mysqli_close($conn);
+            } elseif ($chang == "Delete") {
+                $randomID = $_POST['formID'];
+                $sql = "DELETE FROM room WHERE room_id = '$randomID'";
+                if ($conn->query($sql) === TRUE and $randomID != '') {
+                    echo '<div class="alert alert-success m-3 alert-dismissible alert-absolute fade show" id="alertExample" role="alert" data-mdb-color="success">';
+                    echo '<i class="fas fa-check me-2"></i>';
+                    echo 'ID: ' . $randomID . ' 🎉 ';
+                    echo '<strong>Congratulations, you have successfully delete your room information.</strong>';
                     echo '<button type="button" class="btn-close ms-2" data-mdb-dismiss="alert" aria-label="Close"></button>';
                     echo '</div><br><br>';
                 } else {
@@ -129,58 +166,51 @@
         }
         ?>
         <div class="container p-5">
-            <div class="card">
+            <div class="card" id="animation1">
                 <div class="card-body">
                     <div class="row">
                         <div class="col">
-                            <button type="button" class="btn btn-primary btn-block mb-4" data-mdb-toggle="modal"
+                            <button type="button" class="btn btn-primary btn-block" data-mdb-toggle="modal"
                                 data-mdb-target="#InsertModal">Insert Information</button>
-                        </div>
-                        <div class="col">
-                            <button type="button" class="btn btn-success btn-block mb-4" data-mdb-toggle="modal"
-                                data-mdb-target="#UpdateModal">Update Information</button>
-                        </div>
-                        <div class="col">
-                            <button type="button" class="btn btn-danger btn-block mb-4" data-mdb-toggle="modal"
-                                data-mdb-target="#DeleteModal">Delete Information</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="modal fade" id="InsertModal" tabindex="-1" aria-labelledby="InsertModalLabel"
-                aria-hidden="true">
+            <div class="modal fade" id="InsertModal" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog modal-xl">
                     <div class="modal-content">
                         <form enctype="multipart/form-data" action="" method="POST">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Insert Information</h5>
-                                <button type="button" class="btn-close" data-mdb-dismiss="modal"
-                                    aria-label="Close"></button>
+                                <h5 class="modal-title mx-2">Insert Information</h5>
                             </div>
                             <div class="modal-body">
                                 <div class="row">
+                                    <div class="form mb-5">
+                                        <label class="form-label">Room ID</label>
+                                        <input type="text" class="form-control" name="formID" required/>
+                                    </div>
                                     <div class="col">
                                         <div class="form mb-5">
                                             <label class="form-label">Room Type</label>
                                             <br>
                                             <div class="btn-group-toggle d-flex flex-column" data-toggle="buttons">
                                                 <div class="p-0">
-                                                    <input type="radio" class="btn-check" name="formType" id="Standard"
-                                                        value="Standard" autocomplete="off" checked />
-                                                    <label class="btn btn-secondary m-2" for="Standard">Standard</label>
-                                                    <input type="radio" class="btn-check" name="formType" id="Deluxe"
-                                                        value="Deluxe" autocomplete="off" />
-                                                    <label class="btn btn-secondary m-2" for="Deluxe">Deluxe</label>
-                                                    <input type="radio" class="btn-check" name="formType" id="Suite"
-                                                        value="Suite" autocomplete="off" />
-                                                    <label class="btn btn-secondary m-2" for="Suite">Suite</label>
-                                                    <input type="radio" class="btn-check" name="formType" id="Executive"
-                                                        value="Executive" autocomplete="off" />
-                                                    <label class="btn btn-secondary m-2" for="Executive">Executive</label>
-                                                    <input type="radio" class="btn-check" name="formType" id="Family"
-                                                        value="Family" autocomplete="off" />
-                                                    <label class="btn btn-secondary m-2" for="Family">Family</label>
+                                                    <input type="radio" class="btn-check" name="formType" id="StandardIn"
+                                                        value="Standard" required/>
+                                                    <label class="btn btn-secondary m-2" for="StandardIn">Standard</label>
+                                                    <input type="radio" class="btn-check" name="formType" id="DeluxeIn"
+                                                        value="Deluxe" required/>
+                                                    <label class="btn btn-secondary m-2" for="DeluxeIn">Deluxe</label>
+                                                    <input type="radio" class="btn-check" name="formType" id="SuiteIn"
+                                                        value="Suite" required/>
+                                                    <label class="btn btn-secondary m-2" for="SuiteIn">Suite</label>
+                                                    <input type="radio" class="btn-check" name="formType" id="ExecutiveIn"
+                                                        value="Executive" required/>
+                                                    <label class="btn btn-secondary m-2" for="ExecutiveIn">Executive</label>
+                                                    <input type="radio" class="btn-check" name="formType" id="FamilyIn"
+                                                        value="Family" required/>
+                                                    <label class="btn btn-secondary m-2" for="FamilyIn">Family</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -221,7 +251,7 @@
                                             <label class="form-label">Room Capacity (People)</label>
                                             <div class="form-outline">
                                                 <div class="range">
-                                                    <input type="range" class="form-range" id="formCapacity" name="formCapacity" required min="1" max="5" />
+                                                    <input type="range" class="form-range" name="formCapacity" required min="1" max="5" />
                                                 </div>
                                             </div>
                                         </div>
@@ -231,8 +261,8 @@
                                             <label class="form-label" for="formPrice">Room Price ($)</label>
                                             <div class="input-group">
                                                 <span class="input-group-text">$</span>
-                                                <input type="text" class="form-control"
-                                                    aria-label="Amount (to the nearest dollar)" name="formPrice" required />
+                                                <input type="number" class="form-control"
+                                                    aria-label="Amount (to the nearest dollar)" name="formPrice" required min="1000" max="30000" />
                                                 <div class="invalid-tooltip">Please provide a valid price.</div>
                                             </div>
                                         </div>
@@ -240,7 +270,7 @@
                                             <label class="form-label">Room Size (SQM)</label>
                                             <div class="input-group">
                                                 <span class="input-group-text">SQM</span>
-                                                <input type="text" class="form-control" name="formSize" required />
+                                                <input type="number" class="form-control" name="formSize" required min="5" max="100" />
                                                 <div class="invalid-tooltip">Please provide a valid size.</div>
                                             </div>
                                         </div>
@@ -270,18 +300,22 @@
                 </div>
             </div>
 
-            <div class="modal fade" id="UpdateModal" tabindex="-1" aria-labelledby="UpdateModalLabel"
-                aria-hidden="true">
+            <div class="modal fade" id="UpdateModal" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog modal-xl">
                     <div class="modal-content">
                         <form enctype="multipart/form-data" action="" method="POST">
                             <div class="modal-header">
-                                <h5 class="modal-title">Update Information</h5>
+                                <h5 class="modal-title mx-2">Update Information</h5>
+                                <h5 class="modal-title mx-2 px-2 bg-warning text-light rounded" id="formRID"></h5>
                                 <button type="button" class="btn-close" data-mdb-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <div class="row">
+                                    <div class="form mb-5">
+                                        <label class="form-label">Room ID</label>
+                                        <input type="text" class="form-control" name="formID" id="formID" required/>
+                                    </div>
                                     <div class="col">
                                         <div class="form mb-5">
                                             <label class="form-label">Room Type</label>
@@ -289,19 +323,19 @@
                                             <div class="btn-group-toggle d-flex flex-column" data-toggle="buttons">
                                                 <div class="p-0">
                                                     <input type="radio" class="btn-check" name="formType" id="Standard"
-                                                        value="Standard" autocomplete="off" checked />
+                                                        value="Standard" required/>
                                                     <label class="btn btn-secondary m-2" for="Standard">Standard</label>
                                                     <input type="radio" class="btn-check" name="formType" id="Deluxe"
-                                                        value="Deluxe" autocomplete="off" />
+                                                        value="Deluxe" required/>
                                                     <label class="btn btn-secondary m-2" for="Deluxe">Deluxe</label>
                                                     <input type="radio" class="btn-check" name="formType" id="Suite"
-                                                        value="Suite" autocomplete="off" />
+                                                        value="Suite" required/>
                                                     <label class="btn btn-secondary m-2" for="Suite">Suite</label>
                                                     <input type="radio" class="btn-check" name="formType" id="Executive"
-                                                        value="Executive" autocomplete="off" />
+                                                        value="Executive" required/>
                                                     <label class="btn btn-secondary m-2" for="Executive">Executive</label>
                                                     <input type="radio" class="btn-check" name="formType" id="Family"
-                                                        value="Family" autocomplete="off" />
+                                                        value="Family" required/>
                                                     <label class="btn btn-secondary m-2" for="Family">Family</label>
                                                 </div>
                                             </div>
@@ -311,29 +345,29 @@
                                             <div class="row">
                                                 <div class="col">
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" value="Single"
-                                                            name="formBed" checked />
+                                                        <input class="form-check-input" type="radio" value="Single" id="Single"
+                                                            name="formBed" required/>
                                                         <label class="form-check-label" for="formBed">Single</label>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" value="Double"
-                                                            name="formBed" />
+                                                        <input class="form-check-input" type="radio" value="Double" id="Double"
+                                                            name="formBed" required/>
                                                         <label class="form-check-label" for="formBed">Double</label>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" value="Twin"
-                                                            name="formBed" />
+                                                        <input class="form-check-input" type="radio" value="Twin" id="Twin"
+                                                            name="formBed" required/>
                                                         <label class="form-check-label" for="formBed">Twin</label>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" value="King"
-                                                            name="formBed" />
+                                                        <input class="form-check-input" type="radio" value="King" id="King"
+                                                            name="formBed" required/>
                                                         <label class="form-check-label" for="formBed">King</label>
                                                     </div>
                                                 </div>
@@ -354,7 +388,7 @@
                                             <div class="input-group">
                                                 <span class="input-group-text">$</span>
                                                 <input type="text" class="form-control"
-                                                    aria-label="Amount (to the nearest dollar)" name="formPrice" required />
+                                                    aria-label="Amount (to the nearest dollar)" name="formPrice" id="formPrice" required min="1000" max="30000" />
                                                 <div class="invalid-tooltip">Please provide a valid price.</div>
                                             </div>
                                         </div>
@@ -362,14 +396,14 @@
                                             <label class="form-label">Room Size (SQM)</label>
                                             <div class="input-group">
                                                 <span class="input-group-text">SQM</span>
-                                                <input type="text" class="form-control" name="formSize" required />
+                                                <input type="number" class="form-control" name="formSize" id="formSize" required min="5" max="100" />
                                                 <div class="invalid-tooltip">Please provide a valid size.</div>
                                             </div>
                                         </div>
                                         <div class="form mb-5">
                                             <label class="form-label">Additional items (Other details about the rooms)</label>
                                             <div class="form">
-                                                <textarea name="formAdditional" class="form-control" rows="4" required></textarea>
+                                                <textarea name="formAdditional" class="form-control" rows="4" id="formfacility" required></textarea>
                                                 <div class="invalid-tooltip">Please provide a valid additional.</div>
                                             </div>
                                         </div>
@@ -378,7 +412,7 @@
                                         <label class="form-label">Room Image</label>
                                         <div class="input-group">
                                             <span class="input-group-text">URL</span>
-                                            <input name="formImage" type="text" class="form-control" required />
+                                            <input name="formImage" type="text" class="form-control" id="formImage" required />
                                         </div>
                                     </div>
                                 </div>
@@ -392,23 +426,45 @@
                 </div>
             </div>
 
-            <center>
+            <div class="modal top fade" id="DeleteModal" tabindex="-1" aria-hidden="true" data-mdb-backdrop="true" data-mdb-keyboard="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <form enctype="multipart/form-data" action="" method="POST">
+                            <div class="modal-header bg-danger text-light d-flex justify-content-center align-items-center">
+                                <h5 class="modal-title">Are you sure?</h5>
+                            </div>
+                            <div class="modal-body text-center">
+                                <i class="fas fa-trash-can fa-3x text-danger"></i>
+                                <h5 class="modal-title mt-3 mx-5 bg-danger text-light rounded" id="textDelete"></h5>
+                                <input name="formID" type="text" id="outDelete" hidden />
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-mdb-dismiss="modal">No</button>
+                                <button type="submit" class="btn btn-outline-danger" value="Delete" name="Chang">Yes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <center id="animation2">
                 <div class="card mt-3">
                     <div class="card-body">
                         <h2>Room list</h2>
                         <br>
                         <div class="table-responsive">
-                            <table class="table table-hover" id="tableSearch">
+                            <table class="table table-hover align-middle mb-0" id="tableSearch">
                                 <thead>
                                     <tr>
-                                        <th>Room ID</th>
-                                        <th>Room Type</th>
-                                        <th>Size</th>
-                                        <th>Bed Type</th>
-                                        <th>Capacity</th>
-                                        <th>Price per night</th>
-                                        <th>Facility</th>
-                                        <th>Room Img</th>
+                                        <th class="text-center">Actions</th>
+                                        <th class="text-center">Room ID</th>
+                                        <th class="text-center">Room Type</th>
+                                        <th class="text-center">Size</th>
+                                        <th class="text-center">Bed Type</th>
+                                        <th class="text-center">Capacity</th>
+                                        <th class="text-center">Price per night</th>
+                                        <th class="text-center">Facility</th>
+                                        <th class="text-center">Room Img</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -424,34 +480,41 @@
                                 if (mysqli_num_rows($result) > 0) {
                                     while ($row = mysqli_fetch_assoc($result)) {
                                         echo '<tr>';
-                                        echo '<td><p class="fw-bold mb-1">' . $row["room_id"] . '</p></td>';
+                                        echo '<td class="text-center"><div class="row">';
+                                        echo '<div class="col"><button class="mb-1 btn btn-link btn-rounded btn-sm fw-bold" id="Update" data-mdb-toggle="modal" data-mdb-target="#UpdateModal" type="button" data-roomid="' . $row["room_id"] . '">Edit</button></div>';
+                                        echo '</div>';
+                                        echo '<div class="row">';
+                                        echo '<div class="col"><button class="btn btn-link btn-rounded btn-sm fw-bold text-danger" id="Delete" data-mdb-toggle="modal" data-mdb-target="#DeleteModal" type="button" data-roomid="' . $row["room_id"] . '">Delete</button></div>';
+                                        echo '</div></td>';
+                                        echo '<td class="text-center"><p class="fw-bold mb-1">' . $row["room_id"] . '</p></td>';
                                         if ($row["room_type"] == 'Standard') {
-                                            echo '<td><span class="badge badge-primary rounded-pill d-inline">' . $row["room_type"] . '</span></td>';
+                                            echo '<td class="text-center"><span value="Standard" id="roomtype_' . $row["room_id"] . '" class="badge badge-primary rounded-pill d-inline">' . $row["room_type"] . '</span></td>';
                                         } elseif ($row["room_type"] == 'Deluxe') {
-                                            echo '<td><span class="badge badge-success rounded-pill d-inline">' . $row["room_type"] . '</span></td>';
+                                            echo '<td class="text-center"><span value="Deluxe" id="roomtype_' . $row["room_id"] . '" class="badge badge-success rounded-pill d-inline">' . $row["room_type"] . '</span></td>';
                                         } elseif ($row["room_type"] == 'Suite') {
-                                            echo '<td><span class="badge badge-danger rounded-pill d-inline">' . $row["room_type"] . '</span></td>';
+                                            echo '<td class="text-center"><span value="Suite" id="roomtype_' . $row["room_id"] . '" class="badge badge-danger rounded-pill d-inline">' . $row["room_type"] . '</span></td>';
                                         } elseif ($row["room_type"] == 'Executive') {
-                                            echo '<td><span class="badge badge-warning rounded-pill d-inline">' . $row["room_type"] . '</span></td>';
+                                            echo '<td class="text-center"><span value="Executive" id="roomtype_' . $row["room_id"] . '" class="badge badge-warning rounded-pill d-inline">' . $row["room_type"] . '</span></td>';
                                         }  else {
-                                            echo '<td><span class="badge badge-info rounded-pill d-inline">' . $row["room_type"] . '</span></td>';
+                                            echo '<td class="text-center"><span value="Family" id="roomtype_' . $row["room_id"] . '" class="badge badge-info rounded-pill d-inline">' . $row["room_type"] . '</span></td>';
                                         }
-                                        echo '<td><p class="text-muted mb-0">' . $row["size"] . '</p></td>';
+                                        echo '<td class="text-center"><p class="text-muted mb-0" id="roomsize_' . $row["room_id"] . '">' . $row["size"] . ' sqm</p></td>';
                                         if ($row["bed_type"] == 'Single') {
-                                            echo '<td><span class="badge rounded-pill d-inline" style="background-color: #C2185B;">' . $row["bed_type"] . '</span></td>';
+                                            echo '<td class="text-center"><span id="bedtype_' . $row["room_id"] . '" class="badge rounded-pill d-inline" style="background-color: #C2185B;">' . $row["bed_type"] . '</span></td>';
                                         } elseif ($row["bed_type"] == 'Double') {
-                                            echo '<td><span class="badge rounded-pill d-inline" style="background-color: #D32F2F;">' . $row["bed_type"] . '</span></td>';
+                                            echo '<td class="text-center"><span id="bedtype_' . $row["room_id"] . '" class="badge rounded-pill d-inline" style="background-color: #D32F2F;">' . $row["bed_type"] . '</span></td>';
                                         } elseif ($row["bed_type"] == 'Twin') {
-                                            echo '<td><span class="badge rounded-pill d-inline" style="background-color: #7B1FA2;">' . $row["bed_type"] . '</span></td>';
+                                            echo '<td class="text-center"><span id="bedtype_' . $row["room_id"] . '" class="badge rounded-pill d-inline" style="background-color: #7B1FA2;">' . $row["bed_type"] . '</span></td>';
                                         } elseif ($row["bed_type"] == 'King') {
-                                            echo '<td><span class="badge rounded-pill d-inline" style="background-color: #00796B;">' . $row["bed_type"] . '</span></td>';
+                                            echo '<td class="text-center"><span id="bedtype_' . $row["room_id"] . '" class="badge rounded-pill d-inline" style="background-color: #00796B;">' . $row["bed_type"] . '</span></td>';
                                         }  else {
-                                            echo '<td><span class="badge rounded-pill d-inline" style="background-color: #00BFA5;">' . $row["bed_type"] . '</span></td>';
+                                            echo '<td class="text-center"><span id="bedtype_' . $row["room_id"] . '" class="badge rounded-pill d-inline" style="background-color: #00BFA5;">' . $row["bed_type"] . '</span></td>';
                                         }
-                                        echo '<td><p class="text-muted mb-0">' . $row["capacity"] . '</p></td>';
-                                        echo '<td><p class="text-muted mb-0">' . $row["price_per_night"] . '</p></td>';
-                                        echo '<td><p class="text-muted mb-0 text-truncate" style="max-width: 150px;">' . $row["facility"] . '</p></td>';
-                                        echo '<td><img src="' . $row["room_img"] . '"style="width: 45px; height: 45px" class="rounded-circle"/></td>';
+                                        echo '<td class="text-center"><p id="capacity_' . $row["room_id"] . '" class="text-muted mb-0">' . $row["capacity"] . ' people</p></td>';
+                                        echo '<td class="text-center"><p id="price_' . $row["room_id"] . '" class="text-muted mb-0">' . $row["price_per_night"] . ' $</p></td>';
+                                        echo '<td class="text-center"><p id="facility_' . $row["room_id"] . '" class="text-muted mb-0 text-truncate" style="max-width: 150px; white-space: normal;">' . $row["facility"] . '</p></td>';
+                                        echo '<td class="text-center"><img src="' . $row["room_img"] . '"style="width: 45px; height: 45px" class="rounded-circle"/></td>';
+                                        echo '<input id="roomimg_' . $row["room_id"] . '" value="' . $row["room_img"] . '" hidden/>';
                                         echo '</tr>';
                                     }
                                 }
@@ -466,7 +529,7 @@
         </div>
     </main>
 
-    <footer class="text-center text-lg-start bg-light text-muted">
+    <footer id="animation3" class="text-center text-lg-start bg-light text-muted">
         <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
             <div class="me-5 d-none d-lg-block">
                 <span>Get connected with us on social networks:</span>
@@ -490,22 +553,22 @@
                     </h6>
                     <div class='row'>
                         <p class='col'>
-                            <a href="#!" class="text-reset">HTML</a>
+                            <a href="https://www.w3schools.com/html/default.asp" class="text-reset" target="_blank">HTML</a>
                         </p>
                         <p class='col'>
-                            <a href="#!" class="text-reset">CSS</a>
+                            <a href="https://www.w3schools.com/css/default.asp" class="text-reset" target="_blank">CSS</a>
                         </p>
                         <p class='col'>
-                            <a href="#!" class="text-reset">Javascript</a>
+                            <a href="https://www.w3schools.com/js/default.asp" class="text-reset" target="_blank">Javascript</a>
                         </p>
                         <p class='col'>
-                            <a href="#!" class="text-reset">MDBootstrap</a>
+                            <a href="https://mdbootstrap.com/docs/standard/getting-started/installation/" class="text-reset" target="_blank">MDBootstrap</a>
                         </p>
                         <p class='col'>
-                            <a href="#!" class="text-reset">PHP</a>
+                            <a href="https://www.w3schools.com/php/default.asp" class="text-reset" target="_blank">PHP</a>
                         </p>
                         <p class='col'>
-                            <a href="#!" class="text-reset">MySQL</a>
+                            <a href="https://www.w3schools.com/mysql/default.asp" class="text-reset" target="_blank">MySQL</a>
                         </p>
                     </div>
                 </div>
@@ -543,6 +606,9 @@
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/ScrollMagic.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/plugins/animation.gsap.min.js"></script>
     <script src="../static/manage_room.js"></script>
 </body>
 
