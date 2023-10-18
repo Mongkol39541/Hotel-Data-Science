@@ -1,0 +1,217 @@
+/* style.css */
+
+:root {
+    --success-color: #2ecc71;
+    --error-color: #e74c3c;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Open Sans", sans-serif;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    background: #fff;
+}
+
+.img-responsive.logo {
+    width: 200px;
+}
+
+.night-bg-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    pointer-events: none;
+    background-color: rgba(0, 0, 0, 0.6);
+    transition: 0.1s ease;
+}
+
+.show-popup-login .night-bg-overlay,
+.show-popup-signup .night-bg-overlay {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.form-popup {
+    width: 100%;
+    background: #fff;
+    border: 2px solid #fff;
+    transform: translate(-50%, -65%);
+    display: block;
+}
+
+.form-popup.login {
+    max-width: 400px;
+    opacity: 0;
+    pointer-events: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+}
+
+.form-popup.signup {
+    max-width: 760px;
+    opacity: 0;
+    pointer-events: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+}
+
+.show-popup-login .form-popup.login,
+.show-popup-signup .form-popup.signup {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%);
+    transition: transform 0.5s ease, opacity 0.3s;
+}
+
+.form-head {
+    width: 100%;
+    margin-top: 35px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-btn1,
+.close-btn2 {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    color: #878484;
+    cursor: pointer;
+}
+
+.form-content {
+    width: 100%;
+    padding: 20px 35px;
+    margin-bottom: 15px;
+}
+
+form .input-field {
+    height: 46px;
+    width: 100%;
+    margin-top: 20px;
+    position: relative;
+}
+
+form .input-field input {
+    width: 100%;
+    height: 100%;
+    outline: none;
+    padding: 0 15px;
+    font-size: 0.95rem;
+    border-radius: 3px;
+    border: 1px solid #717171;
+}
+
+.input-field input:focus {
+    border-color: #00bcd4;
+}
+
+.input-field input:is(:focus, :valid) {
+    padding: 16px 15px 0;
+}
+
+form .input-field label {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    color: #717171;
+    pointer-events: none;
+    transform: translateY(-50%);
+    transition: 0.2s ease;
+}
+
+form .input-field input:is(:focus, :valid)~label {
+    color: #00bcd4;
+    font-size: 0.75rem;
+    transform: translateY(-120%);
+}
+
+/* .form-box a {
+    color: #00bcd4;
+    text-decoration: none;
+}
+
+.form-box a:hover {
+    text-decoration: underline;
+} */
+
+/* .form-box .forgot-pass {
+    display: inline-flex;
+    margin-top: 14px;
+    font-size: 0.95rem;
+} */
+
+.login-btn {
+    width: 100%;
+    margin: 10px 0;
+    margin-top: 20px;
+}
+
+.signup-btn {
+    width: 30%;
+    height: 40px;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.bottom-link {
+    text-align: center;
+    margin-top: 14px;
+}
+
+#signup input,
+#signup select {
+    height: 40px;
+}
+
+.input-success select,
+.input-success input {
+    border-color: var(--success-color);
+}
+
+.input-error select,
+.input-error input {
+    border-color: var(--error-color);
+}
+
+.form-label.fs-10px {
+    color: var(--error-color);
+    visibility: hidden;
+    left: 2px;
+}
+
+#notation {
+    display: none;
+}
+
+.input-error #notation {
+    display: block;
+}
+
+.input-error .form-label.fs-10px {
+    visibility: visible;
+}
+
+.loginnote {
+    color: var(--error-color);
+    text-align: center;
+    margin: 10px 0;
+    display: none;
+}
+
+.loginnote.show {
+    display: block;
+}
