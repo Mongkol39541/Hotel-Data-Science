@@ -1,3 +1,9 @@
+<?php
+    session_start();
+    $open_connect = 1;
+    require("../home/connect.php");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,14 +24,19 @@
     ?>
     <?php
     //gather all the room and reservation information
-    $room = $_POST['room'];
-    $roomexplode = explode('|', $room);
-    $roomtype = $roomexplode[0];
-    $bedtype = $roomexplode[1];
+    // $room = $_POST['room'];
+    // $roomexplode = explode('|', $room);
+    $roomtype = 'Standard';
+    $bedtype = 'Single';
+    if(isset($_POST['datefilter'])){
+        datecheck($_POST['datefilter']);
+    }
     $date = $_POST['datefilter'];
     $date_explode = explode('-', $date);
     $date_check_in = $date_explode[0];
     $date_check_out = $date_explode[1];
+    $check_in_final = str_replace('/','-',$date_check_in);
+    $check_out_final = str_replace('/','-',$date_check_out);
     ?>
     <!-- finding occupied -->
     <?php
@@ -38,9 +49,9 @@
         FROM reservation res 
         JOIN room r ON res.room_id = r.room_id
         WHERE r.room_type = '$roomtype' AND r.bed_type = '$bedtype'
-        AND ((check_in BETWEEN '$checkin' AND '$checkout')
-        OR (check_out BETWEEN '$checkin' AND '$checkout')
-        OR (check_in <= '$checkin' AND check_out >= '$checkout'))) occ
+        AND ((check_in BETWEEN '$check_in_final' AND '$check_out_final')
+        OR (check_out BETWEEN '$check_in_final' AND '$check_out_final')
+        OR (check_in <= '$check_in_final' AND check_out >= '$check_out_final'))) occ
     RIGHT JOIN
         (SELECT room_id
         FROM room
@@ -56,9 +67,9 @@
     <?php
     $roomchecking = array($designated_room);
     if (count($roomchecking) == 1) {
-        return 1;
+        echo 'lol';
     } else {
-        return 0;
+        echo 'no';
     }
     mysqli_close($conn);
     ?>

@@ -1,3 +1,15 @@
+<!-- connect to a session -->
+<?php
+    session_start();
+    $open_connect = 1;
+    require("../home/connect.php");
+?>
+<!-- ยังหาทาง inregrate ไม่ได้ hardcode ไปก่อนจะเขียน ui -->
+<!-- TODO: integrate กับ user authentication, room details from roomdetails -->
+<?php
+$roomtype = 'Standard';
+$bedtype = 'Single';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,13 +26,8 @@
         <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
             <div class="container-fluid">
                 <a class="navbar-brand" href="index.php">
-                    <img src="../static/logo.png" width="40" alt="Hotel Data Science Logo" />
-                    <h3 class="pt-2"><span class="navbar-text px-2">HTDS</span></h3>
+                    <img src="../img/logo.png" height="42" alt="Hotel Logo" loading="lazy" style="margin-top: -1px;" />
                 </a>
-                <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#sidebarMenu"
-                    aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="fas fa-bars"></i>
-                </button>
                 <ul class="navbar-nav ms-auto d-flex flex-row">
                     <a class="nav-link me-3 me-lg-0" href="#">
                         <img src="../static/M088.jpg" class="rounded-circle" height="30" />
@@ -29,7 +36,6 @@
             </div>
         </nav>
     </header>
-    <!-- TODO: navbar, proper calendar, proper form -->
     <!-- connect to a server -->
     <!-- TODO: connect to the uni's server instead of the local -->
     <?php
@@ -40,73 +46,75 @@
     // Create connection
     $conn = mysqli_connect($servername, $username, $password, $dbname);
     ?>
+    <!-- finding occupied -->
+    <?php
+    $sql = "SELECT *
+    FROM room
+    WHERE room_type = '$roomtype' AND bed_type = '$bedtype';";
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_array($result); //idk how this works, but it returns only the first result in the array lol
+    $room_img = $row['room_img'];
+    $price_per_night = $row['price_per_night'];
+    $facility = $row['facility'];
+    $size = $row['size']
+    ?>
     <main style="margin-top: 100px">
-    <div class='text-center'>
-        lorem ipsum
-    </div>
-    <hr>
-    <form  id='timecheck' action="timechecktest.php" method="post">
+    <form  id='reservation' method="post" action='.php' novalidate class='needs-validation'>
     <div class='container'>
-        <div class='row'>
-            <div class='text-center col-md-6'>
-                <div class='card mt-3'>
-                    test
+        <div class='row justify-content-center gap-4'>
+            <div class='h-50 card border border-secondary border-1 mb-2 col-md-5'>
+                <img src="<?php echo $room_img?>" class="card-img-top" alt="test"/>
+                <div class='card-body'>
+                    <h3 class="card-title mb-2"><?php echo $roomtype . ' ' . $bedtype?></h3>
+                    <div>
+                        <p class='card-text'>Room size: <?php echo $size?></p>
+                    </div>
+                    <div>
+                        <p class='card-text'>Facility services include: <?php echo $facility?></p>
+                    </div>
+                    <div>
+                        <p class='card-text'>Price per night: <?php echo $price_per_night?> THB</p>
+                    </div>
                 </div>
             </div>
-            <div class='card border border-secondary border-1 mb-3 col-md-6'>
+            <div class='card border border-secondary border-1 col-md-5'>
                 <h3 class='card-header mt-3 text-center'>Your details</h3>
                 <hr>
                 <div clas='card-body'>
                     <div class='card-text'>
-                    <!-- select a room type and size -->
-                        <div class='text-start md'>
-                            <label for="room">placeholder</label>
-                            <select name='room'>
-                                <!-- showing room list -->
-                                <!-- อาจจะย้ายส่วนนี้ไปข้างนอก -->
-                            <?php
-                            $sql = "SELECT DISTINCT room_type, bed_type FROM room;";
-                            $result = mysqli_query($conn, $sql);
-                            while($row = mysqli_fetch_assoc($result)) {
-                                $roomtype = $row['room_type'];
-                                $bedtype = $row['bed_type'];
-                                echo "<option value='$roomtype|$bedtype' name=''>".htmlspecialchars($roomtype)." ".htmlspecialchars($bedtype)."</option>";
-                            }
-                            mysqli_close($conn);
-                            ?>
-                            </select>
-                        </div>
-                        <br>
                         <div class='mb-2'>
-                            <!-- daterangepicker -->       
+                            <!-- daterangepicker -->
                             <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
                             <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
                             <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
                             <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-
-                            <input type="text" name="datefilter" value="" class='form-control'/>
-
-                            <script type="text/javascript">
-                            $(function() {
-
-                            $('input[name="datefilter"]').daterangepicker({
-                                autoUpdateInput: false,
-                                opens: 'center',
-                                locale: {
-                                    cancelLabel: 'Clear'
-                                }
-                            });
-
-                            $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
-                                $(this).val(picker.startDate.format('YYYY/MM/DD') + ' - ' + picker.endDate.format('YYYY/MM/DD'));
-                            });
-
-                            $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
-                                $(this).val('');
-                            });
-
-                            });
+                            <div class='mb-4'>
+                                <input type="text" name="datefilter" id='datefilter' value="" class='form-control' required 
+                                placeholder='Check-in/Check out dates'>
+                                <div class='invalid-feedback'>
+                                    Please provide Check in and Check out date.
+                                </div>
+                            </div>
+                            <!-- FIXME: this shit doesn't work -->
+                            <div class='mb-3'>
+                                <button type="submit" onclick='datecheck(document.getElementById("datefilter").value);'
+                                class="btn btn-primary" name="confirm_date" id="confirm_date">Confirm date</button>
+                            </div>
+                            <div name='test' id='test'>
+                            </div>
+                            <script>
+                                function datecheck(date) {
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "timecheck.php",
+                                        data: date,
+                                        success: function(result) {
+                                            $("#test").html(result);
+                                        }
+                                    });
+                                };
                             </script>
+                            <script src="calendar.js" type='text/javascript'></script> 
                         </div>
                         <!-- use member address instead -->
                         <div class='form-check mb-2'>
@@ -115,36 +123,36 @@
                         </div>
                         <!-- information will be sent to guestdb later -->
                         <div id='guest-info'>
-                            <div class='row mb-2'>
+                            <div class='row mb-3'>
                                 <div class ='col-md-6'>
-                                    <div class='form-outline'>
-                                        <input type="text" class='form-control' name="fname" id="fname">
-                                        <label class="form-label" for="fname" required>First name</label>
+                                    <input type="text" class='form-control' name="fname" id="fname" placeholder='First Name' required>
+                                    <div class='invalid-feedback'>
+                                        Please enter a First Name.
+                                    </div>
+                                </div>  
+                                <div class ='col-md-6'>
+                                    <input type="text" class='form-control' name="lname" id="lname" placeholder='Last Name' required>
+                                    <div class="invalid-feedback">
+                                        Please enter a Last Name.
                                     </div>
                                 </div>
-                                <div class ='col-md-6'>
-                                    <div class='form-outline'>
-                                        <input type="text" class='form-control' name="lname" id="lname">
-                                        <label class="form-label" for="lname" required>Last name</label>
-                                    </div>
+                            </div>
+                            <div class='mb-4'>
+                                <input type="tel" class='form-control' name="phone" id="phone" placeholder='Phone' required>
+                                <div class="invalid-feedback">
+                                    Please provide a phone number.
                                 </div>
                             </div>
-                            <div class='mb-2'>
-                                <div class='form-outline'>
-                                    <input type="tel" class='form-control' name="phone" id="phone">
-                                    <label class="form-label" for="phone" required>Phone</label>
+                            <div class='mb-4'>
+                                <input type="email" class='form-control' name="email" id="email" placeholder='Email' required>
+                                <div class="invalid-feedback">
+                                    Please provide an email.
                                 </div>
                             </div>
-                            <div class='mb-2'>
-                                <div class='form-outline'>
-                                    <input type="email" class='form-control' name="email" id="email">
-                                    <label class="form-label" for="email" required>Email</label>
-                                </div>
-                            </div>
-                            <div class='mb-2'>
-                                <div class='form-outline'>
-                                    <textarea name="address" class='form-control' id="address" cols="30" rows="5"></textarea>
-                                    <label class="form-label" for="address" required>Address</label>
+                            <div class='mb-4'>
+                                <textarea name="address" class='form-control' id="address" cols="30" rows="5" placeholder='Address' required></textarea>
+                                <div class="invalid-feedback">
+                                    Please provide an address.
                                 </div>
                             </div>
                             <div class='mb-3'>
@@ -157,28 +165,10 @@
         </div>
     </div>
     </form>
-    <!-- terrible code -->
-    <script>
-        $('#use-member-address').change(function() {
-        if(this.checked) {
-            $('#fname').prop('disabled',true);
-            $('#lname').prop('disabled',true);
-            $('#phone').prop('disabled',true);
-            $('#email').prop('disabled',true);
-            $('#address').prop('disabled',true);
-        } else {
-            $('#fname').prop('disabled',false);
-            $('#lname').prop('disabled',false);
-            $('#phone').prop('disabled',false);
-            $('#email').prop('disabled',false);
-            $('#address').prop('disabled',false);
-        }
-        });
-        // fixing no border in input
-        document.querySelectorAll('.form-outline').forEach((formOutline) => {
-        new mdb.Input(formOutline).init();
-        });
-    </script>
+    <!-- too lazy to write for loop lol -->
+    <script src="terriblefix.js"></script> 
+    <!-- copied pasted from docs for validitiy check in bootstrap style -->
+    <script src="validitycheckforform.js"></script> 
     </main>
     <footer class="text-center text-lg-start bg-light text-muted">
         <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
