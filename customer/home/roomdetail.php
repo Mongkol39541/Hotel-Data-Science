@@ -241,7 +241,7 @@ if(isset($_GET['type'])) {
                 $selectBedType = mysqli_query($conn, $bed_sql);
 
                 if (mysqli_num_rows($selectBedType) > 0) {
-                    echo '<form action="test.php" method="get" target="_blank">';
+                    echo '<form action="reservation.php" method="POST" target="_blank">';
                     $firstBedType = true;
                     while ($bed = mysqli_fetch_row($selectBedType)) {
                         $bedtype = $bed[0];

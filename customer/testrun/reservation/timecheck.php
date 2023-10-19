@@ -12,25 +12,43 @@
     <title>Reservation</title>
 </head>
 <body>
-    <!-- connect to a server -->
-    <!-- TODO: connect to the uni's server instead of the local -->
     <?php
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "9hotel_reservation";
-    // Create connection
-    $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+    if(
+        !isset($_SESSION['id_account']) ||
+        !isset($_SESSION['role_account'])
+    ){
+        die("กรุณาเข้าสู่ระบบ"); //ถ้าไม่มี session ที่สร้างจากระบบlogin จะถูกนำทางกลับไปหน้าหลัก
+    }
+
+    // ตรวจสอบว่ามีข้อมูลที่ถูกส่งมาหรือไม่
+    if(isset($_GET['type'])) {
+        // รับข้อมูลจาก POST
+        $selectedRoom = $_GET['type'];
+
+    } else {
+        // ถ้าไม่มีข้อมูลถูกส่งมา
+        echo "room type: Null";
+    }
+
+    echo "<br>";
+
+    if(isset($_GET['bed'])) {
+        // รับข้อมูลจาก POST
+        $selectedBed = $_GET['bed'];
+
+    } else {
+        // ถ้าไม่มีข้อมูลถูกส่งมา
+        echo "bed type: Null";
+    }
     ?>
     <?php
     //gather all the room and reservation information
     // $room = $_POST['room'];
     // $roomexplode = explode('|', $room);
-    $roomtype = 'Standard';
-    $bedtype = 'Single';
-    if(isset($_POST['datefilter'])){
-        datecheck($_POST['datefilter']);
-    }
+    $roomtype = $selectedRoom;
+    $bedtype = $selectedBed;
+    // get date from reservation
     $date = $_POST['datefilter'];
     $date_explode = explode('-', $date);
     $date_check_in = $date_explode[0];
@@ -67,9 +85,10 @@
     <?php
     $roomchecking = array($designated_room);
     if (count($roomchecking) == 1) {
-        echo 'lol';
+        echo '<div class="text-success">This room is available.</div>';
+        $_SESSION['designated_room'] = $designated_room;
     } else {
-        echo 'no';
+        echo '<div class="text-danger">This room is not available.</div>';
     }
     mysqli_close($conn);
     ?>

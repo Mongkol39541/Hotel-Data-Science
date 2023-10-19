@@ -1,5 +1,4 @@
 <?php
-// test.php
 session_start();
 
 if(
@@ -9,12 +8,11 @@ if(
     die("กรุณาเข้าสู่ระบบ"); //ถ้าไม่มี session ที่สร้างจากระบบlogin จะถูกนำทางกลับไปหน้าหลัก
 }
 
-echo "หน้าสร้างรายการจองของเทพกุจัง<br>";
-
 // ตรวจสอบว่ามีข้อมูลที่ถูกส่งมาหรือไม่
-if(isset($_GET['type'])) {
+if(isset($_POST['type'])) {
     // รับข้อมูลจาก POST
-    $selectedRoom = $_GET['type'];
+    $selectedRoom = $_POST['type'];
+    $_SESSION['room_type'] = $selectedRoom;
 
     echo "room type: " . htmlspecialchars($selectedRoom);
 } else {
@@ -24,9 +22,10 @@ if(isset($_GET['type'])) {
 
 echo "<br>";
 
-if(isset($_GET['bed'])) {
+if(isset($_POST['bed'])) {
     // รับข้อมูลจาก POST
-    $selectedBed = $_GET['bed'];
+    $selectedBed = $_POST['bed'];
+    $_SESSION['bed_type'] = $selectedBed;
 
     echo "bed type: " . htmlspecialchars($selectedBed);
 } else {

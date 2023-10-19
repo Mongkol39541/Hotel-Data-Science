@@ -4,11 +4,11 @@
     $open_connect = 1;
     require("../home/connect.php");
 ?>
-<!-- ยังหาทาง inregrate ไม่ได้ hardcode ไปก่อนจะเขียน ui -->
+<!-- ยังหาทาง inregrate ไม่ได้ hardcode ไปก่อน จะเขียน ui -->
 <!-- TODO: integrate กับ user authentication, room details from roomdetails -->
 <?php
-$roomtype = 'Standard';
-$bedtype = 'Single';
+$roomtype = $_SESSION['room_type'];
+$bedtype = $_SESSION['bed_type'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,10 +56,9 @@ $bedtype = 'Single';
     $room_img = $row['room_img'];
     $price_per_night = $row['price_per_night'];
     $facility = $row['facility'];
-    $size = $row['size']
+    $size = $row['size'];
     ?>
     <main style="margin-top: 100px">
-    <form  id='reservation' method="post" action='.php' novalidate class='needs-validation'>
     <div class='container'>
         <div class='row justify-content-center gap-4'>
             <div class='h-50 card border border-secondary border-1 mb-2 col-md-5'>
@@ -95,7 +94,6 @@ $bedtype = 'Single';
                                     Please provide Check in and Check out date.
                                 </div>
                             </div>
-                            <!-- FIXME: this shit doesn't work -->
                             <div class='mb-3'>
                                 <button type="submit" onclick='datecheck(document.getElementById("datefilter").value);'
                                 class="btn btn-primary" name="confirm_date" id="confirm_date">Confirm date</button>
@@ -107,7 +105,7 @@ $bedtype = 'Single';
                                     $.ajax({
                                         type: "POST",
                                         url: "timecheck.php",
-                                        data: date,
+                                        data: {datefilter: date},
                                         success: function(result) {
                                             $("#test").html(result);
                                         }
@@ -116,6 +114,7 @@ $bedtype = 'Single';
                             </script>
                             <script src="calendar.js" type='text/javascript'></script> 
                         </div>
+                        <form  id='reservation' method="post" action='sending_to_payment.php' novalidate class='needs-validation'>
                         <!-- use member address instead -->
                         <div class='form-check mb-2'>
                             <input type="checkbox" class="form-check-input" id="use-member-address" name="use-member-address">
