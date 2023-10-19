@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Receptionist</title>
-    <link rel="icon" href="../static/logo2.png">
-    <link rel="stylesheet" href="../static/style2.css">
+    <title>Entrepreneur</title>
+    <link rel="icon" href="../static/logo.png">
+    <link rel="stylesheet" href="../static/style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css" rel="stylesheet" />
@@ -27,6 +27,11 @@
                     </a>
                     <a href="../templates/room.php" class="list-group-item list-group-item-action py-2 ripple">
                         <i class="fas fa-list-check fa-fw me-3"></i><span>Room info.</span></a>
+                    <a href="../templates/dashboard.php" class="list-group-item list-group-item-action py-2 ripple">
+                        <i class="fas fa-chart-line fa-fw me-3"></i><span>Dashboard</span></a>
+                    <a href="../templates/manage_room.php" class="list-group-item list-group-item-action py-2 ripple">
+                        <i class="fa-solid fa-network-wired fa-fw me-3"></i><span>Manage Room</span>
+                    </a>
                 </div>
             </div>
         </nav>

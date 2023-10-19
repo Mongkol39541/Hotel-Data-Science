@@ -10,8 +10,6 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-  <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_green.css">
 </head>
 
 <body>
@@ -41,26 +39,26 @@
           <i class="fas fa-bars"></i>
         </button>
         <ul class="navbar-nav ms-auto d-flex flex-row">
-          <a class="nav-link me-3 me-lg-0" href="#">
+          <a class="nav-link me-3 me-lg-0" href="#" target="_blank">
             <i class="fab fa-facebook-f"></i>
           </a>
-          <a class="nav-link me-3 me-lg-0" href="#">
+          <a class="nav-link me-3 me-lg-0" href="#" target="_blank">
             <i class="fab fa-twitter"></i>
           </a>
-          <a class="nav-link me-3 me-lg-0" href="#">
+          <a class="nav-link me-3 me-lg-0" href="#" target="_blank">
             <i class="fab fa-google"></i>
           </a>
-          <a class="nav-link me-3 me-lg-0" href="#">
+          <a class="nav-link me-3 me-lg-0" href="#" target="_blank">
             <i class="fab fa-instagram"></i>
           </a>
-          <a class="nav-link me-3 me-lg-0" href="#">
+          <a class="nav-link me-3 me-lg-0" href="#" target="_blank">
             <i class="fab fa-linkedin"></i>
           </a>
-          <a class="nav-link me-3 me-lg-0" href="#">
+          <a class="nav-link me-3 me-lg-0" href="https://github.com/Mongkol39541/Hotel-Data-Science.git" target="_blank">
             <i class="fab fa-github"></i>
           </a>
           <a class="nav-link me-3 me-lg-0" href="#">
-            <img src="static/M088.jpg" class="rounded-circle" height="30" />
+            <img src="../static/M088.jpg" class="rounded-circle" height="30" />
           </a>
         </ul>
       </div>
@@ -68,7 +66,7 @@
   </header>
 
   <main style="margin-top: 58px">
-    <div class="text-center bg-image" style="background-image: url('../static/reserva.jpg');height: 450px;">
+    <div class="text-center bg-image" style="background-image: url('../static/roomlist.jpg');height: 450px;">
       <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
         <div class="d-flex justify-content-center align-items-center h-100">
           <div class="text-white">
@@ -86,157 +84,136 @@
       $dbname = "9hotel_reservation";    //ตามที่กำหนดให้
       
       // Create connection
-      $conn = mysqli_connect($servername, $username, $password, $dbname) 
-          or die("Connection failed: " . mysqli_connect_error());
-
-      $con_2 = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-      $con_2->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-      // --- SQL SELECT statement
-      $sql = "SELECT * FROM room
-          ORDER BY room_id;";
-
+      $conn = mysqli_connect($servername, $username, $password, $dbname);
+      $sql = "SELECT * FROM room ORDER BY room_id;";
       $result = mysqli_query($conn, $sql);
     ?>
 
     <div class="container p-5">
-      <div class="card">
+      <div class="card" id="animation1">
         <div class="card-body">
-          <h2>Room List</h2>
+          <h2 class="text-center">Room List</h2>
         </div>
       </div>
       
 
       <?php
-      if (isset($_POST['room_id'])) {
-        $room_id = $_POST['room_id'];
-        $sql_2 = "SELECT * FROM room WHERE room_id = '$room_id';";
-        $result_2 = mysqli_query($conn, $sql_2);
-        $col = mysqli_fetch_assoc($result_2);
-        echo '<div class="row p-5">';
-        echo '<div class="col-md-6 mb-2">';
-        echo '<div class="card">';
-        echo '<img src="'.$col["room_img"].'" class="card-img-top">';
-        echo '<div class="card-body">';
-        echo '<h4 class="card-title">'.$col['room_id'].'</h5>';
-        echo '<p class="card-text">Room Type: '.$col['room_type'].'</p>';    
-        echo '<p class="card-text">Size: '.$col['size'].'</p>';    
-        echo '<p class="card-text">Bed Type: '.$col['bed_type'].'</p>';    
-        echo '<p class="card-text">Price per Night: '.$col['price_per_night'].'</p>';    
-        echo '<p class="card-text">Facility: '.$col['facility'].'</p>';    
-        echo '</div></div></div>';
+        if (isset($_POST["cc_in"])) {
+          $r_id = $_POST["cc_in"];
+          date_default_timezone_set('Asia/Bangkok');
+          $new_in = strftime("%Y-%m-%d %T");
+          $sql4 = "UPDATE room_status SET counter_checkin = '$new_in', status = 1 WHERE reserve_id = '$r_id'";
+          $conn->query($sql4);
+        }
 
-        $stt_rom = array();
-        $sql_3 = "SELECT * FROM room_status JOIN reservation USING (reserve_id, room_id) WHERE room_id = '$room_id' ORDER BY reserve_id;";
-        $result_3 = mysqli_query($conn, $sql_3);         
-        echo '<div class="col-md-6 mb-2">';
-        while ($sta = mysqli_fetch_assoc($result_3)) {
-          echo '<div class="container mb-3 p-3 shadow-5 bg-gradient">';
-          echo '<p>Reserve ID: <b>' . $sta['reserve_id'] . '</b></p>';
-          echo '<p>check-in: ' . $sta['check_in'] . '</p>';
-          echo '<p>check-out: ' . $sta['check_out'] . '</p>';
-          array_push($stt_rom,$sta['status']);
+        if (isset($_POST["cc_out"])) {
+          $r_id = $_POST["cc_out"];
+          date_default_timezone_set('Asia/Bangkok');
+          $new_out = strftime("%Y-%m-%d %T");
+          $sql4 = "UPDATE room_status SET counter_checkout = '$new_out', status = 0 WHERE reserve_id = '$r_id'";
+          $conn->query($sql4);
+        }
 
-          echo '<form action="" method="post">';
-          if ($sta['counter_checkin']=="0000-00-00 00:00:00") {
-            echo '<label for="cc_in_'.$sta['reserve_id'].'">Counter check-in: ';
-            echo '<button type="submit" class="btn btn-info btn-rounded" name="cc_in_'.$sta["reserve_id"].
-            '" value="'.$sta["reserve_id"].'"><i class="fa-solid fa-check"></i></button></label>';
+        if (isset($_POST['room_id'])) {
+          $room_id = $_POST['room_id'];
+          $sql_2 = "SELECT * FROM room WHERE room_id = '$room_id';";
+          $result_2 = mysqli_query($conn, $sql_2);
+          $col = mysqli_fetch_assoc($result_2);
+          echo '<div class="row px-5 mt-3">';
+          echo '<div class="col" id="animation4">';
+          echo '<div class="card">';
+          echo '<img src="'.$col["room_img"].'" class="card-img-top">';
+          echo '<div class="card-body">';
+          echo '<h4 class="card-title">'.$col['room_id'].'</h5>';
+          echo '<p class="card-text">Room Type: '.$col['room_type'].'</p>';    
+          echo '<p class="card-text">Size: '.$col['size'].'</p>';    
+          echo '<p class="card-text">Bed Type: '.$col['bed_type'].'</p>';    
+          echo '<p class="card-text">Price per Night: '.$col['price_per_night'].'</p>';    
+          echo '<p class="card-text">Facility: '.$col['facility'].'</p>';    
+          echo '</div></div></div>';
 
-            $chang_1 = "cc_in_". $sta["reserve_id"];
-            if (isset($_POST[$chang_1])) {
-              $r_id = $sta["reserve_id"];
+          $stt_rom = array();
+          $sql_3 = "SELECT * FROM room_status JOIN reservation USING (reserve_id, room_id) WHERE room_id = '$room_id' ORDER BY reserve_id;";
+          $result_3 = mysqli_query($conn, $sql_3);         
+          echo '<div class="col" id="animation5">';
+          while ($sta = mysqli_fetch_assoc($result_3)) {
+            echo '<div class="container mb-3 p-3 shadow-5 bg-gradient">';
+            echo '<p>Reserve ID: <b>' . $sta['reserve_id'] . '</b></p>';
+            echo '<p>check-in: ' . $sta['check_in'] . '</p>';
+            echo '<p>check-out: ' . $sta['check_out'] . '</p>';
+            array_push($stt_rom,$sta['status']);
 
-              date_default_timezone_set('Asia/Bangkok');
-              $new_in = strftime("%Y-%m-%d %T");
-
-              $sql_4 = "UPDATE room_status
-                        SET counter_checkin = :new_in, status = 1
-                        WHERE reserve_id = :r_id";
-                    
-              $stmt = $con_2->prepare($sql_4);
-              $stmt->bindParam(':new_in', $new_in, PDO::PARAM_STR);
-              $stmt->bindParam(':r_id', $r_id, PDO::PARAM_STR);
-                        
-              $stmt->execute();
+            echo '<form enctype="multipart/form-data" action="" method="POST">';
+            if ($sta['counter_checkin']=="0000-00-00 00:00:00") {
+              echo '<label for="cc_in">Counter check-in: ';
+              echo '<button type="submit" class="btn btn-info btn-rounded" name="cc_in" value="' . $sta["reserve_id"] . '"><i class="fa-solid fa-check"></i></button></label>';
+            } else if (($sta['counter_checkin']!="0000-00-00 00:00:00") and ($sta['counter_checkout']=="0000-00-00 00:00:00")) {
+              echo 'Counter check-in: <i>'.$sta['counter_checkin'].'</i><br>';
+              echo '<label for="cc_out">Counter check-out: ';
+              echo '<button type="submit" class="btn btn-info btn-rounded" name="cc_out" value="' . $sta["reserve_id"] . '"><i class="fa-solid fa-check"></i></button></label>';
+            } else if (($sta['counter_checkin']!="0000-00-00 00:00:00") and ($sta['counter_checkout']!="0000-00-00 00:00:00")) {
+              echo 'Counter check-in: <i>'.$sta['counter_checkin'].'</i><br>';
+              echo 'Counter check-out: <i>'.$sta['counter_checkout'].'</i>';
             }
-            
-          } else if (($sta['counter_checkin']!="0000-00-00 00:00:00") and ($sta['counter_checkout']=="0000-00-00 00:00:00")) {
-            echo 'Counter check-in: <i>'.$sta['counter_checkin'].'</i><br>';
-            echo '<label for="cc_out_'.$sta['reserve_id'].'">Counter check-out: ';
-            echo '<button type="submit" class="btn btn-info btn-rounded" name="cc_out_'.$sta["reserve_id"].
-            '" value="'.$sta["reserve_id"].'"><i class="fa-solid fa-check"></i></button></label>';
+            echo '</form></div>';
+          }
 
-            $chang_2 = "cc_out_". $sta["reserve_id"];
-            if (isset($_POST[$chang_2])) {
-              $r_id = $sta["reserve_id"];
-
-              date_default_timezone_set('Asia/Bangkok');
-              $new_out = strftime("%Y-%m-%d %T");
-
-              $sql_5 = "UPDATE room_status
-                        SET counter_checkout = :new_out, status = 0
-                        WHERE reserve_id = :r_id";
-                    
-              $stmt = $con_2->prepare($sql_5);
-              $stmt->bindParam(':new_out', $new_out, PDO::PARAM_STR);
-              $stmt->bindParam(':r_id', $r_id, PDO::PARAM_STR);
-                        
-              $stmt->execute();
+          $output = "";
+          foreach ($stt_rom as $s) {
+            if ($s == 1) {
+              $output = "maiwang";
+              break;
             }
-          } else if (($sta['counter_checkin']!="0000-00-00 00:00:00") and ($sta['counter_checkout']!="0000-00-00 00:00:00")) {
-            echo 'Counter check-in: <i>'.$sta['counter_checkin'].'</i><br>';
-            echo 'Counter check-out: <i>'.$sta['counter_checkout'].'</i>';
           }
-      
-        echo '</div>';
-        }
 
-        $output = "";
-        foreach ($stt_rom as $s) {
-          if ($s == 1) {
-            $output = "maiwang";
-            break;
+          if ($output == "") {
+            echo "<div class='card border border-success w-50 pt-1'><center>";
+            echo '<h5 class="text-success">Available</h5>';
+            echo "</center></div>";
+          } else {
+            echo "<div class='card border border-danger w-50 pt-1'><center>";
+            echo '<h5 class="text-danger">Unavailable</h5>';
+            echo "</center></div>";
           }
+          echo "</div>";
         }
+      ?>
 
-        if ($output == "") {
-          echo "<div class='card border border-success w-50 p-1'><center>";
-          echo '<h5 class="text-success">Available</h5>';
-          echo "</center></div>";
-        } else {
-          echo "<div class='card border border-danger w-50 p-1'><center>";
-          echo '<h5 class="text-danger">Unavailable</h5>';
-          echo "</center></div>";
-        }
-      }?>
-    </div>
-
-    <div class="card mt-3">
-      <div class="card-body">
-        <div class="row">
-          <?php
-            if (mysqli_num_rows($result) > 0) {
-            // output data of each row
-              while($row = mysqli_fetch_assoc($result)) {
-                echo '<div class="col-md-2 mb-3">';
-                echo '<form method="post"';
-                echo "<span class='badge badge-primary btn-rounded'>";
-                echo '<button type="submit" class="btn btn-primary btn-rounded"'.'name="room_id" value="'. $row["room_id"] . '">';
-                echo "<h5>" . $row["room_id"] ."</h5>";      
-                echo "</button><span></form></div>";    
+      <div class="card mt-3" id="animation2">
+        <div class="card-body">
+          <div class="row">
+            <?php
+              $sql_0 = "SELECT r.room_id, rs.status FROM room r LEFT JOIN room_status rs USING (room_id) ORDER BY r.room_id ASC, rs.status DESC;";
+              $result_0 = mysqli_query($conn, $sql_0);
+              $num = "-";
+              while ($val = mysqli_fetch_assoc($result_0)) {
+                if ($num == $val["room_id"]) {
+                  $num = $val["room_id"];
+                } else {
+                  echo '<div class="col-md-2 mb-3">';
+                  echo '<form enctype="multipart/form-data" action="" method="POST">';
+                  if ($val['status'] == 1) {
+                    echo "<span class='badge badge-danger btn-rounded'>";
+                    echo '<button type="submit" class="btn btn-danger btn-rounded" name="room_id" value="'. $val["room_id"] . '">';
+                  } else {
+                    echo "<span class='badge badge-success btn-rounded'>";
+                    echo '<button type="submit" class="btn btn-success btn-rounded" name="room_id" value="'. $val["room_id"] . '">';
+                  }
+                  echo "<h5>" . $val["room_id"] ."</h5>";      
+                  echo "</button><span></form></div>";
+                }
+                $num = $val["room_id"];
               }
-            } else {
-              echo "0 results";
-            }
-          ?>
+              mysqli_close($conn);
+            ?>
+          </div>
         </div>
       </div>
     </div>
     
   </main>
 
-  <footer class="text-center text-lg-start bg-light text-muted">
+  <footer id="animation3" class="text-center text-lg-start bg-light text-muted">
     <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
       <div class="me-5 d-none d-lg-block">
         <span>Get connected with us on social networks:</span>
@@ -260,22 +237,22 @@
           </h6>
           <div class='row'>
             <p class='col'>
-              <a href="#!" class="text-reset">HTML</a>
+              <a href="https://www.w3schools.com/html/default.asp" class="text-reset" target="_blank">HTML</a>
             </p>
             <p class='col'>
-              <a href="#!" class="text-reset">CSS</a>
+              <a href="https://www.w3schools.com/css/default.asp" class="text-reset" target="_blank">CSS</a>
             </p>
             <p class='col'>
-              <a href="#!" class="text-reset">Javascript</a>
+              <a href="https://www.w3schools.com/js/default.asp" class="text-reset" target="_blank">Javascript</a>
             </p>
             <p class='col'>
-              <a href="#!" class="text-reset">MDBootstrap</a>
+              <a href="https://mdbootstrap.com/docs/standard/getting-started/installation/" class="text-reset" target="_blank">MDBootstrap</a>
             </p>
             <p class='col'>
-              <a href="#!" class="text-reset">PHP</a>
+              <a href="https://www.w3schools.com/php/default.asp" class="text-reset" target="_blank">PHP</a>
             </p>
             <p class='col'>
-              <a href="#!" class="text-reset">MySQL</a>
+              <a href="https://www.w3schools.com/mysql/default.asp" class="text-reset" target="_blank">MySQL</a>
             </p>
           </div>
         </div>
@@ -297,15 +274,10 @@
     </div>
   </footer>
 
-  <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
-    integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
-    crossorigin="anonymous"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  <script src="../static/room.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/ScrollMagic.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/plugins/animation.gsap.min.js"></script>
+  <script src="../static/room2.js"></script>
 </body>
 </html>

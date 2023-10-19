@@ -22,10 +22,10 @@
                         aria-current="true">
                         <i class="fas fa-user-group fa-fw me-3"></i><span>Administrator</span>
                     </a>
-                    <a href="../templates/reserva.html" class="list-group-item list-group-item-action py-2 ripple">
+                    <a href="../templates/reserva.php" class="list-group-item list-group-item-action py-2 ripple">
                         <i class="fa-solid fa-table-list fa-fw me-3"></i><span>Reservation info.</span>
                     </a>
-                    <a href="../templates/room.html" class="list-group-item list-group-item-action py-2 ripple">
+                    <a href="../templates/room.php" class="list-group-item list-group-item-action py-2 ripple">
                         <i class="fas fa-list-check fa-fw me-3"></i><span>Room info.</span></a>
                     <a href="../templates/dashboard.php" class="list-group-item list-group-item-action py-2 ripple">
                         <i class="fas fa-chart-line fa-fw me-3"></i><span>Dashboard</span></a>
@@ -306,7 +306,7 @@
                         <form enctype="multipart/form-data" action="" method="POST">
                             <div class="modal-header">
                                 <h5 class="modal-title mx-2">Update Information</h5>
-                                <h5 class="modal-title mx-2 px-2 bg-warning text-light rounded" id="formRID"></h5>
+                                <h5 class="modal-title mx-2 px-2 bg-warning text-light rounded" id="formRID">ID #</h5>
                                 <button type="button" class="btn-close" data-mdb-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
