@@ -1,5 +1,4 @@
 <!-- Payment confirm -->
-
 <?php
 // จัดการ session ควบคุมสิทธิการเข้าใช้งาน
 session_start();
@@ -50,55 +49,6 @@ $selectRoomType = mysqli_query($conn, $sql);
 $date1 = new DateTime($check_in_final);
 $date2 = new DateTime($check_out_final);
 $interval = $date1->diff($date2);
-?>
-
-<!-- insert value to reservation -->
-<!-- Reservation -->
-<?php
-$res_id_sql = 'SELECT reserve_id
-FROM reservation
-ORDER BY reserve_id DESC;';
-$result_res = mysqli_query($conn, $res_id_sql);
-$res_id_sql_result = mysqli_fetch_assoc($result_res); //idk how this works, but it returns only the first result in the array lol
-$res_id_num_result = substr($res_id_sql_result['reserve_id'], 3);
-// final RES_ID
-$new_res_id = 'RES' . str_pad(strval($res_id_num_result + 1), 3, '0', STR_PAD_LEFT);
-$res_sql = "INSERT INTO reservation VALUES (?, ?, ?, ?, ?, ?);";
-$insert_res = mysqli_prepare($conn, $res_sql);
-mysqli_stmt_bind_param($insert_res, "ssssss", $new_res_id, $date_now, $roomtype, $check_in_final, $check_out_final, $designated_room);
-mysqli_stmt_execute($insert_res);
-?>
-
-<!-- Guest -->
-<?php
-$guest_id_sql = 'SELECT guest_id
-FROM guest
-ORDER BY guest_id DESC';
-$result_guest = mysqli_query($conn, $guest_id_sql);
-$guest_id_sql_result = mysqli_fetch_assoc($result_guest); //idk how this works, but it returns only the first result in the array lol
-$guest_id_num_result = substr($guest_id_sql_result['guest_id'], 5);
-// final GUEST_ID
-$new_guest_id = 'GUEST' . strval($guest_id_num_result) + 1;
-$guest_sql = "INSERT INTO guest VALUES (?, ?, ?, ?, ?, ?, ?);";
-$insert_guest = mysqli_prepare($conn, $guest_sql);
-mysqli_stmt_bind_param($insert_guest, "sssssss", $new_guest_id, $new_res_id, $customer_id, $res_fname, $res_lname, $res_email, $res_phone);
-mysqli_stmt_execute($insert_guest);
-?>
-
-<!-- Payment -->
-<?php
-$pay_id_sql = 'SELECT payment_id
-FROM transaction
-ORDER BY payment_id DESC';
-$result_pay = mysqli_query($conn, $pay_id_sql);
-$pay_id_sql_result = mysqli_fetch_assoc($result_pay); //idk how this works, but it returns only the first result in the array lol
-$pay_id_num_result = substr($pay_id_sql_result['payment_id'], 3);
-// Final PAY_ID
-$new_pay_id = 'PAY' . str_pad(strval($pay_id_num_result + 1), 3, '0', STR_PAD_LEFT);
-$pay_sql = "INSERT INTO transaction VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
-$insert_pay = mysqli_prepare($conn, $pay_sql);
-mysqli_stmt_bind_param($insert_pay, "ssssdddds", $new_pay_id, $new_res_id, $res_date, $res_time, $total_price, $tax, $discount, $final_room_pice, $payment_type);
-mysqli_stmt_execute($insert_pay);
 ?>
 
 <!DOCTYPE html>
@@ -183,7 +133,15 @@ mysqli_stmt_execute($insert_pay);
         require("img/account-nav.php");
         ?>
     </header>
-   
+    <main class='mt-4'>
+        <h1 class='text-center'>PAYMENT COMPLETED</h1>
+        <div class='text-center'>
+            <img src="img/green_checkmark.png" alt="" class='img-fluid'>
+        </div>
+        <div>
+
+        </div>
+    </main>
 
     <footer class="py-2 mx-5 my-4 border-top">
         <p class="text-center text-body-secondary">© 2023 ISAD, KMITL</p>
@@ -216,6 +174,11 @@ mysqli_stmt_execute($insert_pay);
         $_SESSION['final_room_pice'] = $final_room_pice;
         ?>
     </script>
+
+    <?php
+        //ปิดการเชื่อมต่อฐานข้อมูล
+        mysqli_close($conn);
+    ?>
 
 </body>
 </html>

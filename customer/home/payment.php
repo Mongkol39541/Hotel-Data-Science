@@ -28,6 +28,8 @@ if (isset($_POST['use-member-address'])) {
     $res_email = $_POST['email'];
 }
 
+// make sure the reserve only happens once
+
 // used for showing logged in user in the top right
 $email = $_SESSION['email_account'];
 
@@ -160,7 +162,7 @@ $total_price = (float)$price_per_night * $interval->format("%a");
                 <h5><span class="far fa-check-square pe-2"></span><b>DUMB</b> |</h5>
                 <span class="ps-2">Payment Mockup</span>
                 </div>
-                <form action="payment_confirm.php" novalidate class='.needs-validation'>
+                <form action="update_reserve_to_db.php" novalidate class='.needs-validation'>
                     <div id='guest-info'>
                         <div class='mb-4 w-75'>
                             <input type="text" class='form-control' placeholder='Card Number' required>
@@ -266,8 +268,15 @@ $total_price = (float)$price_per_night * $interval->format("%a");
         ?>
     </script>
 
+    <!-- make sure this page happens once -->
+
     <!-- copied pasted from docs for validitiy check in bootstrap style -->
-    <script src="validitycheckforform.js" type='text/javascript'></script> 
+    <script src="validitycheckforform.js" type='text/javascript'></script>
+
+    <?php
+        //ปิดการเชื่อมต่อฐานข้อมูล
+        mysqli_close($conn);
+    ?>
 
 </body>
 </html>
