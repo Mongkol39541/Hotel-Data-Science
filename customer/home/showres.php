@@ -163,7 +163,6 @@ $selectRoomType = mysqli_query($conn, $sql);
                 echo '<div>' . $row['room_type'] . ' ' . $row['bed_type'] . '</div>';
                 echo '<div>Check in: ' . $row['check_in'] . '</div>';
                 echo '<div>Check out: ' . $row['check_out'] . '</div>';
-                echo '<button type="button" class="btn btn-primary">Read</button>';
                 echo '</div>';
                 echo '</div>';
             }
