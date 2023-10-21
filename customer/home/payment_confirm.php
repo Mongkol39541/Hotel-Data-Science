@@ -64,9 +64,9 @@ $res_id_num_result = substr($res_id_sql_result['reserve_id'], 3);
 // final RES_ID
 $new_res_id = 'RES' . str_pad(strval($res_id_num_result + 1), 3, '0', STR_PAD_LEFT);
 $res_sql = "INSERT INTO reservation VALUES (?, ?, ?, ?, ?, ?);";
-// $insert_res = mysqli_prepare($conn, $res_sql);
-// mysqli_stmt_bind_param($insert_res, "ssssss", $new_res_id, $date_now, $roomtype, $check_in_final, $check_out_final, $designated_room);
-// mysqli_stmt_execute($insert_res);
+$insert_res = mysqli_prepare($conn, $res_sql);
+mysqli_stmt_bind_param($insert_res, "ssssss", $new_res_id, $date_now, $roomtype, $check_in_final, $check_out_final, $designated_room);
+mysqli_stmt_execute($insert_res);
 ?>
 
 <!-- Guest -->
@@ -79,11 +79,10 @@ $guest_id_sql_result = mysqli_fetch_assoc($result_guest); //idk how this works, 
 $guest_id_num_result = substr($guest_id_sql_result['guest_id'], 5);
 // final GUEST_ID
 $new_guest_id = 'GUEST' . strval($guest_id_num_result) + 1;
-echo strval($guest_id_num_result);
 $guest_sql = "INSERT INTO guest VALUES (?, ?, ?, ?, ?, ?, ?);";
-// $insert_guest = mysqli_prepare($conn, $guest_sql);
-// mysqli_stmt_bind_param($insert_guest, "sssssss", $new_guest_id, $new_res_id, $customer_id, $res_fname, $res_lname, $res_email, $res_phone);
-// mysqli_stmt_execute($insert_guest);
+$insert_guest = mysqli_prepare($conn, $guest_sql);
+mysqli_stmt_bind_param($insert_guest, "sssssss", $new_guest_id, $new_res_id, $customer_id, $res_fname, $res_lname, $res_email, $res_phone);
+mysqli_stmt_execute($insert_guest);
 ?>
 
 <!-- Payment -->
@@ -97,9 +96,9 @@ $pay_id_num_result = substr($pay_id_sql_result['payment_id'], 3);
 // Final PAY_ID
 $new_pay_id = 'PAY' . str_pad(strval($pay_id_num_result + 1), 3, '0', STR_PAD_LEFT);
 $pay_sql = "INSERT INTO transaction VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
-// $insert_pay = mysqli_prepare($conn, $pay_sql);
-// mysqli_stmt_bind_param($insert_pay, "ssssdddds", $new_pay_id, $new_res_id, $res_date, $res_time, $total_price, $tax, $discount, $final_room_pice, $payment_type);
-// mysqli_stmt_execute($insert_pay);
+$insert_pay = mysqli_prepare($conn, $pay_sql);
+mysqli_stmt_bind_param($insert_pay, "ssssdddds", $new_pay_id, $new_res_id, $res_date, $res_time, $total_price, $tax, $discount, $final_room_pice, $payment_type);
+mysqli_stmt_execute($insert_pay);
 ?>
 
 <!DOCTYPE html>
