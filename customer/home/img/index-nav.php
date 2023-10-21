@@ -3,7 +3,7 @@
             <div class="container">
                 <!-- Navbar brand -->
                 <a class="navbar-brand me-2" href="index.php">
-                    <img src="img/logo.png" height="42" alt="Hotel Logo" loading="lazy" style="margin-top: -1px;" />
+                    <img src="static/logo.png" height="42" alt="Hotel Logo" loading="lazy" style="margin-top: -1px;" />
                 </a>
 
                 <!-- Toggle button -->
@@ -64,7 +64,7 @@
         <span class="close-btn1 material-symbols-rounded">close</span>
 
         <div class="form-head">
-            <img class="img-responsive logo" src="img/logo.png" alt="The 9 Hotel logo">
+            <img class="img-responsive logo" src="static/logo.png" alt="The 9 Hotel logo">
         </div>
         <div class="form-content">
             <!-- ฟอร์มเข้าสู่ระบบ -->

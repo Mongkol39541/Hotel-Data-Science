@@ -1,4 +1,4 @@
-<!-- show reservation -->
+<!-- Payment confirm -->
 
 <?php
 // จัดการ session ควบคุมสิทธิการเข้าใช้งาน
@@ -17,12 +17,89 @@ if(
     die(header("Location: index.php"));
 }
 
+// used for showing logged in user in the top right
 $email = $_SESSION['email_account'];
+
+//FINAL RES INFO
 $customer_id = $_SESSION['customer_id'];
+$roomtype = $_SESSION['roomtype'];
+$bedtype = $_SESSION['bedtype'];
+$designated_room = $_SESSION['designated_room'];
+$check_in_final = $_SESSION['check_in'];
+$check_out_final = $_SESSION['check_out'];
+$res_phone = $_SESSION['res_phone'];
+$res_fname = $_SESSION['res_fname'];
+$res_lname = $_SESSION['res_lname'];
+$res_email = $_SESSION['res_email_account'];
+$res_date = date("Y-m-d");
+$res_time = date("H:i:s");
+$total_price = $_SESSION['total_price'];
+$final_room_pice = $_SESSION['final_room_pice'];
+$date_now = date("Y-m-d H:i:s");
+
+// for payment
+$tax = 0.07;
+$discount = 00.00;
+$payment_type = 'Credit Card';
 
 // ดึงข้อมูลประเภทห้องพัก
 $sql = "SELECT DISTINCT room_type FROM room;";
 $selectRoomType = mysqli_query($conn, $sql);
+
+// finding interval between check-in/check out
+$date1 = new DateTime($check_in_final);
+$date2 = new DateTime($check_out_final);
+$interval = $date1->diff($date2);
+?>
+
+<!-- insert value to reservation -->
+<!-- Reservation -->
+<?php
+$res_id_sql = 'SELECT reserve_id
+FROM reservation
+ORDER BY reserve_id DESC;';
+$result_res = mysqli_query($conn, $res_id_sql);
+$res_id_sql_result = mysqli_fetch_assoc($result_res); //idk how this works, but it returns only the first result in the array lol
+$res_id_num_result = substr($res_id_sql_result['reserve_id'], 3);
+// final RES_ID
+$new_res_id = 'RES' . str_pad(strval($res_id_num_result + 1), 3, '0', STR_PAD_LEFT);
+$res_sql = "INSERT INTO reservation VALUES (?, ?, ?, ?, ?, ?);";
+// $insert_res = mysqli_prepare($conn, $res_sql);
+// mysqli_stmt_bind_param($insert_res, "ssssss", $new_res_id, $date_now, $roomtype, $check_in_final, $check_out_final, $designated_room);
+// mysqli_stmt_execute($insert_res);
+?>
+
+<!-- Guest -->
+<?php
+$guest_id_sql = 'SELECT guest_id
+FROM guest
+ORDER BY guest_id DESC';
+$result_guest = mysqli_query($conn, $guest_id_sql);
+$guest_id_sql_result = mysqli_fetch_assoc($result_guest); //idk how this works, but it returns only the first result in the array lol
+$guest_id_num_result = substr($guest_id_sql_result['guest_id'], 5);
+// final GUEST_ID
+$new_guest_id = 'GUEST' . strval($guest_id_num_result) + 1;
+echo strval($guest_id_num_result);
+$guest_sql = "INSERT INTO guest VALUES (?, ?, ?, ?, ?, ?, ?);";
+// $insert_guest = mysqli_prepare($conn, $guest_sql);
+// mysqli_stmt_bind_param($insert_guest, "sssssss", $new_guest_id, $new_res_id, $customer_id, $res_fname, $res_lname, $res_email, $res_phone);
+// mysqli_stmt_execute($insert_guest);
+?>
+
+<!-- Payment -->
+<?php
+$pay_id_sql = 'SELECT payment_id
+FROM transaction
+ORDER BY payment_id DESC';
+$result_pay = mysqli_query($conn, $pay_id_sql);
+$pay_id_sql_result = mysqli_fetch_assoc($result_pay); //idk how this works, but it returns only the first result in the array lol
+$pay_id_num_result = substr($pay_id_sql_result['payment_id'], 3);
+// Final PAY_ID
+$new_pay_id = 'PAY' . str_pad(strval($pay_id_num_result + 1), 3, '0', STR_PAD_LEFT);
+$pay_sql = "INSERT INTO transaction VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+// $insert_pay = mysqli_prepare($conn, $pay_sql);
+// mysqli_stmt_bind_param($insert_pay, "ssssdddds", $new_pay_id, $new_res_id, $res_date, $res_time, $total_price, $tax, $discount, $final_room_pice, $payment_type);
+// mysqli_stmt_execute($insert_pay);
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +107,7 @@ $selectRoomType = mysqli_query($conn, $sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The 9 Hotel</title>
+    <title>Payment</title>
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
@@ -38,6 +115,7 @@ $selectRoomType = mysqli_query($conn, $sql);
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <!-- MDB -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css" rel="stylesheet" />
+    <!-- ajax -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"></script>
 
     <style>
@@ -106,75 +184,7 @@ $selectRoomType = mysqli_query($conn, $sql);
         require("img/account-nav.php");
         ?>
     </header>
-    <!-- Background image -->
-    <div
-        class="mb-5 p-5 text-center bg-image"
-        style="
-        background-image: url('https://www.dusit.com/asai-bangkok-chinatown/wp-content/uploads/sites/51/cache/2023/08/Comfort-at-ASAI-Chinatown/25512868.jpg');
-        height: 400px;
-        "
-    >
-        <div class="mask" style="background-color: rgba(0, 0, 0, 0.2);">
-        <div class="d-flex justify-content-center align-items-center h-100">
-            <div class="text-white">
-            <h1 class="fw-bold" style="font-size: 3rem;">My Booking</h1>
-            </div>
-        </div>
-        </div>
-    </div>
-    <!-- Background image -->
-    
-    <div class="container">
-      <!--Grid row-->
-      <div class="row">
-        <!--Grid column-->
-        <div class="col-md-12 mb-4">
-          <!--Section: Content-->
-          <section>
-            <!-- connect to a db -->
-            <?php
-            $servername = "localhost";
-            $username = "root"; //ตามที่กำหนดให้
-            $password = ""; //ตามที่กำหนดให้
-            $dbname = "9hotel_reservation";    //ตามที่กำหนดให้
-            // Create connection
-            $conn = mysqli_connect($servername, $username, $password, $dbname);
-            ?>
-
-            <?php
-            $sql = "SELECT *
-            FROM guest g
-            JOIN reservation res
-            ON (g.reserve_id = res.reserve_id)
-            JOIN room rm
-            ON (res.room_id = rm.room_id)
-            WHERE customer_id = '$customer_id';";
-            $result = mysqli_query($conn, $sql);
-            while($row = mysqli_fetch_assoc($result)) {
-                echo '<div class="row">';
-                echo '<div class="col-md-4 mb-4">';
-                echo '<div class="bg-image hover-overlay shadow-1-strong rounded ripple" data-mdb-ripple-color="light">';
-                echo '<img src="' . $row['room_img'] . '" class="img-fluid" />';
-                echo '<div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>';
-                echo '</div>';
-                echo '</div>';
-                echo '<div class="col-md-8 mb-4">';
-                echo '<h5>'. 'Reservation ID: ' . $row['reserve_id'] .'</h5>';
-                echo '<div>' . $row['room_type'] . ' ' . $row['bed_type'] . '</div>';
-                echo '<div>Check in: ' . $row['check_in'] . '</div>';
-                echo '<div>Check out: ' . $row['check_out'] . '</div>';
-                echo '<button type="button" class="btn btn-primary">Read</button>';
-                echo '</div>';
-                echo '</div>';
-            }
-            mysqli_close($conn);
-            ?>
-          </section>
-          <!--Section: Content-->
-        </div>
-        <!--Grid column-->
-    </div>
-
+   
 
     <footer class="py-2 mx-5 my-4 border-top">
         <p class="text-center text-body-secondary">© 2023 ISAD, KMITL</p>
@@ -201,6 +211,10 @@ $selectRoomType = mysqli_query($conn, $sql);
             echo '   }, 4000);';
             unset($_SESSION['loginSuccess']);
         }
+        ?>
+
+        <?php
+        $_SESSION['final_room_pice'] = $final_room_pice;
         ?>
     </script>
 

@@ -26,7 +26,7 @@ if(isset($_GET['type'])) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito&family=Open+Sans&family=Poppins&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
-    <link rel="stylesheet" href="img/style.css">
+    <link rel="stylesheet" href="static/style.css">
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
@@ -36,7 +36,7 @@ if(isset($_GET['type'])) {
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css" rel="stylesheet" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"></script>
 
-    <script src="img/script.js" defer></script>
+    <script src="static/script.js" defer></script>
     <style>
         .book-nav,
         .login-nav,
@@ -298,5 +298,27 @@ if(isset($_GET['type'])) {
     <footer class="py-2 mx-5 my-4 border-top">
         <p class="text-center text-body-secondary">© 2023 ISAD, KMITL</p>
     </footer>
+
+    <script>
+        document.querySelector('#roomsDropdown').addEventListener('click', function(e) {
+            e.stopPropagation();
+            window.location.href = 'room.php';
+        });
+
+        <?php
+        if (isset($_SESSION['loginSuccess'])) {
+            echo '   var alertText = "' . $_SESSION['loginSuccess'] . '";';
+            echo '   var alertDiv = \'';
+            echo '   <div class="alert alert-success position-fixed top-0 start-50 translate-middle-x w-25" style="margin-top:7%;" role="alert" data-mdb-color="success" data-mdb-offset="20">';
+            echo '        <i class="fas fa-check-circle me-3"></i> \' + alertText + \'';
+            echo '    </div>\';';
+            echo '   $("body").append(alertDiv);';
+            echo '   setTimeout(function() {';
+            echo '       $(".alert").remove();';
+            echo '   }, 4000);';
+            unset($_SESSION['loginSuccess']);
+        }
+        ?>
+    </script>
 </body>
 </html>

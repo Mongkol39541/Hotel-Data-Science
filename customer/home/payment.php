@@ -17,30 +17,54 @@ if(
     die(header("Location: index.php"));
 }
 
+// getting all the info needed for making a reservation
+if (isset($_POST['use-member-address'])) {
+    $res_fname = $_SESSION['fname'];
+    $res_lname = $_SESSION['lname'];
+    $res_email = $_SESSION['email_account'];
+} else {
+    $res_fname = $_POST['fname'];
+    $res_lname = $_POST['lname'];
+    $res_email = $_POST['email'];
+}
+
+// used for showing logged in user in the top right
 $email = $_SESSION['email_account'];
+
+//FINAL RES INFO
+$roomtype = $_SESSION['roomtype'];
+$bedtype = $_SESSION['bedtype'];
+$designated_room = $_SESSION['designated_room'];
+$check_in_final = $_SESSION['check_in'];
+$check_out_final = $_SESSION['check_out'];
+$res_phone = $_POST['phone'];
+$_SESSION['res_phone'] = $res_phone;
+$_SESSION['res_fname'] = $res_fname;
+$_SESSION['res_lname'] = $res_lname;
+$_SESSION['res_email_account'] = $res_email;
 
 // ดึงข้อมูลประเภทห้องพัก
 $sql = "SELECT DISTINCT room_type FROM room;";
 $selectRoomType = mysqli_query($conn, $sql);
 
-// ตรวจสอบว่ามีข้อมูลที่ถูกส่งมาหรือไม่
-if(isset($_POST['type'])) {
-    // รับข้อมูลจาก POST
-    $selectedRoom = $_POST['type'];
-    $_SESSION['roomtype'] = $selectedRoom;
-    $roomtype = $selectedRoom;
-} else {
-    // ถ้าไม่มีข้อมูลถูกส่งมา
-}
+// finding interval between check-in/check out
+$date1 = new DateTime($check_in_final);
+$date2 = new DateTime($check_out_final);
+$interval = $date1->diff($date2);
+?>
 
-if(isset($_POST['bed'])) {
-    // รับข้อมูลจาก POST
-    $selectedBed = $_POST['bed'];
-    $_SESSION['bedtype'] = $selectedBed;
-    $bedtype = $selectedBed;
-} else {
-    // ถ้าไม่มีข้อมูลถูกส่งมา
-}
+<?php
+$sqlroom = "SELECT *
+FROM room
+WHERE room_type = '$roomtype' AND bed_type = '$bedtype';";
+$result = mysqli_query($conn, $sqlroom);
+$row = mysqli_fetch_array($result); //idk how this works, but it returns only the first result in the array lol
+$room_img = $row['room_img'];
+$price_per_night = $row['price_per_night'];
+$facility = $row['facility'];
+$size = $row['size'];
+
+$total_price = (float)$price_per_night * $interval->format("%a");
 ?>
 
 <!DOCTYPE html>
@@ -48,7 +72,7 @@ if(isset($_POST['bed'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Making a reservation</title>
+    <title>Payment</title>
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
@@ -121,195 +145,92 @@ if(isset($_POST['bed'])) {
 </head>
 <body>
     <header>
-        <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white">
-        <div class="container">
-            <!-- Navbar brand -->
-            <a class="navbar-brand me-2" href="account.php">
-                <img src="img/logo.png" height="42" alt="Hotel Logo" loading="lazy" style="margin-top: -1px;" />
-            </a>
-
-            <!-- Toggle button -->
-            <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
-                data-mdb-target="#navbarButtonsExample" aria-controls="navbarButtonsExample" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <i class="fas fa-bars"></i>
-            </button>
-
-            <!-- Collapsible wrapper -->
-            <div class="collapse navbar-collapse" id="navbarButtonsExample">
-                <!-- Left links me-auto -->
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li id="firstmenu" class="nav-item mx-2">
-                        <a class="nav-link" href="account.php">Home</a>
-                    </li>
-
-                    <li class="nav-item dropdown mx-2">
-                        <a class="nav-link dropdown-toggle" id="roomsDropdown" role="button"
-                            data-mdb-toggle="dropdown" aria-expanded="false">
-                            Rooms
-                        </a>
-                        <!-- Dropdown menu -->
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <?php
-                            if (mysqli_num_rows($selectRoomType) > 0) {
-                                while($row = mysqli_fetch_row($selectRoomType)) {
-                                    echo '<li><a class="dropdown-item" href="roomdetail.php?type='.$row[0].'">'.$row[0].'</a></li>';
-                                }
-                            }
-                            ?>
-                        </ul>
-                    </li>
-                    <li class="nav-item mx-2">
-                        <a class="nav-link" href="discover.php">Discover</a>
-                    </li>
-                    <li class="nav-item mx-2">
-                        <a class="nav-link" href="contact.php">Contact</a>
-                    </li>
-                </ul>
-                <!-- Left links -->
-
-                <div class="d-flex align-items-center">
-                    <div class="btn-group shadow-none me-4 user-nav">
-                        <a role="button" class="dropdown-toggle text-dark" data-mdb-toggle="dropdown" aria-expanded="false">
-                            <i class="fas fa-user"></i> <?php echo $email ?>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <!-- <li><a class="dropdown-item" href="password.php"><i class="fas fa-info-circle me-1"></i> Change Password</a></li> -->
-                            <li><a class="dropdown-item" href="account.php?logout=1"><i class="fas fa-arrow-right-to-bracket me-1"></i> Log out</a></li>
-                        </ul>
-                    </div>
-                    <a role="button" class="btn btn-secondary btn-lg px-3 me-2 book-nav" href="showres.php">My Booking</a>
-                </div>
-            </div>
-            <!-- Collapsible wrapper -->
-        </div>
-    </nav>
-    <!-- Navbar -->
+        <?php
+        require("img/account-nav.php");
+        ?>
     </header>
-
-    <!-- finding occupied -->
-    <?php
-    $sqlroom = "SELECT *
-    FROM room
-    WHERE room_type = '$roomtype' AND bed_type = '$bedtype';";
-    $result = mysqli_query($conn, $sqlroom);
-    $row = mysqli_fetch_array($result); //idk how this works, but it returns only the first result in the array lol
-    $room_img = $row['room_img'];
-    $price_per_night = $row['price_per_night'];
-    $facility = $row['facility'];
-    $size = $row['size'];
-    ?>
-    <main style="margin-top: 100px">
-    <div class='container'>
-        <div class='row justify-content-center gap-4'>
-            <div class='h-50 card border border-secondary border-1 mb-2 col-md-5'>
-                <img src="<?php echo $room_img?>" class="card-img-top" alt="room-img"/>
-                <div class='card-body'>
-                    <h3 class="card-title mb-2"><?php echo $roomtype . ' ' . $bedtype?></h3>
-                    <div>
-                        <p class='card-text'>Room size: <?php echo $size?></p>
-                    </div>
-                    <div>
-                        <p class='card-text'>Facility services include: <?php echo $facility?></p>
-                    </div>
-                    <div>
-                        <p class='card-text'>Price per night: <?php echo $price_per_night?> THB</p>
-                    </div>
+    <main class='mt-3'>
+    <section style="background-color: #eee;">
+    <div class="container py-5">
+        <div class="card">
+        <div class="card-body">
+            <div class="row d-flex justify-content-center pb-5">
+            <div class="col-md-7 col-xl-5 mb-4 mb-md-0">
+                <div class="py-4 d-flex flex-row">
+                <h5><span class="far fa-check-square pe-2"></span><b>DUMB</b> |</h5>
+                <span class="ps-2">Payment Mockup</span>
                 </div>
-            </div>
-            <div class='card border border-secondary border-1 col-md-5'>
-                <h3 class='card-header mt-3 text-center'>Your details</h3>
-                <hr>
-                <div clas='card-body'>
-                    <div class='card-text'>
-                        <div class='mb-2'>
-                            <!-- daterangepicker -->
-                            <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-                            <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-                            <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-                            <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-                            <div class='mb-4'>
-                                <input type="text" name="datefilter" id='datefilter' value="" class='form-control' required 
-                                placeholder='Check-in/Check out dates'>
+                <form action="payment_confirm.php" novalidate class='.needs-validation'>
+                    <div id='guest-info'>
+                        <div class='mb-4 w-75'>
+                            <input type="text" class='form-control' placeholder='Card Number' required>
+                            <div class='invalid-feedback'>
+                                Please enter a Card Number.
+                            </div>
+                        </div>
+                        <div class='mb-4 w-75'>
+                            <input type="text" class='form-control'placeholder='Name on Card' required>
+                            <div class="invalid-feedback">
+                                Please provide a Name.
+                            </div>
+                        </div>
+                        <div class='row mb-3 text-center'>
+                            <div class ='col-md-4'>
+                                <input type="text" class='form-control' placeholder='Expiry Date' required>
                                 <div class='invalid-feedback'>
-                                    Please provide Check in and Check out date.
+                                    Please enter an Expiry Date.
+                                </div>
+                            </div>  
+                            <div class ='col-md-4'>
+                                <input type="password" class='form-control' placeholder='Security Code' required>
+                                <div class="invalid-feedback">
+                                    Please enter a Security Code.
                                 </div>
                             </div>
-                            <div class='mb-3'>
-                                <button type="submit" onclick='datecheck(document.getElementById("datefilter").value);'
-                                class="btn btn-primary" name="confirm_date" id="confirm_date">Confirm date</button>
-                            </div>
-                            <div name='result' id='result'>
-                            </div>
-                            <script>
-                                function datecheck(date) {
-                                    $.ajax({
-                                        type: "POST",
-                                        url: "timecheck.php",
-                                        data: {datefilter: date},
-                                        success: function(result) {
-                                            $("#result").html(result);
-                                        }
-                                    });
-                                };
-                            </script>
-                            <script src="calendar.js" type='text/javascript'></script> 
                         </div>
-                        <form  id='reservation' method="post" action='sending_to_payment.php' novalidate class='needs-validation'>
-                        <!-- use member address instead -->
-                        <div class='form-check mb-2'>
-                            <input type="checkbox" class="form-check-input" id="use-member-address" name="use-member-address">
-                            <label for="use-member-address">Use member address</label>
-                        </div>
-                        <!-- information will be sent to guestdb later -->
-                        <div id='guest-info'>
-                            <div class='row mb-3'>
-                                <div class ='col-md-6'>
-                                    <input type="text" class='form-control' name="fname" id="fname" placeholder='First Name' required>
-                                    <div class='invalid-feedback'>
-                                        Please enter a First Name.
-                                    </div>
-                                </div>  
-                                <div class ='col-md-6'>
-                                    <input type="text" class='form-control' name="lname" id="lname" placeholder='Last Name' required>
-                                    <div class="invalid-feedback">
-                                        Please enter a Last Name.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class='mb-4'>
-                                <input type="tel" class='form-control' name="phone" id="phone" placeholder='Phone' required>
-                                <div class="invalid-feedback">
-                                    Please provide a phone number.
-                                </div>
-                            </div>
-                            <div class='mb-4'>
-                                <input type="email" class='form-control' name="email" id="email" placeholder='Email' required>
-                                <div class="invalid-feedback">
-                                    Please provide an email.
-                                </div>
-                            </div>
-                            <div class='mb-4'>
-                                <textarea name="address" class='form-control' id="address" cols="30" rows="5" placeholder='Address' required></textarea>
-                                <div class="invalid-feedback">
-                                    Please provide an address.
-                                </div>
-                            </div>
-                            <div class='mb-3'>
-                                <button type="submit" class="btn btn-primary" name="submit" id="submit">Submit</button>
-                            </div>
+                        <div class='mb-4'>
+                            <button type="submit" class="btn btn-primary" name="submit" id="submit">Confirm Payment</button>
                         </div>
                     </div>
                 </div>
+            </form>
+
+            <div class="col-md-5 col-xl-4 offset-xl-1">
+                <div class="py-4 d-flex justify-content-end">
+                <h6><a href="">Cancel and return to website</a></h6>
+                </div>
+                <div class="rounded d-flex flex-column p-2" style="background-color: #f8f9fa;">
+                <div class="p-2 me-3">
+                    <h4>Order Recap</h4>
+                </div>
+                <div class="p-2 d-flex">
+                    <div class="col-8"><?php echo $roomtype . ' ' . $bedtype . ' (' . $interval->format('%d days') . ')' ?></div>
+                    <div class="ms-auto"><?php echo $total_price?> THB</div>
+                    <?php $_SESSION['total_price'] = $total_price; ?>
+                </div>
+                <div class="p-2 d-flex">
+                    <div class="col-8">Tax (0.07%)</div>
+                    <div class="ms-auto">+ <?php echo 0.07*$total_price?> THB</div>
+                    <?php $final_room_pice = $total_price + 0.07*$total_price; ?>
+                    <?php $_SESSION['final_room_price'] = $final_room_pice; ?>
+                </div>
+                <div class="border-top px-2 mx-2"></div>
+                <div class="p-2 d-flex pt-3">
+                    <div class="col-8">Total Discount</div>
+                    <div class="ms-auto">0.00 THB</div> <!-- TODO: discount code (maybe?) -->
+                </div>
+                <div class="border-top px-2 mx-2"></div>
+                <div class="p-2 d-flex pt-3">
+                    <div class="col-8"><b>Total</b></div>
+                    <div class="ms-auto"><b class="text-success"><?php echo $final_room_pice?> THB</b></div>
+                </div>
+                </div>
             </div>
+            </div>
+        </div>
         </div>
     </div>
-    </form>
-    <!-- too lazy to write for loop lol -->
-    <script src="terriblefix.js"></script> 
-    <!-- copied pasted from docs for validitiy check in bootstrap style -->
-    <script src="validitycheckforform.js"></script> 
+    </section>
     </main>
    
 
@@ -339,7 +260,14 @@ if(isset($_POST['bed'])) {
             unset($_SESSION['loginSuccess']);
         }
         ?>
+
+        <?php
+        $_SESSION['final_room_pice'] = $final_room_pice;
+        ?>
     </script>
+
+    <!-- copied pasted from docs for validitiy check in bootstrap style -->
+    <script src="validitycheckforform.js" type='text/javascript'></script> 
 
 </body>
 </html>

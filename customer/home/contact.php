@@ -165,6 +165,28 @@ $selectRoomType = mysqli_query($conn, $sql);
         </div>
     </div>
 
+    <script>
+        document.querySelector('#roomsDropdown').addEventListener('click', function(e) {
+            e.stopPropagation();
+            window.location.href = 'room.php';
+        });
+
+        <?php
+        if (isset($_SESSION['loginSuccess'])) {
+            echo '   var alertText = "' . $_SESSION['loginSuccess'] . '";';
+            echo '   var alertDiv = \'';
+            echo '   <div class="alert alert-success position-fixed top-0 start-50 translate-middle-x w-25" style="margin-top:7%;" role="alert" data-mdb-color="success" data-mdb-offset="20">';
+            echo '        <i class="fas fa-check-circle me-3"></i> \' + alertText + \'';
+            echo '    </div>\';';
+            echo '   $("body").append(alertDiv);';
+            echo '   setTimeout(function() {';
+            echo '       $(".alert").remove();';
+            echo '   }, 4000);';
+            unset($_SESSION['loginSuccess']);
+        }
+        ?>
+    </script>
+
     <footer class="py-2 mx-5 my-4 border-top">
         <p class="text-center text-body-secondary">© 2023 ISAD, KMITL</p>
     </footer>

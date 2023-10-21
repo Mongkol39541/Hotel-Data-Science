@@ -107,64 +107,20 @@
 </head>
 <body>
     <header>
+        <!-- แก้ตรงไม่ได้กด log out กดออกเว็บ หน้า index ตรง navbar มันกลายเป็น sign up กับ sign in -->
         <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-white">
-            <div class="container">
-                <!-- Navbar brand -->
-                <a class="navbar-brand me-2" href="index.php">
-                    <img src="img/logo.png" height="42" alt="Hotel Logo" loading="lazy" style="margin-top: -1px;" />
-                </a>
-
-                <!-- Toggle button -->
-                <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
-                    data-mdb-target="#navbarButtonsExample" aria-controls="navbarButtonsExample" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                    <i class="fas fa-bars"></i>
-                </button>
-
-                <!-- Collapsible wrapper -->
-                <div class="collapse navbar-collapse" id="navbarButtonsExample">
-                    <!-- Left links me-auto -->
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li id="firstmenu" class="nav-item mx-2">
-                            <a class="nav-link" href="index.php">Home</a>
-                        </li>
-
-                        <li class="nav-item dropdown mx-2">
-                            <a class="nav-link dropdown-toggle" href="#" id="roomsDropdown" role="button"
-                                data-mdb-toggle="dropdown" aria-expanded="false">
-                                Rooms
-                            </a>
-                            <!-- Dropdown menu -->
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <?php
-                                    if (mysqli_num_rows($selectRoomType) > 0) {
-                                        while($row = mysqli_fetch_row($selectRoomType)) {
-                                            echo '<li><a class="dropdown-item" href="roomdetail.php?type='.$row[0].'">'.$row[0].'</a></li>';
-                                        }
-                                    }
-                                ?>
-                            </ul>
-                        </li>
-                        <li class="nav-item mx-2">
-                            <a class="nav-link" href="discover.php">Discover</a>
-                        </li>
-                        <li class="nav-item mx-2">
-                            <a class="nav-link" href="contact.php">Contact</a>
-                        </li>
-                    </ul>
-                    <!-- Left links -->
-
-                    <div class="d-flex align-items-center">
-                        <button type="button" class="btn btn-secondary btn-lg px-3 me-2 login-nav">Login</button>
-                        <button type="button" class="btn btn-info btn-lg me-3 signup-nav">create account</button>
-                    </div>
-                </div>
-                <!-- Collapsible wrapper -->
-            </div>
-        </nav>
-        <!-- Navbar -->
-    </header>
+        <?php
+        if(
+            !isset($_SESSION['id_account']) ||
+            !isset($_SESSION['role_account'])
+        ){
+            require("img/index-nav.php");
+        } else {
+            require("img/account-nav.php");
+        }
+        ?>
+            <!-- Navbar -->
+        </header>
 
     <!-- Carousel wrapper -->
     <div id="carouselBasicExample" class="carousel slide" data-mdb-ride="carousel" data-mdb-interval="4500">

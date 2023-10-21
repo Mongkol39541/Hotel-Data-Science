@@ -7,7 +7,7 @@ $email = $_SESSION['email_account'];
         <div class="container">
             <!-- Navbar brand -->
             <a class="navbar-brand me-2" href="account.php">
-                <img src="img/logo.png" height="42" alt="Hotel Logo" loading="lazy" style="margin-top: -1px;" />
+                <img src="static/logo.png" height="42" alt="Hotel Logo" loading="lazy" style="margin-top: -1px;" />
             </a>
 
             <!-- Toggle button -->

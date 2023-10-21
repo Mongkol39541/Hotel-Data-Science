@@ -3,6 +3,7 @@
 <?php
 // จัดการ session ควบคุมสิทธิการเข้าใช้งาน
 session_start();
+unset($_SESSION["datefilter"]);
 $open_connect = 1;
 require("connect.php");
 
@@ -121,71 +122,9 @@ if(isset($_POST['bed'])) {
 </head>
 <body>
     <header>
-        <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white">
-        <div class="container">
-            <!-- Navbar brand -->
-            <a class="navbar-brand me-2" href="account.php">
-                <img src="img/logo.png" height="42" alt="Hotel Logo" loading="lazy" style="margin-top: -1px;" />
-            </a>
-
-            <!-- Toggle button -->
-            <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
-                data-mdb-target="#navbarButtonsExample" aria-controls="navbarButtonsExample" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <i class="fas fa-bars"></i>
-            </button>
-
-            <!-- Collapsible wrapper -->
-            <div class="collapse navbar-collapse" id="navbarButtonsExample">
-                <!-- Left links me-auto -->
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li id="firstmenu" class="nav-item mx-2">
-                        <a class="nav-link" href="account.php">Home</a>
-                    </li>
-
-                    <li class="nav-item dropdown mx-2">
-                        <a class="nav-link dropdown-toggle" id="roomsDropdown" role="button"
-                            data-mdb-toggle="dropdown" aria-expanded="false">
-                            Rooms
-                        </a>
-                        <!-- Dropdown menu -->
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <?php
-                            if (mysqli_num_rows($selectRoomType) > 0) {
-                                while($row = mysqli_fetch_row($selectRoomType)) {
-                                    echo '<li><a class="dropdown-item" href="roomdetail.php?type='.$row[0].'">'.$row[0].'</a></li>';
-                                }
-                            }
-                            ?>
-                        </ul>
-                    </li>
-                    <li class="nav-item mx-2">
-                        <a class="nav-link" href="discover.php">Discover</a>
-                    </li>
-                    <li class="nav-item mx-2">
-                        <a class="nav-link" href="contact.php">Contact</a>
-                    </li>
-                </ul>
-                <!-- Left links -->
-
-                <div class="d-flex align-items-center">
-                    <div class="btn-group shadow-none me-4 user-nav">
-                        <a role="button" class="dropdown-toggle text-dark" data-mdb-toggle="dropdown" aria-expanded="false">
-                            <i class="fas fa-user"></i> <?php echo $email ?>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <!-- <li><a class="dropdown-item" href="password.php"><i class="fas fa-info-circle me-1"></i> Change Password</a></li> -->
-                            <li><a class="dropdown-item" href="account.php?logout=1"><i class="fas fa-arrow-right-to-bracket me-1"></i> Log out</a></li>
-                        </ul>
-                    </div>
-                    <a role="button" class="btn btn-secondary btn-lg px-3 me-2 book-nav" href="showres.php">My Booking</a>
-                </div>
-            </div>
-            <!-- Collapsible wrapper -->
-        </div>
-    </nav>
-    <!-- Navbar -->
+        <?php
+        require("img/account-nav.php");
+        ?>
     </header>
 
     <!-- finding occupied -->
@@ -197,7 +136,7 @@ if(isset($_POST['bed'])) {
     $row = mysqli_fetch_array($result); //idk how this works, but it returns only the first result in the array lol
     $room_img = $row['room_img'];
     $price_per_night = $row['price_per_night'];
-    $facility = $row['facility'];
+    $desc = $row['room_description'];
     $size = $row['size'];
     ?>
     <main style="margin-top: 100px">
@@ -207,11 +146,11 @@ if(isset($_POST['bed'])) {
                 <img src="<?php echo $room_img?>" class="card-img-top" alt="room-img"/>
                 <div class='card-body'>
                     <h3 class="card-title mb-2"><?php echo $roomtype . ' ' . $bedtype?></h3>
-                    <div>
-                        <p class='card-text'>Room size: <?php echo $size?></p>
+                    <div class='mb-2'>
+                        <p class='card-text'><?php echo $desc?></p>
                     </div>
                     <div>
-                        <p class='card-text'>Facility services include: <?php echo $facility?></p>
+                        <p class='card-text'>Room size: <?php echo $size?></p>
                     </div>
                     <div>
                         <p class='card-text'>Price per night: <?php echo $price_per_night?> THB</p>
@@ -221,42 +160,25 @@ if(isset($_POST['bed'])) {
             <div class='card border border-secondary border-1 col-md-5'>
                 <h3 class='card-header mt-3 text-center'>Your details</h3>
                 <hr>
+                <form  id='reservation' method="post" action='payment.php' novalidate class='.needs-validation'>
                 <div clas='card-body'>
                     <div class='card-text'>
                         <div class='mb-2'>
-                            <!-- daterangepicker -->
-                            <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-                            <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-                            <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-                            <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-                            <div class='mb-4'>
-                                <input type="text" name="datefilter" id='datefilter' value="" class='form-control' required 
-                                placeholder='Check-in/Check out dates'>
-                                <div class='invalid-feedback'>
+                                <div class='mb-4'>
+                                    <input type="text" name="datefilter" id='datefilter' value="" 
+                                    class='form-control' autocomplete="off"
+                                    required placeholder='Check-in/Check out dates'>
+                                    <div class='invalid-feedback'>
                                     Please provide Check in and Check out date.
+                                    </div>
+                                </div>
+                                <div class='mb-3'>
+                                    <button type="button" onclick='datecheck(document.getElementById("datefilter").value);'
+                                    class="btn btn-primary" name="confirm_date" id="confirm_date">Confirm date</button>
+                                </div>
+                                <div name='result' id='result'>
                                 </div>
                             </div>
-                            <div class='mb-3'>
-                                <button type="submit" onclick='datecheck(document.getElementById("datefilter").value);'
-                                class="btn btn-primary" name="confirm_date" id="confirm_date">Confirm date</button>
-                            </div>
-                            <div name='result' id='result'>
-                            </div>
-                            <script>
-                                function datecheck(date) {
-                                    $.ajax({
-                                        type: "POST",
-                                        url: "timecheck.php",
-                                        data: {datefilter: date},
-                                        success: function(result) {
-                                            $("#result").html(result);
-                                        }
-                                    });
-                                };
-                            </script>
-                            <script src="calendar.js" type='text/javascript'></script> 
-                        </div>
-                        <form  id='reservation' method="post" action='sending_to_payment.php' novalidate class='needs-validation'>
                         <!-- use member address instead -->
                         <div class='form-check mb-2'>
                             <input type="checkbox" class="form-check-input" id="use-member-address" name="use-member-address">
@@ -296,7 +218,7 @@ if(isset($_POST['bed'])) {
                                     Please provide an address.
                                 </div>
                             </div>
-                            <div class='mb-3'>
+                            <div class='mb-4'>
                                 <button type="submit" class="btn btn-primary" name="submit" id="submit">Submit</button>
                             </div>
                         </div>
@@ -306,10 +228,6 @@ if(isset($_POST['bed'])) {
         </div>
     </div>
     </form>
-    <!-- too lazy to write for loop lol -->
-    <script src="terriblefix.js"></script> 
-    <!-- copied pasted from docs for validitiy check in bootstrap style -->
-    <script src="validitycheckforform.js"></script> 
     </main>
    
 
@@ -318,6 +236,19 @@ if(isset($_POST['bed'])) {
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- daterangepicker -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <script src="calendar.js" type='text/javascript'></script>
+
+    <!-- too lazy to write for loop lol -->
+    <script src="terriblefix.js" type='text/javascript'></script>
+
+    <!-- copied pasted from docs for validitiy check in bootstrap style -->
+    <script src="validitycheckforform.js" type='text/javascript'></script> 
 
     <script>
         document.querySelector('#roomsDropdown').addEventListener('click', function(e) {
@@ -341,5 +272,22 @@ if(isset($_POST['bed'])) {
         ?>
     </script>
 
+    <script>
+        function datecheck(date) {
+            $.ajax({
+                type: "POST",
+                url: "timecheck.php",
+                data: {datefilter: date},
+                success: function(result) {
+                    $("#result").html(result);
+                }
+            });
+        };
+    </script>
+
+    <?php
+    // close connection
+    mysqli_close($conn);
+    ?>
 </body>
 </html>
