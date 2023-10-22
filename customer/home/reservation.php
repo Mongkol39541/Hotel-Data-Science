@@ -338,7 +338,7 @@ if(isset($_POST['bed'])) {
                         <!-- use member address instead -->
                         <div class='form-check mb-2'>
                             <input type="checkbox" class="form-check-input" id="use-member-address" name="use-member-address" disabled>
-                            <label for="use-member-address">Use member address</label>
+                            <label for="use-member-address">Use member information</label>
                         </div>
                         <!-- information will be sent to guestdb later -->
                         <div id='guest-info'>
