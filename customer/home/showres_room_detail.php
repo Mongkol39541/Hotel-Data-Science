@@ -36,7 +36,7 @@ $selectRoomType = mysqli_query($conn, $sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Making a reservation</title>
+    <title>Room Detail</title>
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
@@ -164,7 +164,7 @@ $selectRoomType = mysqli_query($conn, $sql);
                             <p class='card-text fw-bold'>Reservation Made: <?php echo $res_made?></p>
                         </div>
                         <div>
-                            <p class='card-text fw-bold'>Total Paid: <?php echo $total_paid?> THB</p>
+                            <p class='card-text fw-bold'>Total Price: <?php echo $total_paid?> THB</p>
                         </div>
                     </div>
                 </div>
@@ -183,7 +183,7 @@ $selectRoomType = mysqli_query($conn, $sql);
                                         Please provide Check in and Check out date.
                                         </div>
                                     </div>
-                                    <div class='mb-3'>
+                                    <div class='mb-3' id='date_button' name='date_button'>
                                     </div>
                                     <div name='result' id='result'>
                                     </div>
@@ -227,7 +227,7 @@ $selectRoomType = mysqli_query($conn, $sql);
                                 </div>
                                 <div class='mb-4' id='submit-button' name='submit-button'>
                                 </div>
-                                <div class='mb-4'>
+                                <div class='mb-4' name='lowest_button' id='lowest_button'>
                                     <button type="button" class="btn btn-primary" name="edit" id="edit" onclick='edit_info()'>Edit Information</button>
                                     <button type="button" class="btn btn-danger" name="delete" id="delete">Cancel Reservation</button>
                                 </div>

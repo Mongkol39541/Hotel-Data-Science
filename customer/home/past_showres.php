@@ -117,7 +117,7 @@ $selectRoomType = mysqli_query($conn, $sql);
         <div class="mask" style="background-color: rgba(0, 0, 0, 0.2);">
         <div class="d-flex justify-content-center align-items-center h-100">
             <div class="text-white">
-            <h1 class="fw-bold" style="font-size: 3rem;">My Booking</h1>
+            <h1 class="" style="font-size: 3rem;">MY BOOKING</h1>
             </div>
         </div>
         </div>

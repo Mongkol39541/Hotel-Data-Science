@@ -222,7 +222,7 @@
         </button>
     </div>
     <!-- Carousel wrapper -->
-
+    <!-- มึงเขียน navbar ไว้ ก็ลบที่ใส่ไว้ในหน้าด้วยสิวะ ไอเหี้ย -->
     <!-- Discovery -->
     <div class="container p-4">
         <div class="heading text-center">
