@@ -19,9 +19,9 @@ if(
 
 // getting all the info needed for making a reservation
 if (isset($_POST['use-member-address'])) {
-    $res_fname = $_SESSION['fname'];
-    $res_lname = $_SESSION['lname'];
-    $res_email = $_SESSION['email_account'];
+    $res_fname = $_SESSION['acc_fname'];
+    $res_lname = $_SESSION['acc_lname'];
+    $res_email = $_SESSION['acc_email_account'];
 } else {
     $res_fname = $_POST['fname'];
     $res_lname = $_POST['lname'];

@@ -22,13 +22,13 @@ $conn = mysqli_connect($servername, $username, $password, $dbname);
 if (empty($date)) {
     echo '<div class="text-danger">Please select check-in/check out dates.</div>';
     echo "<script>
-    $('#use-member-address').prop('disabled',true);
-    $('#fname').prop('disabled',true);
-    $('#lname').prop('disabled',true);
-    $('#email').prop('disabled',true);
-    $('#phone').prop('disabled',true);
-    $('#submit').prop('disabled',true);
-    </script>";
+        $('#use-member-address').prop('disabled',true);
+        $('#fname').prop('disabled',true);
+        $('#lname').prop('disabled',true);
+        $('#email').prop('disabled',true);
+        $('#phone').prop('disabled',true);
+        $('#submit').prop('disabled',true);
+        </script>";
 } else {
     //gather all the room and reservation information
     // get date from reservation
@@ -42,6 +42,14 @@ if (empty($date)) {
     <?php
     if ($check_in_final < date("Y-m-d")) {
         echo '<div class="text-danger">Please select valid check-in/check out dates.</div>';
+        echo "<script>
+        $('#use-member-address').prop('disabled',true);
+        $('#fname').prop('disabled',true);
+        $('#lname').prop('disabled',true);
+        $('#email').prop('disabled',true);
+        $('#phone').prop('disabled',true);
+        $('#submit').prop('disabled',true);
+        </script>";
     } else {
         //add bed_type in reservation
         //fix sample check_in, check_out date
@@ -68,7 +76,7 @@ if (empty($date)) {
         } else {
             $designated_room = $row['room_id'];
         }
-        
+
         ?>
         <!-- checking if there's an available room -->
         <?php
@@ -99,5 +107,5 @@ if (empty($date)) {
         }
         mysqli_close($conn);
     }
-}
-    ?>
+};
+?>

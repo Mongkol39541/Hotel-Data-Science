@@ -54,8 +54,8 @@ if (empty($email) || empty($password)) {
             $_SESSION['email_account'] = $email;
             // for reservation
             $_SESSION['customer_id'] = $account['customer_id'];
-            $_SESSION['fname'] = $account['first_name'];
-            $_SESSION['lname'] = $account['last_name'];
+            $_SESSION['acc_fname'] = $account['first_name'];
+            $_SESSION['acc_lname'] = $account['last_name'];
             mysqli_stmt_close($stmt);
 
             $_SESSION['loginSuccess'] = "Login successful";
