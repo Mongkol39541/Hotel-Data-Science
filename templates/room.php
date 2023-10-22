@@ -40,6 +40,7 @@ $selectRoomType = mysqli_query($conn, $sql);
         }
     </style>
 </head>
+
 <body>
     <?php
     if(

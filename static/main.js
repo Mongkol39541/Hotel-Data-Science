@@ -1,15 +1,3 @@
-const check = document.querySelector("#check_show_password");
-const password = document.querySelector("#password");
-check.addEventListener("click", togglePassword);
-
-function togglePassword() {
-    if (check.checked) {
-        password.type = "text";
-    } else {
-        password.type = "password";
-    }
-}
-
 document.querySelector('#roomsDropdownindex, #roomsDropdown').addEventListener('click', function (e) {
     e.stopPropagation();
     if (this.id === 'roomsDropdownindex') {
@@ -201,6 +189,18 @@ function validateSignupForm() {
         return false;
     }
 
+}
+
+const check = document.querySelector("#check_show_password");
+const password = document.querySelector("#password");
+check.addEventListener("click", togglePassword);
+
+function togglePassword() {
+    if (check.checked) {
+        password.type = "text";
+    } else {
+        password.type = "password";
+    }
 }
 
 

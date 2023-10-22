@@ -65,32 +65,6 @@
           <i class="fas fa-bars"></i>
         </button>
         <div class="collapse navbar-collapse" id="navbarButtonsExample">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li id="firstmenu" class="nav-item mx-2">
-              <a class="nav-link" href="account.php">Home</a>
-            </li>
-            <li class="nav-item dropdown mx-2">
-              <a class="nav-link dropdown-toggle" id="roomsDropdown" role="button" data-mdb-toggle="dropdown"
-                aria-expanded="false">
-                Rooms
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <?php
-            if (mysqli_num_rows($selectRoomType) > 0) {
-              while($row = mysqli_fetch_row($selectRoomType)) {
-                echo '<li><a class="dropdown-item" href="roomdetail.php?type='.$row[0].'">'.$row[0].'</a></li>';
-              }
-            }
-            ?>
-              </ul>
-            </li>
-            <li class="nav-item mx-2">
-              <a class="nav-link" href="discover.php">Discover</a>
-            </li>
-            <li class="nav-item mx-2">
-              <a class="nav-link" href="contact.php">Contact</a>
-            </li>
-          </ul>
           <div class="d-flex align-items-center">
             <div class="btn-group shadow-none me-4 user-nav">
               <a role="button" class="dropdown-toggle text-dark" data-mdb-toggle="dropdown" aria-expanded="false">

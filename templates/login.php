@@ -22,22 +22,32 @@ if (empty($email) || empty($password)) {
     $_SESSION['loginError'] = 'Invalid email, please try again';
     header('Location: ../index.php');
 } else {
-    $select_sql = "SELECT * FROM member WHERE email = ?";
+    $select_sql = "SELECT * 
+    FROM member m
+    JOIN customer c
+    ON (m.member_id = c.member_id)
+    WHERE email = ?";
     $stmt = mysqli_prepare($conn, $select_sql);
     mysqli_stmt_bind_param($stmt, "s", $email);
     mysqli_stmt_execute($stmt);
     $selectData = mysqli_stmt_get_result($stmt);
-    if(mysqli_num_rows($selectData) == 1){
+    $select_sql0 = "SELECT * FROM member WHERE email = ?";
+    $stmt0 = mysqli_prepare($conn, $select_sql0);
+    mysqli_stmt_bind_param($stmt0, "s", $email);
+    mysqli_stmt_execute($stmt0);
+    $selectData0 = mysqli_stmt_get_result($stmt0);
+    if(mysqli_num_rows($selectData) == 1 || mysqli_num_rows($selectData0) == 1){
         $account = mysqli_fetch_assoc($selectData);
-        $checkPassword = $account['password'];
-        $password = $password.$account['salt_password'];
+        $account0 = mysqli_fetch_assoc($selectData0);
+        $checkPassword = $account0['password'];
+        $password = $password.$account0['salt_password'];
         if(password_verify($password, $checkPassword)){
-            $_SESSION["id_account"] = $account["member_id"];
-            $_SESSION['role_account'] = $account['role'];
+            $_SESSION["id_account"] = $account0["member_id"];
+            $_SESSION['role_account'] = $account0['role'];
             $_SESSION['acc_email_account'] = $email;
             $_SESSION['customer_id'] = $account['customer_id'];
-            $_SESSION['acc_fname'] = $account['first_name'];
-            $_SESSION['acc_lname'] = $account['last_name'];
+            $_SESSION['acc_fname'] = $account0['first_name'];
+            $_SESSION['acc_lname'] = $account0['last_name'];
             $_SESSION['loginSuccess'] = "Login successful";
             mysqli_stmt_close($stmt);
             if ($_SESSION['role_account'] == 'customer') {
