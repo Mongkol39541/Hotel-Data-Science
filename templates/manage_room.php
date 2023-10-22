@@ -604,7 +604,7 @@
                                 <h5 class="modal-title">Are you sure?</h5>
                             </div>
                             <div class="modal-body text-center">
-                                <i class="fas fa-trash-can fa-3x text-danger"></i>
+                                <i class="fa-solid fa-xmark fa-5x text-danger"></i>
                                 <h5 class="modal-title mt-3 mx-5 bg-danger text-light rounded" id="textDelete"></h5>
                                 <input name="formID" type="text" id="outDelete" hidden />
                             </div>
