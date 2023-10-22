@@ -82,7 +82,7 @@ $selectRoomType = mysqli_query($conn, $sql);
                                 <li><a class="dropdown-item" href="account.php?logout=1"><i class="fas fa-arrow-right-to-bracket me-1"></i> Log out</a></li>
                             </ul>
                         </div>
-                        <a role="button" class="btn btn-secondary btn-lg px-3 me-2 book-nav" href="room.php">My Booking</a>
+                        <a role="button" class="btn btn-secondary btn-lg px-3 me-2 book-nav" href="showres_room_detail.php">My Booking</a>
                     </div>
                 </div>
             </div>

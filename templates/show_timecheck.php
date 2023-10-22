@@ -1,8 +1,9 @@
 <?php
 session_start();
+$res_id = $_SESSION['res_id'];
 $roomtype = $_SESSION['roomtype'];
 $bedtype = $_SESSION['bedtype'];
-$date = $_POST['datefilter'];
+$date = $_POST['date_editor'];
 
 ?>
 <?php
@@ -15,14 +16,6 @@ $conn = mysqli_connect($servername, $username, $password, $dbname);
 <?php
 if (empty($date)) {
     echo '<div class="text-danger">Please select check-in/check out dates.</div>';
-    echo "<script>
-    $('#use-member-address').prop('disabled',true);
-    $('#fname').prop('disabled',true);
-    $('#lname').prop('disabled',true);
-    $('#email').prop('disabled',true);
-    $('#phone').prop('disabled',true);
-    $('#submit').prop('disabled',true);
-    </script>";
 } else {
     $date_explode = explode('-', $date);
     $date_check_in = $date_explode[0];
@@ -56,30 +49,15 @@ if (empty($date)) {
             $designated_room = null;
         } else {
             $designated_room = $row['room_id'];
-        } 
+        }
+        
         ?>
         <?php
         $roomchecking = array($designated_room);
         if (is_null($designated_room)) {
             echo '<div class="text-danger">This room is not available.</div>';
-            echo "<script>
-                $('#use-member-address').prop('disabled',true);
-                $('#fname').prop('disabled',true);
-                $('#lname').prop('disabled',true);
-                $('#email').prop('disabled',true);
-                $('#phone').prop('disabled',true);
-                $('#submit').prop('disabled',true);
-                </script>";
         } else {
             echo '<div class="text-success">This room is available.</div>';
-            echo "<script>
-                $('#use-member-address').prop('disabled',false);
-                $('#fname').prop('disabled',false);
-                $('#lname').prop('disabled',false);
-                $('#email').prop('disabled',false);
-                $('#phone').prop('disabled',false);
-                $('#submit').prop('disabled',false);
-                </script>";
             $_SESSION['designated_room'] = $designated_room;
             $_SESSION['check_in'] = $check_in_final;
             $_SESSION['check_out'] = $check_out_final;
