@@ -117,13 +117,13 @@ $selectRoomType = mysqli_query($conn, $sql);
         <div class="mask" style="background-color: rgba(0, 0, 0, 0.2);">
         <div class="d-flex justify-content-center align-items-center h-100">
             <div class="text-white">
-            <h1 class="fw-bold" style="font-size: 3rem;">My Booking</h1>
+            <h1 class="" style="font-size: 3rem;">MY BOOKING</h1>
             </div>
         </div>
         </div>
     </div>
     <!-- Background image -->
-    <div class='mb-3 text-center'>
+    <div class='mb-5 text-center'>
         <button type="button" class="btn btn-primary" onclick="window.location.href='past_showres.php'">
             Show past reseravtion
         </button>
@@ -170,7 +170,7 @@ $selectRoomType = mysqli_query($conn, $sql);
                 echo '<div>' . $row['room_type'] . ' ' . $row['bed_type'] . '</div>';
                 echo '<div>Check in: ' . $row['check_in'] . '</div>';
                 echo '<div>Check out: ' . $row['check_out'] . '</div>';
-                echo '<button type="button" class="btn btn-primary">Show details</button>';
+                echo '<a type="button" class="btn btn-primary" href="showres_room_detail.php?res_id='.$row['reserve_id'] .'">Show details</a>';
                 echo '</div>';
                 echo '</div>';
             }

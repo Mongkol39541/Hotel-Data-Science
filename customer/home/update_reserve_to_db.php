@@ -63,9 +63,9 @@ $res_id_sql_result = mysqli_fetch_assoc($result_res); //idk how this works, but 
 $res_id_num_result = substr($res_id_sql_result['reserve_id'], 3);
 // final RES_ID
 $new_res_id = 'RES' . str_pad(strval($res_id_num_result + 1), 3, '0', STR_PAD_LEFT);
-$res_sql = "INSERT INTO reservation VALUES (?, ?, ?, ?, ?, ?);";
+$res_sql = "INSERT INTO reservation VALUES (?, ?, ?, ?, ?);";
 $insert_res = mysqli_prepare($conn, $res_sql);
-mysqli_stmt_bind_param($insert_res, "ssssss", $new_res_id, $date_now, $roomtype, $check_in_final, $check_out_final, $designated_room);
+mysqli_stmt_bind_param($insert_res, "sssss", $new_res_id, $date_now, $check_in_final, $check_out_final, $designated_room);
 mysqli_stmt_execute($insert_res);
 ?>
 

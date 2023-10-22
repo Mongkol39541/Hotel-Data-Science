@@ -142,7 +142,7 @@ if(isset($_POST['bed'])) {
     <main style="margin-top: 100px">
     <div class='container'>
         <div class='row justify-content-center gap-4'>
-            <div class='h-50 card border border-secondary border-1 mb-2 col-md-5'>
+            <div class='card border border-secondary border-1 mb-2 col-md-5'>
                 <img src="<?php echo $room_img?>" class="card-img-top" alt="room-img"/>
                 <div class='card-body'>
                     <h3 class="card-title mb-2"><?php echo $roomtype . ' ' . $bedtype?></h3>
@@ -157,7 +157,7 @@ if(isset($_POST['bed'])) {
                     </div>
                 </div>
             </div>
-            <div class='card border border-secondary border-1 col-md-5'>
+            <div class='card border border-secondary border-1 col-md-5 h-50'>
                 <h3 class='card-header mt-3 text-center'>Your details</h3>
                 <hr>
                 <form  id='reservation' method="post" action='payment.php' novalidate class='.needs-validation'>
@@ -210,12 +210,6 @@ if(isset($_POST['bed'])) {
                                 <input type="email" class='form-control' name="email" id="email" placeholder='Email' required>
                                 <div class="invalid-feedback">
                                     Please provide an email.
-                                </div>
-                            </div>
-                            <div class='mb-4'>
-                                <textarea name="address" class='form-control' id="address" cols="30" rows="5" placeholder='Address' required></textarea>
-                                <div class="invalid-feedback">
-                                    Please provide an address.
                                 </div>
                             </div>
                             <div class='mb-4'>

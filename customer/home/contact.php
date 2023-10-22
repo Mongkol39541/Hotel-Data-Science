@@ -124,7 +124,8 @@ $selectRoomType = mysqli_query($conn, $sql);
         <div class="mask" style="background-color: rgba(0, 0, 0, 0.2);">
         <div class="d-flex justify-content-center align-items-center h-100">
             <div class="text-white">
-            <h1 class="fw-bold" style="font-size: 3rem;">DISCOVER</h1>
+                <!-- มึงลืมแก้ตรงนี้พิมดาว ไอสัส -->
+            <h1 class="fw-bold" style="font-size: 3rem;">CONTACT</h1>
             </div>
         </div>
         </div>

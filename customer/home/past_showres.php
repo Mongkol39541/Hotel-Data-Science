@@ -123,7 +123,7 @@ $selectRoomType = mysqli_query($conn, $sql);
         </div>
     </div>
     <!-- Background image -->
-    <div class='mb-3 text-center'>
+    <div class='mb-5 text-center'>
         <button type="button" class="btn btn-primary" onclick="window.location.href='showres.php'">
             Show upcoming reseravtion
         </button>
@@ -158,6 +158,7 @@ $selectRoomType = mysqli_query($conn, $sql);
             WHERE customer_id = '$customer_id' AND check_in < CAST(NOW() AS DATE);";
             $result = mysqli_query($conn, $sql);
             while($row = mysqli_fetch_assoc($result)) {
+                $reserve_id = $row['reserve_id'];
                 echo '<div class="row">';
                 echo '<div class="col-md-4 mb-4">';
                 echo '<div class="bg-image hover-overlay shadow-1-strong rounded ripple" data-mdb-ripple-color="light">';
@@ -170,7 +171,7 @@ $selectRoomType = mysqli_query($conn, $sql);
                 echo '<div>' . $row['room_type'] . ' ' . $row['bed_type'] . '</div>';
                 echo '<div>Check in: ' . $row['check_in'] . '</div>';
                 echo '<div>Check out: ' . $row['check_out'] . '</div>';
-                echo '<button type="button" class="btn btn-primary">Show details</button>';
+                echo '<a type="button" class="btn btn-primary" href="showres_room_detail.php?res_id='.$row['reserve_id'] .'">Show details</a>';
                 echo '</div>';
                 echo '</div>';
             }
