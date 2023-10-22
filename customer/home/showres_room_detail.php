@@ -281,30 +281,33 @@ $selectRoomType = mysqli_query($conn, $sql);
     <main style="margin-top: 100px">
         <div class='container'>
             <div class='row justify-content-center gap-4'>
-                <div class='card border border-secondary border-1 mb-2 col-md-5'>
-                    <img src="<?php echo $room_img?>" class="card-img-top" alt="room-img"/>
-                    <div class='card-body'>
-                        <h3 class="card-title mb-2"><?php echo $roomtype . ' ' . $bedtype?></h3>
-                        <div class='mb-2'>
-                            <p class='card-text'><?php echo $desc?></p>
-                        </div>
-                        <div>
-                            <p class='card-text'>Room size: <?php echo $size?> SQM</p>
-                        </div>
-                        <div class='mb-2'>
-                            <p class='card-text'>Price per night: <?php echo $price_per_night?> THB</p>
-                        </div>
-                        <div>
-                            <p class='card-text fw-bold'>Reservation Made: <?php echo $res_made?></p>
-                        </div>
-                        <div>
-                            <p class='card-text fw-bold'>Total Price: <?php echo $total_paid?> THB</p>
+                <div class='col-md-5 mb-2>'>
+                    <div class='card border border-secondary border-1'>
+                        <img src="<?php echo $room_img?>" class="card-img-top" alt="room-img"/>
+                        <div class='card-body'>
+                            <h3 class="card-title mb-2"><?php echo $roomtype . ' ' . $bedtype?></h3>
+                            <div class='mb-2'>
+                                <p class='card-text'><?php echo $desc?></p>
+                            </div>
+                            <div>
+                                <p class='card-text'>Room size: <?php echo $size?> SQM</p>
+                            </div>
+                            <div class='mb-2'>
+                                <p class='card-text'>Price per night: <?php echo $price_per_night?> THB</p>
+                            </div>
+                            <div>
+                                <p class='card-text fw-bold'>Reservation Made: <?php echo $res_made?></p>
+                            </div>
+                            <div>
+                                <p class='card-text fw-bold'>Total Price: <?php echo $total_paid?> THB</p>
+                            </div>
                         </div>
                     </div>
                 </div>
+
                 <div class='card border border-secondary border-1 col-md-5 h-50'>
                     <h3 class='card-header mt-3 text-center'>Your details</h3>
-                    <hr>
+                    <br>
                     <form method="post" action='' novalidate class='.needs-validation'>
                     <div clas='card-body'>
                         <div class='card-text'>
