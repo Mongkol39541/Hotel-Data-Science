@@ -144,6 +144,140 @@ $selectRoomType = mysqli_query($conn, $sql);
     $check_in_final = str_replace('-','/',$check_in);
     $check_out_final = str_replace('-','/',$check_out);
     ?>
+
+    <?php
+    if(isset($_POST['update'])) {
+        $fname = $_POST['fname'];
+        $lname = $_POST['lname'];
+        $res_email = $_POST['email'];
+        $phone = $_POST['phone'];
+        $check_in_final = $_SESSION['check_in'];
+        $check_out_final = $_SESSION['check_out'];
+        $sql = "UPDATE guest SET first_name = '$fname', last_name = '$lname', email = '$res_email', phone = '$phone' WHERE reserve_id = '$res_id'";
+        $sql1 = "UPDATE reservation SET check_in = '$check_in_final', check_out = '$check_out_final' WHERE reserve_id = '$res_id'";
+        try {
+            if ($conn->query($sql) and $conn->query($sql1)) {
+                $text = 'ID: ' . $res_id . ' 🎉 <strong>Congratulations, you have successfully updated your room information.</strong>';
+                echo <<<EOT
+                    <script>
+                        var alertDiv = document.createElement('div');
+                        alertDiv.classList.add('alert', 'alert-success', 'position-fixed');
+                        alertDiv.style.top = '50%';
+                        alertDiv.style.left = '50%';
+                        alertDiv.style.transform = 'translate(-50%, -50%)';
+                        alertDiv.style.zIndex = '102';
+                        alertDiv.setAttribute('role', 'alert');
+                        alertDiv.setAttribute('data-mdb-color', 'success');
+                        alertDiv.setAttribute('data-mdb-offset', '20');
+                        alertDiv.innerHTML = `
+                            <i class="fas fa-check me-2"></i> {$text}
+                        `;
+                        document.body.appendChild(alertDiv);
+                        setTimeout(function() {
+                            alertDiv.remove();
+                        }, 4000);
+                    </script>
+                    EOT;
+            }
+        } catch (mysqli_sql_exception $e) {
+            $text = "Error: " . $sql . "<br>" . $conn->error;
+            echo <<<EOT
+                <script>
+                    var alertDiv = document.createElement('div');
+                    alertDiv.classList.add('alert', 'alert-danger', 'position-fixed');
+                    alertDiv.style.top = '50%';
+                    alertDiv.style.left = '50%';
+                    alertDiv.style.transform = 'translate(-50%, -50%)';
+                    alertDiv.style.zIndex = '102';
+                    alertDiv.setAttribute('role', 'alert');
+                    alertDiv.setAttribute('data-mdb-color', 'danger');
+                    alertDiv.setAttribute('data-mdb-offset', '20');
+                    alertDiv.innerHTML = `
+                        <i class="fas fa-check me-2"></i> {$text}
+                    `;
+                    document.body.appendChild(alertDiv);
+                    setTimeout(function() {
+                        alertDiv.remove();
+                    }, 4000);
+                </script>
+                EOT;
+        }
+    } elseif (isset($_POST['delete'])) {
+        $sql = "DELETE FROM transaction WHERE reserve_id  = '$res_id';";
+        $sql1 = "DELETE FROM reservation WHERE reserve_id = '$res_id';";
+        $sql2 = "DELETE FROM guest WHERE reserve_id = '$res_id';";
+        try {
+            if ($conn->query($sql) && $conn->query($sql1) && $conn->query($sql2)) {
+                $text = 'ID: ' . $res_id . ' 🎉 <strong>Congratulations, you have successfully delete your room information.</strong>';
+                echo <<<EOT
+                    <script>
+                        var alertDiv = document.createElement('div');
+                        alertDiv.classList.add('alert', 'alert-success', 'position-fixed');
+                        alertDiv.style.top = '50%';
+                        alertDiv.style.left = '50%';
+                        alertDiv.style.transform = 'translate(-50%, -50%)';
+                        alertDiv.style.zIndex = '102';
+                        alertDiv.setAttribute('role', 'alert');
+                        alertDiv.setAttribute('data-mdb-color', 'success');
+                        alertDiv.setAttribute('data-mdb-offset', '20');
+                        alertDiv.innerHTML = `
+                            <i class="fas fa-check me-2"></i> {$text}
+                        `;
+                        document.body.appendChild(alertDiv);
+                        setTimeout(function() {
+                            alertDiv.remove();
+                            window.location.href = 'showres.php';
+                        }, 4000);
+                    </script>
+                    EOT;
+            }
+        } catch (mysqli_sql_exception $e) {
+            $text = "Error: " . $sql . "<br>" . $conn->error;
+            echo <<<EOT
+                    <script>
+                        var alertDiv = document.createElement('div');
+                        alertDiv.classList.add('alert', 'alert-danger', 'position-fixed');
+                        alertDiv.style.top = '50%';
+                        alertDiv.style.left = '50%';
+                        alertDiv.style.transform = 'translate(-50%, -50%)';
+                        alertDiv.style.zIndex = '102';
+                        alertDiv.setAttribute('role', 'alert');
+                        alertDiv.setAttribute('data-mdb-color', 'success');
+                        alertDiv.setAttribute('data-mdb-offset', '20');
+                        alertDiv.innerHTML = `
+                            <i class="fas fa-check me-2"></i> {$text}
+                        `;
+                        document.body.appendChild(alertDiv);
+                        setTimeout(function() {
+                            alertDiv.remove();
+                        }, 4000);
+                    </script>
+                    EOT;
+        }
+    }
+    ?>
+
+    <div class="modal top fade" id="DeleteModal" tabindex="-1" aria-hidden="true" data-mdb-backdrop="true" data-mdb-keyboard="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <form enctype="multipart/form-data" action="" method="POST">
+                    <div class="modal-header bg-danger text-light d-flex justify-content-center align-items-center">
+                        <h5 class="modal-title">Are you sure?</h5>
+                    </div>
+                    <div class="modal-body text-center">
+                        <i class="fa-solid fa-xmark fa-5x text-danger"></i>
+                        <h5 class="modal-title mt-3 mx-4 bg-danger text-light rounded">Delete ID #<?php echo $res_id?></h5>
+                        <input name="formID" type="text" id="outDelete" hidden />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-mdb-dismiss="modal">No</button>
+                        <button type="submit" class="btn btn-outline-danger" name="delete">Yes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <main style="margin-top: 100px">
         <div class='container'>
             <div class='row justify-content-center gap-4'>
@@ -155,7 +289,7 @@ $selectRoomType = mysqli_query($conn, $sql);
                             <p class='card-text'><?php echo $desc?></p>
                         </div>
                         <div>
-                            <p class='card-text'>Room size: <?php echo $size?></p>
+                            <p class='card-text'>Room size: <?php echo $size?> SQM</p>
                         </div>
                         <div class='mb-2'>
                             <p class='card-text'>Price per night: <?php echo $price_per_night?> THB</p>
@@ -186,6 +320,7 @@ $selectRoomType = mysqli_query($conn, $sql);
                                     <div class='mb-3' id='date_button' name='date_button'>
                                         <button type="button" onclick='datecheck(document.getElementById("date_editor").value);'
                                         class="btn btn-primary" id="confirm_date" name="confirm_date" id="confirm_date" disabled>Confirm date</button>
+                                        <input type="text" id="confirm_hidden" value="" hidden>
                                     </div>
                                     <div name='result' id='result'>
                                     </div>
@@ -195,17 +330,19 @@ $selectRoomType = mysqli_query($conn, $sql);
                                 <label for="use-member-address">Use member address</label>
                             </div>
                             <div id='guest-info'>
-                                <div class='row mb-3'>
-                                    <div class ='col-md-6'>
+                                <div class='row'>
+                                    <div class ='col-md-6 mb-3'>
                                         <input type="text" class='form-control' name="fname" id="fname" placeholder='First Name' 
                                         value='<?php echo $fname ?>' required disabled>
+                                        <input type="text" id="fname_hidden" value='<?php echo $fname ?>' hidden>
                                         <div class='invalid-feedback'>
                                             Please enter a First Name.
                                         </div>
                                     </div>  
-                                    <div class ='col-md-6'>
+                                    <div class ='col-md-6 mb-3'>
                                         <input type="text" class='form-control' name="lname" id="lname" placeholder='Last Name' 
                                         value='<?php echo $lname ?>' required disabled>
+                                        <input type="text" id="lname_hidden" value='<?php echo $lname ?>' hidden>
                                         <div class="invalid-feedback">
                                             Please enter a Last Name.
                                         </div>
@@ -214,6 +351,7 @@ $selectRoomType = mysqli_query($conn, $sql);
                                 <div class='mb-4'>
                                     <input type="tel" class='form-control' name="phone" id="phone" placeholder='Phone' 
                                     value='<?php echo $phone ?>'required disabled>
+                                    <input type="text" id="phone_hidden" value='<?php echo $phone ?>' hidden>
                                     <div class="invalid-feedback">
                                         Please provide a phone number.
                                     </div>
@@ -221,17 +359,15 @@ $selectRoomType = mysqli_query($conn, $sql);
                                 <div class='mb-4'>
                                     <input type="email" class='form-control' name="email" id="email" placeholder='Email' 
                                     value='<?php echo $res_email ?>'required disabled>
+                                    <input type="text" id="email_hidden" value='<?php echo $res_email ?>' hidden>
                                     <div class="invalid-feedback">
                                         Please provide an email.
                                     </div>
                                 </div>
-                                <div class='mb-4'>
-                                    <button type="submit" class="btn btn-success text-light" name="update" id="update" disabled>Update Reservation</button>
-                                </div>
-                                <div class='mb-4' name='lowest_button' id='lowest_button'>
-                                    <button type="button" class="btn btn-primary" name="edit" id="edit" onclick='edit_info()'>Edit Information</button>
-                                    <button type="button" class="btn btn-danger" name="delete" id="delete">Delete Reservation</button>
-                                </div>
+                                <button type="button" class="btn btn-light mb-3" name="cancel" id="cancel" onclick='cancel_info()' hidden>Cancel Edit</button>
+                                <button type="submit" class="btn btn-dark mb-3" name="update" id="update" hidden>Update Reservation</button>
+                                <button type="button" class="btn btn-warning mb-3" name="edit" id="edit" onclick='edit_info()'>Edit Information</button>
+                                <button type="button" class="btn btn-danger mb-3" id="delete" data-mdb-toggle="modal" data-mdb-target="#DeleteModal">Delete Reservation</button>
                             </div>
                         </div>
                     </div>
@@ -240,116 +376,6 @@ $selectRoomType = mysqli_query($conn, $sql);
         </div>
         </form>
     </main>
-
-    <?php
-    if(isset($_POST['update'])) {
-        $sql = "UPDATE guest SET first_name = '$fname', last_name = '$lname', email = '$email', phone = '$phone' WHERE reserve_id = '$reserve_id'";
-        $sql1 = "UPDATE reservation SET check_in = '$check_in_final', check_out = '$check_out_final' WHERE reserve_id = '$reserve_id'";
-        try {
-            if ($conn->query($sql) and $conn->query($sql1)) {
-                $text = 'ID: ' . $reserve_id . ' 🎉 <strong>Congratulations, you have successfully updated your room information.</strong>';
-                echo <<<EOT
-                    <script>
-                        var alertDiv = document.createElement('div');
-                        alertDiv.classList.add('alert', 'alert-success', 'position-fixed');
-                        alertDiv.style.top = '50%';
-                        alertDiv.style.left = '50%';
-                        alertDiv.style.transform = 'translate(-50%, -50%)';
-                        alertDiv.style.zIndex = '102';
-                        alertDiv.setAttribute('role', 'alert');
-                        alertDiv.setAttribute('data-mdb-color', 'success');
-                        alertDiv.setAttribute('data-mdb-offset', '20');
-                        alertDiv.innerHTML = `
-                            <i class="fas fa-check me-2"></i> {$text}
-                        `;
-
-                        document.body.appendChild(alertDiv);
-                        setTimeout(function() {
-                            alertDiv.remove();
-                        }, 5000);
-                    </script>
-                    EOT;
-            }
-        } catch (mysqli_sql_exception $e) {
-            $text = "Error: " . $sql . "<br>" . $conn->error;
-            echo <<<EOT
-                <script>
-                    var alertDiv = document.createElement('div');
-                    alertDiv.classList.add('alert', 'alert-danger', 'position-fixed');
-                    alertDiv.style.top = '50%';
-                    alertDiv.style.left = '50%';
-                    alertDiv.style.transform = 'translate(-50%, -50%)';
-                    alertDiv.style.zIndex = '102';
-                    alertDiv.setAttribute('role', 'alert');
-                    alertDiv.setAttribute('data-mdb-color', 'danger');
-                    alertDiv.setAttribute('data-mdb-offset', '20');
-                    alertDiv.innerHTML = `
-                        <i class="fas fa-check me-2"></i> {$text}
-                    `;
-
-                    document.body.appendChild(alertDiv);
-                    setTimeout(function() {
-                        alertDiv.remove();
-                    }, 5000);
-                </script>
-                EOT;
-        }
-        mysqli_close($conn);
-        die(header("Location: showres.php"));
-    } elseif ($chang == "Delete") {
-        $sql = "DELETE FROM room WHERE room_id = '$randomID'";
-        try {
-            if ($conn->query($sql)) {
-                $text = 'ID: ' . $reserve_id . ' 🎉 <strong>Congratulations, you have successfully delete your room information.</strong>';
-                echo <<<EOT
-                    <script>
-                        var alertDiv = document.createElement('div');
-                        alertDiv.classList.add('alert', 'alert-success', 'position-fixed');
-                        alertDiv.style.top = '50%';
-                        alertDiv.style.left = '50%';
-                        alertDiv.style.transform = 'translate(-50%, -50%)';
-                        alertDiv.style.zIndex = '102';
-                        alertDiv.setAttribute('role', 'alert');
-                        alertDiv.setAttribute('data-mdb-color', 'success');
-                        alertDiv.setAttribute('data-mdb-offset', '20');
-                        alertDiv.innerHTML = `
-                            <i class="fas fa-check me-2"></i> {$text}
-                        `;
-
-                        document.body.appendChild(alertDiv);
-                        setTimeout(function() {
-                            alertDiv.remove();
-                        }, 5000);
-                    </script>
-                    EOT;
-            }
-        } catch (mysqli_sql_exception $e) {
-            $text = "Error: " . $sql . "<br>" . $conn->error;
-            echo <<<EOT
-                <script>
-                    var alertDiv = document.createElement('div');
-                    alertDiv.classList.add('alert', 'alert-danger', 'position-fixed');
-                    alertDiv.style.top = '50%';
-                    alertDiv.style.left = '50%';
-                    alertDiv.style.transform = 'translate(-50%, -50%)';
-                    alertDiv.style.zIndex = '102';
-                    alertDiv.setAttribute('role', 'alert');
-                    alertDiv.setAttribute('data-mdb-color', 'danger');
-                    alertDiv.setAttribute('data-mdb-offset', '20');
-                    alertDiv.innerHTML = `
-                        <i class="fas fa-check me-2"></i> {$text}
-                    `;
-
-                    document.body.appendChild(alertDiv);
-                    setTimeout(function() {
-                        alertDiv.remove();
-                    }, 5000);
-                </script>
-                EOT;
-        }
-        mysqli_close($conn);
-    }
-    ?>
 
     <footer class="py-2 mx-5 my-4 border-top">
         <p class="text-center text-body-secondary">© 2023 ISAD, KMITL</p>
