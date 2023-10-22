@@ -138,9 +138,28 @@ $interval = $date1->diff($date2);
         <div class='text-center'>
             <img src="img/green_checkmark.png" alt="" class='img-fluid'>
         </div>
-        <div>
-
+        
+        <center>
+        <div class="card p-3 mt-2 ml-3 mr-3">
+            <div class="card-body">
+                <div id="calendarContainer">
+                    <div id="calendarHeader">
+                        <div class="row">
+                            <div class="col">
+                                <button id="prevMonth" class="btn btn-primary">Prev. Month</button>
+                            </div>
+                            <div class="col">
+                                <h3 id="currentMonth"></h3>
+                            </div>
+                            <div class="col">
+                                <button id="nextMonth" class="btn btn-primary">Next Month</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+        </center>    
     </main>
 
     <footer class="py-2 mx-5 my-4 border-top">
