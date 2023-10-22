@@ -21,6 +21,14 @@ $conn = mysqli_connect($servername, $username, $password, $dbname);
 <?php
 if (empty($date)) {
     echo '<div class="text-danger">Please select check-in/check out dates.</div>';
+    echo "<script>
+    $('#use-member-address').prop('disabled',true);
+    $('#fname').prop('disabled',true);
+    $('#lname').prop('disabled',true);
+    $('#email').prop('disabled',true);
+    $('#phone').prop('disabled',true);
+    $('#submit').prop('disabled',true);
+    </script>";
 } else {
     //gather all the room and reservation information
     // get date from reservation
@@ -67,8 +75,24 @@ if (empty($date)) {
         $roomchecking = array($designated_room);
         if (is_null($designated_room)) {
             echo '<div class="text-danger">This room is not available.</div>';
+            echo "<script>
+                $('#use-member-address').prop('disabled',true);
+                $('#fname').prop('disabled',true);
+                $('#lname').prop('disabled',true);
+                $('#email').prop('disabled',true);
+                $('#phone').prop('disabled',true);
+                $('#submit').prop('disabled',true);
+                </script>";
         } else {
             echo '<div class="text-success">This room is available.</div>';
+            echo "<script>
+                $('#use-member-address').prop('disabled',false);
+                $('#fname').prop('disabled',false);
+                $('#lname').prop('disabled',false);
+                $('#email').prop('disabled',false);
+                $('#phone').prop('disabled',false);
+                $('#submit').prop('disabled',false);
+                </script>";
             $_SESSION['designated_room'] = $designated_room;
             $_SESSION['check_in'] = $check_in_final;
             $_SESSION['check_out'] = $check_out_final;

@@ -337,39 +337,39 @@ if(isset($_POST['bed'])) {
                             </div>
                         <!-- use member address instead -->
                         <div class='form-check mb-2'>
-                            <input type="checkbox" class="form-check-input" id="use-member-address" name="use-member-address">
+                            <input type="checkbox" class="form-check-input" id="use-member-address" name="use-member-address" disabled>
                             <label for="use-member-address">Use member address</label>
                         </div>
                         <!-- information will be sent to guestdb later -->
                         <div id='guest-info'>
                             <div class='row mb-3'>
                                 <div class ='col-md-6'>
-                                    <input type="text" class='form-control' name="fname" id="fname" placeholder='First Name' required>
+                                    <input type="text" class='form-control' name="fname" id="fname" placeholder='First Name' required disabled>
                                     <div class='invalid-feedback'>
                                         Please enter a First Name.
                                     </div>
                                 </div>  
                                 <div class ='col-md-6'>
-                                    <input type="text" class='form-control' name="lname" id="lname" placeholder='Last Name' required>
+                                    <input type="text" class='form-control' name="lname" id="lname" placeholder='Last Name' required disabled>
                                     <div class="invalid-feedback">
                                         Please enter a Last Name.
                                     </div>
                                 </div>
                             </div>
                             <div class='mb-4'>
-                                <input type="tel" class='form-control' name="phone" id="phone" placeholder='Phone' required>
+                                <input type="tel" class='form-control' name="phone" id="phone" placeholder='Phone' required disabled>
                                 <div class="invalid-feedback">
                                     Please provide a phone number.
                                 </div>
                             </div>
                             <div class='mb-4'>
-                                <input type="email" class='form-control' name="email" id="email" placeholder='Email' required>
+                                <input type="email" class='form-control' name="email" id="email" placeholder='Email' required disabled>
                                 <div class="invalid-feedback">
                                     Please provide an email.
                                 </div>
                             </div>
                             <div class='mb-4'>
-                                <button type="submit" class="btn btn-primary" name="submit" id="submit">Submit</button>
+                                <button type="submit" class="btn btn-primary" name="submit" id="submit" disabled>Submit</button>
                             </div>
                         </div>
                     </div>
