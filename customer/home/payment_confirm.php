@@ -140,26 +140,54 @@ $interval = $date1->diff($date2);
         </div>
         
         <center>
-        <div class="card p-3 mt-2 ml-3 mr-3">
+        <div class="card w-50 mt-3">
+            <div class="card-header">
+                <h4>Receipt</h4>
+            </div>
             <div class="card-body">
-                <div id="calendarContainer">
-                    <div id="calendarHeader">
-                        <div class="row">
-                            <div class="col">
-                                <button id="prevMonth" class="btn btn-primary">Prev. Month</button>
-                            </div>
-                            <div class="col">
-                                <h3 id="currentMonth"></h3>
-                            </div>
-                            <div class="col">
-                                <button id="nextMonth" class="btn btn-primary">Next Month</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <?php
+                $sql_2 = "SELECT * FROM room WHERE room_id = '$designated_room';";
+                $result_2 = mysqli_query($conn, $sql_2);
+                $col = mysqli_fetch_assoc($result_2);
+                echo '<div class="row px-5 mt-3">';
+                echo '<div class="col" id="animation4">';
+                echo '<div class="card">';
+                echo '<img src="'.$col["room_img"].'" class="card-img-top">';
+                echo '<div class="card-body">';
+                echo '<h5 class="card-title">'.$col['room_id'].'</h5>';
+                echo '<p class="card-text">Room Type: '.$col['room_type'].'</p>';    
+                echo '<p class="card-text">Size: '.$col['size'].'</p>';    
+                echo '<p class="card-text">Bed Type: '.$col['bed_type'].'</p>';    
+                echo '<p class="card-text">Price per Night: '.$col['price_per_night'].' ฿</p>';       
+                echo '</div></div></div>';
+               
+                echo '<div class="col mt-3" id="animation5">';
+
+                echo '<p class="text-start">Name-Surname: ' . $res_fname . 
+                    ' ' . $res_lname . '</p>';
+                echo '<p class="text-start">Email: ' . $res_email . '</p>';
+                echo '<p class="text-start">Phone: ' . $res_phone . '</p>';
+
+                $timestamp1 = strtotime($check_in_final);
+                $timestamp2 = strtotime($check_out_final);
+                $diff = $timestamp2 - $timestamp1;
+                $night = floor($diff / (60 * 60 * 24));
+
+                echo '<p class="text-start">Period: ' . $check_in_final .
+                    ' - ' . $check_out_final . '</p>';
+                echo '<p class="text-start">Night(s): '. $night .'</p>';
+                
+                echo '<p class="text-start">Time booking: ' . $date_now . '</p>';
+                echo '<p class="text-start">Total Room Charges: ' . $total_price . ' THB</p>';
+                echo '<p class="text-start">Total Tax Charges: ' . ($total_price * $tax) . ' THB</p>';
+                echo '<p class="text-start">Total Discount: ' . $discount . ' THB</p>';
+                echo '<p class="text-start"><b>Grand Total</b>: '.$final_room_pice.' THB</p>';
+                
+                echo '</div>';
+                ?>
             </div>
         </div>
-        </center>    
+        </center>
     </main>
 
     <footer class="py-2 mx-5 my-4 border-top">

@@ -124,7 +124,7 @@
           echo '<div class="card">';
           echo '<img src="'.$col["room_img"].'" class="card-img-top">';
           echo '<div class="card-body">';
-          echo '<h4 class="card-title">'.$col['room_id'].'</h5>';
+          echo '<h4 class="card-title">'.$col['room_id'].'</h4>';
           echo '<p class="card-text">Room Type: '.$col['room_type'].'</p>';    
           echo '<p class="card-text">Size: '.$col['size'].'</p>';    
           echo '<p class="card-text">Bed Type: '.$col['bed_type'].'</p>';    

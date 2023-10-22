@@ -298,24 +298,30 @@ if(isset($_POST['bed'])) {
 
     <div class='container mt-4'>
         <div class='row justify-content-center gap-4'>
-            <div class='card border border-secondary border-1 mb-2 col-md-5'>
-                <img src="<?php echo $room_img?>" class="card-img-top" alt="room-img"/>
-                <div class='card-body'>
-                    <h3 class="card-title mb-2"><?php echo $roomtype . ' ' . $bedtype?></h3>
-                    <div class='mb-2'>
-                        <p class='card-text'><?php echo $desc?></p>
-                    </div>
-                    <div>
-                        <p class='card-text'>Room size: <?php echo $size?></p>
-                    </div>
-                    <div>
-                        <p class='card-text'>Price per night: <?php echo $price_per_night?> THB</p>
+            <div class='mb-2 col-md-5'>
+                <div class="card border border-secondary border-1 ">
+                    <img src="<?php echo $room_img?>" class="card-img-top" alt="room-img"/>
+                    <div class='card-body'>
+                        <h3 class="card-title mb-2"><?php echo $roomtype . ' ' . $bedtype?></h3>
+                        <div class='mb-2'>
+                            <p class='card-text'><?php echo $desc?></p>
+                        </div>
+                        <div>
+                            <p class='card-text'>Room size: <?php echo $size?></p>
+                        </div>
+                        <div>
+                            <p class='card-text'>Price per night: <?php echo $price_per_night?> THB</p>
+                        </div>
                     </div>
                 </div>
             </div>
+
             <div class='card border border-secondary border-1 col-md-5 h-50'>
-                <h3 class='card-header mt-3 text-center'>Your details</h3>
-                <hr>
+                <div class='card-header'>
+                    <h3 class='text-center'>Your details</h3>
+                </div>
+
+                <br>
                 <form  id='reservation' method="post" action='payment.php' novalidate class='.needs-validation'>
                 <div clas='card-body'>
                     <div class='card-text'>
