@@ -34,9 +34,12 @@ if (empty($email) || empty($password)) {
         if(password_verify($password, $checkPassword)){
             $_SESSION["id_account"] = $account["member_id"];
             $_SESSION['role_account'] = $account['role'];
-            $_SESSION['email_account'] = $email;
-            mysqli_stmt_close($stmt);
+            $_SESSION['acc_email_account'] = $email;
+            $_SESSION['customer_id'] = $account['customer_id'];
+            $_SESSION['acc_fname'] = $account['first_name'];
+            $_SESSION['acc_lname'] = $account['last_name'];
             $_SESSION['loginSuccess'] = "Login successful";
+            mysqli_stmt_close($stmt);
             if ($_SESSION['role_account'] == 'customer') {
                 header('Location: account.php');
             } elseif ($_SESSION['role_account'] == 'owner' || $_SESSION['role_account'] == 'recep') {
