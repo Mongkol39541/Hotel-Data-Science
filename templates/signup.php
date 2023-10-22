@@ -57,7 +57,7 @@
             header("location: ../index.php");
 
         } elseif (!isset($_SESSION['error'])) {
-            $check_id_sql = "SELECT member_id FROM member ORDER BY member_id DESC LIMIT 1;";
+            $check_id_sql = "SELECT member_id FROM member ORDER BY CAST(SUBSTRING(member_id, 2) AS SIGNED) DESC;";
             $check_id = mysqli_query($conn, $check_id_sql);
             $check_id = mysqli_fetch_row($check_id);
             $mem_number = intval(substr($check_id[0], 1));

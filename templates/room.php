@@ -94,20 +94,28 @@ $selectRoomType = mysqli_query($conn, $sql);
                             <p class="card-text small ms-5">'.$roomDes.'</p>
                             </div>
                             <div class="d-md-flex justify-content-center mt-3 mx-5">';
-
                     $bed_sql = "SELECT DISTINCT bed_type FROM `room` WHERE room_type='$roomtype';";
                     $selectBedType = mysqli_query($conn, $bed_sql);
-                    echo '<div class="col-md-6 mb-3 me-3">
-                            <div class="btn-group shadow-none me-md-2 w-100">
-                        <a role="button" class="dropdown-toggle w-100 btn btn-outline-dark" data-mdb-toggle="dropdown" aria-expanded="false">
-                        Book Now</a>
-                        <ul class="dropdown-menu">';
-                    if (mysqli_num_rows($selectBedType) > 0) {
-                        while($bed = mysqli_fetch_row($selectBedType)) {
+                    echo '<div class="col-md-6 mb-3 me-3"><div class="btn-group shadow-none me-md-2 w-100">';
+                    if (mysqli_num_rows($selectBedType) > 1) {
+                            echo '<a role="button" class="dropdown-toggle w-100 btn btn-outline-dark" data-mdb-toggle="dropdown" aria-expanded="false">
+                                    Book Now
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                    <li class="disabled"><span class="dropdown-item-text">-- Select bed type --</span></li>';
+                            while($bed = mysqli_fetch_row($selectBedType)) {
+                                $bedtype = $bed[0];
+                                echo '<li><a class="dropdown-item" target="_blank" href="reservation.php?type='.$roomtype.'&bed='.$bedtype.'">'.$bedtype.'</a></li>';
+                            }
+                            echo '</ul>';
+        
+                        } else {
+                            $bed = mysqli_fetch_row($selectBedType);
                             $bedtype = $bed[0];
-                            echo '<li><a class="dropdown-item" target="_blank" href="reservation.php?type='.$roomtype.'&bed='.$bedtype.'">'.$bedtype.'</a></li>';
-                        }
-                    }
+                            echo '<a role="button" class="w-100 btn btn-outline-dark" href="reservation.php?type='.$roomtype.'&bed='.$bedtype.'">
+                                    Book Now
+                                </a>';
+                            }
                     echo '</ul></div></div>
                         <div class="col-md-6">
                         <a role="button" class="w-100 btn btn-outline-dark" href="roomdetail.php?type='.$roomtype.'">EXPLORE</a>

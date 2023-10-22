@@ -14,7 +14,7 @@ if(
     mysqli_close($conn);
     die(header("Location: ../index.php"));
 }
-$email = $_SESSION['email_account'];
+$email = $_SESSION['acc_email_account'];
 $sql = "SELECT DISTINCT room_type FROM room;";
 $selectRoomType = mysqli_query($conn, $sql);
 if(isset($_GET['type'])) {

@@ -13,7 +13,7 @@ if(
     mysqli_close($conn);
     die(header("Location: index.php"));
 }
-$email = $_SESSION['email_account'];
+$email = $_SESSION['acc_email_account'];
 $customer_id = $_SESSION['customer_id'];
 $roomtype = $_SESSION['roomtype'];
 $bedtype = $_SESSION['bedtype'];

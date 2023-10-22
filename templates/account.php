@@ -14,7 +14,7 @@ if(
     die(header("Location: ../index.php"));
 }
 
-$email = $_SESSION['email_account'];
+$email = $_SESSION['acc_email_account'];
 $sql = "SELECT DISTINCT room_type FROM room;";
 $selectRoomType = mysqli_query($conn, $sql);
 
@@ -32,7 +32,7 @@ $selectRoomType = mysqli_query($conn, $sql);
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css" rel="stylesheet" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"></script>
-    <script src="../static/main2.js" defer></script>
+    <script src="../static/main.js" defer></script>
 </head>
 <body>
     <header>
@@ -79,10 +79,11 @@ $selectRoomType = mysqli_query($conn, $sql);
                                 <i class="fas fa-user"></i> <?php echo $email ?>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="profile.php"><i class="fas fa-square-pen"></i> Profile</a></li>
                                 <li><a class="dropdown-item" href="account.php?logout=1"><i class="fas fa-arrow-right-to-bracket me-1"></i> Log out</a></li>
                             </ul>
                         </div>
-                        <a role="button" class="btn btn-secondary btn-lg px-3 me-2 book-nav" href="showres_room_detail.php">My Booking</a>
+                        <a role="button" class="btn btn-secondary btn-lg px-3 me-2 book-nav" href="showres.php">My Booking</a>
                     </div>
                 </div>
             </div>

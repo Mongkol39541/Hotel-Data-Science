@@ -1,5 +1,5 @@
 <?php
-$email = $_SESSION['email_account'];
+$email = $_SESSION['acc_email_account'];
 ?>
 <header>
    <nav class="navbar navbar-expand-lg navbar-light bg-white">
@@ -45,10 +45,11 @@ $email = $_SESSION['email_account'];
                             <i class="fas fa-user"></i> <?php echo $email ?>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="profile.php"><i class="fas fa-square-pen"></i> Profile</a></li>
                             <li><a class="dropdown-item" href="account.php?logout=1"><i class="fas fa-arrow-right-to-bracket me-1"></i> Log out</a></li>
                         </ul>
                     </div>
-                    <a role="button" class="btn btn-secondary btn-lg px-3 me-2 book-nav" href="showres_room_detail.php">My Booking</a>
+                    <a role="button" class="btn btn-secondary btn-lg px-3 me-2 book-nav" href="showres.php">My Booking</a>
                 </div>
             </div>
         </div>

@@ -27,7 +27,7 @@ if(isset($_GET['type'])) {
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css" rel="stylesheet" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"></script>
-    <script src="../static/main2.js" defer></script>
+    <script src="../static/main.js" defer></script>
     <style>
         .item {
             width: 50%;
@@ -50,11 +50,11 @@ if(isset($_GET['type'])) {
             box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.5);
         }
 
-        input[type="radio"]{
+        .radio1{
             display: none;
         }
 
-        label{
+        .label1 {
             position: relative;
             color: #54B4D3;
             font-size: 16px;
@@ -65,7 +65,7 @@ if(isset($_GET['type'])) {
             align-items: center;
         }
 
-        label:before{
+        .label1:before{
             content: "";
             height: 14px;
             width: 14px;
@@ -75,12 +75,12 @@ if(isset($_GET['type'])) {
             margin-left: 20px;
         }
 
-        input[type="radio"]:checked + label {
+        .radio1:checked + .label1 {
             background-color: #54B4D3;
             color: #ffff;
         }
 
-        input[type="radio"]:checked + label:before{
+        .radio1:checked + .label1:before{
             height: 16px;
             width: 16px;
             border: 10px solid #54B4D3;
@@ -120,21 +120,34 @@ if(isset($_GET['type'])) {
         <div class="col-md-7">
             <div id="carouselExampleControls" class="carousel slide" data-mdb-ride="carousel">
                 <div class="carousel-inner">
-                    <?php
-                    $img_sql = "SELECT room_img FROM `room` WHERE room_type='$selectedRoom' LIMIT 5;";
-                    $selectImg = mysqli_query($conn, $img_sql);
+                <?php
 
-                    $firstImg = true;
-                    while ($img_row = mysqli_fetch_row($selectImg)) {
-                        $item = $firstImg ? ' active' : '';
+                $bed_sql = "SELECT DISTINCT bed_type FROM `room` WHERE room_type='$selectedRoom';";
 
-                        echo '<div class="carousel-item'. $item. '">
-                        <img src="'.$img_row[0].'" class="d-block w-100" height=400px" alt="Room Image"/>
-                        </div>';
+                // start มีแก้ใหม่ตรงนี้ครับพี่
+                if (isset($_GET['bed'])) {
+                    $selectedBed = $_GET['bed'];
+                } else {
+                    $selectBedType = mysqli_query($conn, $bed_sql);
+                    $selectedBed = mysqli_fetch_row($selectBedType);
+                    $selectedBed = $selectedBed[0];
+                }
+                // end
 
-                        $firstImg = false;
-                    }
-                    ?>
+                $img_sql = "SELECT room_img FROM `room` WHERE room_type='$selectedRoom' and bed_type='$selectedBed' LIMIT 5;";
+                $selectImg = mysqli_query($conn, $img_sql);
+
+                $firstImg = true;
+                while ($img_row = mysqli_fetch_row($selectImg)) {
+                    $item = $firstImg ? ' active' : '';
+
+                    echo '<div class="carousel-item'. $item. '">
+                    <img src="'.$img_row[0].'" class="d-block w-100" height=400px" alt="Room Image"/>
+                    </div>';
+
+                    $firstImg = false;
+                }
+                ?>
                 </div>
                 <button class="carousel-control-prev" type="button" data-mdb-target="#carouselExampleControls" data-mdb-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -157,22 +170,26 @@ if(isset($_GET['type'])) {
                 echo '<pre>Room Size: '.$RoomInfo[0]."\tMax Adults:".$RoomInfo[1].'</pre>';
                 echo '<b class="text-dark font-weight-bold">bed type:</b>';
 
-
-                $bed_sql = "SELECT DISTINCT bed_type FROM `room` WHERE room_type='$selectedRoom';";
+                // start มีแก้ใหม่ตรงนี้ครับพี่
                 $selectBedType = mysqli_query($conn, $bed_sql);
 
                 if (mysqli_num_rows($selectBedType) > 0) {
-                    echo '<form action="reservation.php" method="GET" target="_blank">';
-                    $firstBedType = true;
+                    echo '<form action="test.php" method="get" target="_blank">';
+
                     while ($bed = mysqli_fetch_row($selectBedType)) {
                         $bedtype = $bed[0];
-                        $checked = $firstBedType ? 'checked' : ''; // ตรวจสอบว่าเป็น radio แรกหรือไม่
+                        if ($bedtype == $selectedBed) {
+                            $checked = 'checked';
+                        } else {
+                            $checked = '';
+                        }
                         echo '
                             <div class="form-check w-50" style="margin-left: 60px; height:16px; margin-bottom: 30px;">
-                                <input class="form-check-input" type="radio" name="bed" id="' . $bedtype . '" value="' . $bedtype . '" ' . $checked . '>
-                                <label class="form-check-label" for="' . $bedtype . '">' . $bedtype . '</label>
+                                <input class="radio1 form-check-input" type="radio" onclick="RadioClick(this)"
+                                    name="bed" id="' . $bedtype . '" value="' . $bedtype . '" ' . $checked . '>
+                                <label class="label1 form-check-label" for="' . $bedtype . '">' . $bedtype . '</label>
                             </div>';
-                        $firstBedType = false;
+                        // end
                     }
 
                     echo '
@@ -215,5 +232,18 @@ if(isset($_GET['type'])) {
     <footer class="py-2 mx-5 my-4 border-top">
         <p class="text-center text-body-secondary">© 2023 ISAD, KMITL</p>
     </footer>
+    <script>
+        document.querySelector('#roomsDropdown').addEventListener('click', function(e) {
+            e.stopPropagation();
+            window.location.href = 'room.php';
+        });
+
+        // มีแก้ใหม่ตรงนี้ครับพี่
+        function RadioClick(radio) {
+            var selectedOption = radio.value;
+            window.location.href = "roomdetail.php?type=<?php echo $selectedRoom ?>&bed=" + selectedOption;
+        }
+
+    </script>
 </body>
 </html>

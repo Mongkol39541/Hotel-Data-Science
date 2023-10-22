@@ -11,13 +11,14 @@ if(
 } elseif(isset($_GET['logout'])){
     session_destroy();
     mysqli_close($conn);
-    die(header("Location: index.php"));
+    die(header("Location: ../index.php"));
 }
 
-$email = $_SESSION['email_account'];
+$email = $_SESSION['acc_email_account'];
 $customer_id = $_SESSION['customer_id'];
 $sql = "SELECT DISTINCT room_type FROM room;";
 $selectRoomType = mysqli_query($conn, $sql);
+$_SESSION['show'] = "show_con";
 ?>
 
 <!DOCTYPE html>
@@ -36,7 +37,7 @@ $selectRoomType = mysqli_query($conn, $sql);
 <body>
     <header>
         <?php
-        require("img/account-nav.php");
+        require("account-nav.php");
         ?>
     </header>
     <div
@@ -54,7 +55,6 @@ $selectRoomType = mysqli_query($conn, $sql);
         </div>
         </div>
     </div>
-    <!-- Background image -->
     <div class='mb-5 text-center'>
         <button type="button" class="btn btn-primary me-3" onclick="window.location.href='showres.php'" disabled>
             Show upcoming reseravtion
@@ -65,22 +65,16 @@ $selectRoomType = mysqli_query($conn, $sql);
     </div>
     
     <div class="container">
-      <!--Grid row-->
       <div class="row">
-        <!--Grid column-->
         <div class="col-md-12 mb-4">
-          <!--Section: Content-->
           <section>
-            <!-- connect to a db -->
             <?php
             $servername = "localhost";
-            $username = "root"; //ตามที่กำหนดให้
-            $password = ""; //ตามที่กำหนดให้
-            $dbname = "9hotel_reservation";    //ตามที่กำหนดให้
-            // Create connection
+            $username = "root";
+            $password = "";
+            $dbname = "9hotel_reservation";
             $conn = mysqli_connect($servername, $username, $password, $dbname);
             ?>
-
             <?php
             $sql = "SELECT *
             FROM guest g
@@ -105,16 +99,14 @@ $selectRoomType = mysqli_query($conn, $sql);
                 echo '<div>' . $row['room_type'] . ' ' . $row['bed_type'] . '</div>';
                 echo '<div>Check in: ' . $row['check_in'] . '</div>';
                 echo '<div>Check out: ' . $row['check_out'] . '</div>';
-                echo '<a type="button" class="btn btn-primary" href="showres_room_detail.php?res_id='.$row['reserve_id'] .'">Show details</a>';
+                echo '<a type="button" class="btn btn-primary mt-3" href="showres_room_detail.php?res_id='.$row['reserve_id'] .'">Show details</a>';
                 echo '</div>';
                 echo '</div>';
             }
             mysqli_close($conn);
             ?>
           </section>
-          <!--Section: Content-->
         </div>
-        <!--Grid column-->
     </div>
 
 
@@ -123,13 +115,11 @@ $selectRoomType = mysqli_query($conn, $sql);
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
     <script>
         document.querySelector('#roomsDropdown').addEventListener('click', function(e) {
             e.stopPropagation();
             window.location.href = 'room.php';
         });
-
         <?php
         if (isset($_SESSION['loginSuccess'])) {
             echo '   var alertText = "' . $_SESSION['loginSuccess'] . '";';
@@ -145,9 +135,7 @@ $selectRoomType = mysqli_query($conn, $sql);
         }
         ?>
     </script>
-
     <script>
-        //ปิดการเชื่อมต่อฐานข้อมูล
         mysqli_close($conn);
     </script>
 

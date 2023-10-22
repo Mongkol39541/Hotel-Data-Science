@@ -59,6 +59,18 @@
                     <input type="password" name="user_password" id="password" required>
                     <label for="password">Password</label>
                 </div>
+                <div class="row mt-2">
+                    <div class="col-md-6 d-flex justify-content-center">
+                    <div class="form-check mb-3 mb-md-0">
+                        <input class="form-check-input" type="checkbox" id="check_show_password"/>
+                        <label class="form-check-label" for="check_show_password"> Show password </label>
+                    </div>
+                    </div>
+
+                    <div class="col-md-6 d-flex justify-content-center">
+                    <a href="forgotpassword.php">Forgot password?</a>
+                    </div>
+                </div>
                 <p class="loginnote" id="loginnote">error description</p>
                 <button type="submit" class="login-btn btn btn-info btn-lg">LOG IN</button>
             </form>
@@ -114,7 +126,8 @@
                         <label class="form-label fs-14px text-dark" for="birthday">Birthday</label>
                         <label class="form-label fs-10px" for="birthday"></label>
                         <input type="date" class="form-control" id="birthday"
-                            name="birthday" placeholder="Date of Birth" autocomplete="off">
+                            name="birthday" placeholder="Date of Birth" autocomplete="off"
+                            max="<?php echo date('Y-m-d', strtotime('-7 years')); ?>">
                     </div>
                 </div>
                 <div class="row mb-3">

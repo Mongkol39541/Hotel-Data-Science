@@ -3,15 +3,20 @@
     $open_connect = 1;
     require("connect.php");
 
-    if(!isset($_SESSION['id_account']) || ($_SESSION['role_account'] != "owner" && $_SESSION['role_account'] != "recep")) {
+    if(
+        !isset($_SESSION['id_account']) ||
+        !isset($_SESSION['role_account'])
+    ){
         die(header("Location: ../index.php"));
     } elseif(isset($_GET['logout'])){
         session_destroy();
+        mysqli_close($conn);
         die(header("Location: ../index.php"));
     }
 
     $menber_id = $_SESSION['id_account'];
-    $email = $_SESSION['email_account'];
+    $email = $_SESSION['acc_email_account'];
+    echo $sus;
     $sql = "SELECT DISTINCT room_type FROM room;";
     $selectRoomType = mysqli_query($conn, $sql);
 ?>
@@ -206,6 +211,13 @@
     <footer class="py-2 mx-5 my-4 border-top" >
         <p class="text-center text-body-secondary">© 2023 ISAD, KMITL</p>
     </footer>
+
+    <script>
+        document.querySelector('#roomsDropdown').addEventListener('click', function(e) {
+            e.stopPropagation();
+            window.location.href = 'room.php';
+        });
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"

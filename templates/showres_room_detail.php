@@ -24,7 +24,14 @@ if(isset($_GET['res_id'])) {
 } else {
     die(header("Location: account.php"));
 }
-$email = $_SESSION['email_account'];
+
+if (isset($_POST['use-member-address'])) {
+    $fname = $_SESSION['acc_fname'];
+    $lname = $_SESSION['acc_lname'];
+    $email = $_SESSION['acc_email_account'];
+}
+
+$email = $_SESSION['acc_email_account'];
 $sql = "SELECT DISTINCT room_type FROM room;";
 $selectRoomType = mysqli_query($conn, $sql);
 ?>
@@ -297,10 +304,16 @@ $selectRoomType = mysqli_query($conn, $sql);
                                         Please provide an email.
                                     </div>
                                 </div>
-                                <button type="button" class="btn btn-light mb-3" name="cancel" id="cancel" onclick='cancel_info()' hidden>Cancel Edit</button>
-                                <button type="submit" class="btn btn-dark mb-3" name="update" id="update" hidden>Update Reservation</button>
-                                <button type="button" class="btn btn-warning mb-3" name="edit" id="edit" onclick='edit_info()'>Edit Information</button>
-                                <button type="button" class="btn btn-danger mb-3" id="delete" data-mdb-toggle="modal" data-mdb-target="#DeleteModal">Delete Reservation</button>
+                                <?php
+                                $chan = "";
+                                if ($_SESSION['show'] == "show_past") {
+                                    $chan = "hidden";
+                                }
+                                ?>
+                                <button type="button" class="btn btn-light mb-3 me-3" name="cancel" id="cancel" onclick='cancel_info()' hidden>Cancel Edit</button>
+                                <button type="submit" class="btn btn-dark mb-3 me-3" name="update" id="update" hidden>Update Reservation</button>
+                                <button type="button" class="btn btn-warning mb-3 me-3" name="edit" id="edit" onclick='edit_info()' <?php echo $chan; ?>>Edit Information</button>
+                                <button type="button" class="btn btn-danger mb-3 me-3" id="delete" data-mdb-toggle="modal" data-mdb-target="#DeleteModal" <?php echo $chan; ?>>Delete Reservation</button>
                             </div>
                         </div>
                     </div>
@@ -330,10 +343,10 @@ $selectRoomType = mysqli_query($conn, $sql);
             "opens": "center"
         });
     </script>
-    <script src="calendar.js" type='text/javascript'></script>
-    <script src="terriblefix.js" type='text/javascript'></script>
-    <script src="manage_res.js" type='text/javascript'></script>
-    <script src="validitycheckforform.js" type='text/javascript'></script> 
+    <script src="../static/calendar.js" type='text/javascript'></script>
+    <script src="../static/terriblefix.js" type='text/javascript'></script>
+    <script src="../static/manage_res.js" type='text/javascript'></script>
+    <script src="../static/validitycheckforform.js" type='text/javascript'></script> 
     <script>
         document.querySelector('#roomsDropdown').addEventListener('click', function(e) {
             e.stopPropagation();

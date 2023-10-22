@@ -11,7 +11,7 @@
     }
 
     $menber_id = $_SESSION['id_account'];
-    $email = $_SESSION['email_account'];
+    $email = $_SESSION['acc_email_account'];
     $sql = "SELECT DISTINCT room_type FROM room;";
     $selectRoomType = mysqli_query($conn, $sql);
 ?>
@@ -694,6 +694,12 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/ScrollMagic.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/plugins/animation.gsap.min.js"></script>
   <script src="../static/dashboard.js"></script>
+  <script>
+        document.querySelector('#roomsDropdown').addEventListener('click', function(e) {
+            e.stopPropagation();
+            window.location.href = 'room.php';
+        });
+    </script>
 </body>
 
 </html>
