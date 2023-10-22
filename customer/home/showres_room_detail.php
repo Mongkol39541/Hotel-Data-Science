@@ -377,6 +377,116 @@ $selectRoomType = mysqli_query($conn, $sql);
         </form>
     </main>
 
+    <?php
+    if(isset($_POST['update'])) {
+        $sql = "UPDATE guest SET first_name = '$fname', last_name = '$lname', email = '$email', phone = '$phone' WHERE reserve_id = '$reserve_id'";
+        $sql1 = "UPDATE reservation SET check_in = '$check_in_final', check_out = '$check_out_final' WHERE reserve_id = '$reserve_id'";
+        try {
+            if ($conn->query($sql) and $conn->query($sql1)) {
+                $text = 'ID: ' . $reserve_id . ' 🎉 <strong>Congratulations, you have successfully updated your room information.</strong>';
+                echo <<<EOT
+                    <script>
+                        var alertDiv = document.createElement('div');
+                        alertDiv.classList.add('alert', 'alert-success', 'position-fixed');
+                        alertDiv.style.top = '50%';
+                        alertDiv.style.left = '50%';
+                        alertDiv.style.transform = 'translate(-50%, -50%)';
+                        alertDiv.style.zIndex = '102';
+                        alertDiv.setAttribute('role', 'alert');
+                        alertDiv.setAttribute('data-mdb-color', 'success');
+                        alertDiv.setAttribute('data-mdb-offset', '20');
+                        alertDiv.innerHTML = `
+                            <i class="fas fa-check me-2"></i> {$text}
+                        `;
+
+                        document.body.appendChild(alertDiv);
+                        setTimeout(function() {
+                            alertDiv.remove();
+                        }, 5000);
+                    </script>
+                    EOT;
+            }
+        } catch (mysqli_sql_exception $e) {
+            $text = "Error: " . $sql . "<br>" . $conn->error;
+            echo <<<EOT
+                <script>
+                    var alertDiv = document.createElement('div');
+                    alertDiv.classList.add('alert', 'alert-danger', 'position-fixed');
+                    alertDiv.style.top = '50%';
+                    alertDiv.style.left = '50%';
+                    alertDiv.style.transform = 'translate(-50%, -50%)';
+                    alertDiv.style.zIndex = '102';
+                    alertDiv.setAttribute('role', 'alert');
+                    alertDiv.setAttribute('data-mdb-color', 'danger');
+                    alertDiv.setAttribute('data-mdb-offset', '20');
+                    alertDiv.innerHTML = `
+                        <i class="fas fa-check me-2"></i> {$text}
+                    `;
+
+                    document.body.appendChild(alertDiv);
+                    setTimeout(function() {
+                        alertDiv.remove();
+                    }, 5000);
+                </script>
+                EOT;
+        }
+        mysqli_close($conn);
+        die(header("Location: showres.php"));
+    } elseif (isset($_POST['delete'])) {
+        $sql = "DELETE FROM room WHERE room_id = '$randomID'";
+        try {
+            if ($conn->query($sql)) {
+                $text = 'ID: ' . $reserve_id . ' 🎉 <strong>Congratulations, you have successfully delete your room information.</strong>';
+                echo <<<EOT
+                    <script>
+                        var alertDiv = document.createElement('div');
+                        alertDiv.classList.add('alert', 'alert-success', 'position-fixed');
+                        alertDiv.style.top = '50%';
+                        alertDiv.style.left = '50%';
+                        alertDiv.style.transform = 'translate(-50%, -50%)';
+                        alertDiv.style.zIndex = '102';
+                        alertDiv.setAttribute('role', 'alert');
+                        alertDiv.setAttribute('data-mdb-color', 'success');
+                        alertDiv.setAttribute('data-mdb-offset', '20');
+                        alertDiv.innerHTML = `
+                            <i class="fas fa-check me-2"></i> {$text}
+                        `;
+
+                        document.body.appendChild(alertDiv);
+                        setTimeout(function() {
+                            alertDiv.remove();
+                        }, 5000);
+                    </script>
+                    EOT;
+            }
+        } catch (mysqli_sql_exception $e) {
+            $text = "Error: " . $sql . "<br>" . $conn->error;
+            echo <<<EOT
+                <script>
+                    var alertDiv = document.createElement('div');
+                    alertDiv.classList.add('alert', 'alert-danger', 'position-fixed');
+                    alertDiv.style.top = '50%';
+                    alertDiv.style.left = '50%';
+                    alertDiv.style.transform = 'translate(-50%, -50%)';
+                    alertDiv.style.zIndex = '102';
+                    alertDiv.setAttribute('role', 'alert');
+                    alertDiv.setAttribute('data-mdb-color', 'danger');
+                    alertDiv.setAttribute('data-mdb-offset', '20');
+                    alertDiv.innerHTML = `
+                        <i class="fas fa-check me-2"></i> {$text}
+                    `;
+
+                    document.body.appendChild(alertDiv);
+                    setTimeout(function() {
+                        alertDiv.remove();
+                    }, 5000);
+                </script>
+                EOT;
+        }
+        mysqli_close($conn);
+    }
+    ?>
+
     <footer class="py-2 mx-5 my-4 border-top">
         <p class="text-center text-body-secondary">© 2023 ISAD, KMITL</p>
     </footer>

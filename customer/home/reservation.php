@@ -329,7 +329,7 @@ if(isset($_POST['bed'])) {
                                 <div class='mb-4'>
                                     <input type="text" name="datefilter" id='datefilter' value="" 
                                     class='form-control' autocomplete="off"
-                                    required placeholder='Check-in/Check out dates'>
+                                    required placeholder='Check-in/Check out dates' readonly>
                                     <div class='invalid-feedback'>
                                     Please provide Check in and Check out date.
                                     </div>
