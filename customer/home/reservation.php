@@ -126,6 +126,162 @@ if(isset($_POST['bed'])) {
         require("img/account-nav.php");
         ?>
     </header>
+    
+    <?php
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "9hotel_reservation";
+    $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+    ?>
+
+    <?php
+    $reservations = array();
+    $sql = "SELECT reservation.check_in, reservation.check_out FROM reservation JOIN room USING (room_id) WHERE room.room_type = '$roomtype' AND room.bed_type = '$bedtype';";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $reservations[] = $row;
+        }
+    }
+    ?>
+
+    <div class="container mt-4 text-center"> 
+    <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#modcalend">
+        Show Calender
+        </button>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modcalend" tabindex="-1" aria-labelledby="modcalendLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="modcalendLabel">Room booking calender</h2>
+                    <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body"> 
+                    <center>
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="calendarContainer">
+                                <div id="calendarHeader">
+                                    <div class="row">
+                                        <div class="col">
+                                            <button id="prevMonth" class="btn btn-primary">Prev. Month</button>
+                                        </div>
+                                        <div class="col">
+                                            <h3 id="currentMonth"></h3>
+                                        </div>
+                                        <div class="col">
+                                            <button id="nextMonth" class="btn btn-primary">Next Month</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                    <thead>
+                                        <tr class="text-center">
+                                            <th class="table-primary">Sun</th>
+                                            <th class="table-primary">Mon</th>
+                                            <th class="table-primary">Tue</th>
+                                            <th class="table-primary">Wed</th>
+                                            <th class="table-primary">Thu</th>
+                                            <th class="table-primary">Fri</th>
+                                            <th class="table-primary">Sat</th>
+                                        </tr>
+                                    </thead>
+                                        <tbody id="calendarBody" class="text-center">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const currentMonthElement = document.getElementById("currentMonth");
+        const calendarBody = document.getElementById("calendarBody");
+
+        const prevMonthButton = document.getElementById("prevMonth");
+        const nextMonthButton = document.getElementById("nextMonth");
+
+        let currentDate = new Date();
+        let currentMonth = currentDate.getMonth();
+        let currentYear = currentDate.getFullYear();
+
+        function generateCalendar(year, month, reservations) {
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            let dayCounter = 1;
+            let html = '';
+            for (let i = 0; i < 6; i++) {
+                html += '<tr>';
+                for (let j = 0; j < 7; j++) {
+                    const day = (i * 7 + j) - firstDay.getDay() + 1;
+                    if (day > 0 && day <= lastDay.getDate()) {
+                        const current_date = year + '-' + (month + 1).toString().padStart(2, '0') + '-' + day.toString().padStart(2, '0');
+                        let status = 'Avaliable';
+                        let color = 'success';
+
+                        reservations.forEach(reservation => {
+                            if (reservation.check_in <= current_date && current_date <= reservation.check_out) {
+                                status = 'Unavaliable';
+                                color = 'danger';
+                            }
+                        });
+                        html += '<td class="table-' + color + '">' + day + '<br>' + status + '</td>';
+                    } else if (dayCounter == 36) {
+                        break;
+                    } else {
+                        html += '<td></td>';
+                    }
+                    dayCounter += 1;
+                }
+                html += '</tr>';
+            }
+
+            calendarBody.innerHTML = html;
+        }
+
+        function changeMonth(change) {
+            currentMonth += change;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            currentDate.setFullYear(currentYear, currentMonth);
+            generateCalendar(currentYear, currentMonth, <?php echo json_encode($reservations); ?>);
+            currentMonthElement.textContent = currentYear + " - " + (currentMonth + 1);
+        }
+
+        generateCalendar(currentYear, currentMonth, <?php echo json_encode($reservations); ?>);
+        currentMonthElement.textContent = currentYear + " - " + (currentMonth + 1);
+        prevMonthButton.addEventListener("click", () => changeMonth(-1));
+        nextMonthButton.addEventListener("click", () => changeMonth(1));
+    });
+    </script>
+    <script
+    type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"
+    ></script>
 
     <!-- finding occupied -->
     <?php
@@ -139,8 +295,8 @@ if(isset($_POST['bed'])) {
     $desc = $row['room_description'];
     $size = $row['size'];
     ?>
-    <main style="margin-top: 100px">
-    <div class='container'>
+
+    <div class='container mt-4'>
         <div class='row justify-content-center gap-4'>
             <div class='card border border-secondary border-1 mb-2 col-md-5'>
                 <img src="<?php echo $room_img?>" class="card-img-top" alt="room-img"/>
@@ -222,7 +378,6 @@ if(isset($_POST['bed'])) {
         </div>
     </div>
     </form>
-    </main>
    
 
     <footer class="py-2 mx-5 my-4 border-top">
