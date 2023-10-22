@@ -153,6 +153,7 @@ $selectRoomType = mysqli_query($conn, $sql);
             $res_email = $_POST['email'];
         }
         
+        $phone = $_POST['phone'];
         $check_in_final = $_SESSION['check_in'];
         $check_out_final = $_SESSION['check_out'];
         $sql = "UPDATE guest SET first_name = '$fname', last_name = '$lname', email = '$res_email', phone = '$phone' WHERE reserve_id = '$res_id'";
