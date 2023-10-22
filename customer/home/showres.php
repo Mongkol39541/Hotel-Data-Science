@@ -124,6 +124,9 @@ $selectRoomType = mysqli_query($conn, $sql);
     </div>
     <!-- Background image -->
     <div class='mb-5 text-center'>
+        <button type="button" class="btn btn-primary me-3" onclick="window.location.href='showres.php'" disabled>
+            Show upcoming reseravtion
+        </button>
         <button type="button" class="btn btn-primary" onclick="window.location.href='past_showres.php'">
             Show past reseravtion
         </button>
@@ -155,7 +158,7 @@ $selectRoomType = mysqli_query($conn, $sql);
             ON (t.reserve_id = res.reserve_id)
             JOIN room rm
             ON (res.room_id = rm.room_id)
-            WHERE customer_id = '$customer_id';";
+            WHERE customer_id = '$customer_id' AND check_in >= CAST(NOW() AS DATE)";
             $result = mysqli_query($conn, $sql);
             while($row = mysqli_fetch_assoc($result)) {
                 echo '<div class="row">';

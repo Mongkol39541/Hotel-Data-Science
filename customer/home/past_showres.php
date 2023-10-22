@@ -124,8 +124,11 @@ $selectRoomType = mysqli_query($conn, $sql);
     </div>
     <!-- Background image -->
     <div class='mb-5 text-center'>
-        <button type="button" class="btn btn-primary" onclick="window.location.href='showres.php'">
+        <button type="button" class="btn btn-primary me-3" onclick="window.location.href='showres.php'">
             Show upcoming reseravtion
+        </button>
+        <button type="button" class="btn btn-primary" onclick="window.location.href='past_showres.php'" disabled>
+            Show past reseravtion
         </button>
     </div>
     
