@@ -241,7 +241,7 @@ if(isset($_GET['type'])) {
                 $selectBedType = mysqli_query($conn, $bed_sql);
 
                 if (mysqli_num_rows($selectBedType) > 0) {
-                    echo '<form action="test.php" method="get" target="_blank">';
+                    echo '<form action="reservation.php" method="POST" target="_blank">';
                     $firstBedType = true;
                     while ($bed = mysqli_fetch_row($selectBedType)) {
                         $bedtype = $bed[0];
@@ -298,5 +298,27 @@ if(isset($_GET['type'])) {
     <footer class="py-2 mx-5 my-4 border-top">
         <p class="text-center text-body-secondary">© 2023 ISAD, KMITL</p>
     </footer>
+
+    <script>
+        document.querySelector('#roomsDropdown').addEventListener('click', function(e) {
+            e.stopPropagation();
+            window.location.href = 'room.php';
+        });
+
+        <?php
+        if (isset($_SESSION['loginSuccess'])) {
+            echo '   var alertText = "' . $_SESSION['loginSuccess'] . '";';
+            echo '   var alertDiv = \'';
+            echo '   <div class="alert alert-success position-fixed top-0 start-50 translate-middle-x w-25" style="margin-top:7%;" role="alert" data-mdb-color="success" data-mdb-offset="20">';
+            echo '        <i class="fas fa-check-circle me-3"></i> \' + alertText + \'';
+            echo '    </div>\';';
+            echo '   $("body").append(alertDiv);';
+            echo '   setTimeout(function() {';
+            echo '       $(".alert").remove();';
+            echo '   }, 4000);';
+            unset($_SESSION['loginSuccess']);
+        }
+        ?>
+    </script>
 </body>
 </html>

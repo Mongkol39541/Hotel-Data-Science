@@ -28,7 +28,11 @@ if (empty($email) || empty($password)) {
 } else {
 
     // ตรวจสอบความถูกต้องของบัญชีผู้ใช้ จากฐานข้อมูล member
-    $select_sql = "SELECT * FROM member WHERE email = ?";
+    $select_sql = "SELECT * 
+    FROM member m
+    JOIN customer c
+    ON (m.member_id = c.member_id)
+    WHERE email = ?";
     $stmt = mysqli_prepare($conn, $select_sql);
     mysqli_stmt_bind_param($stmt, "s", $email);
     mysqli_stmt_execute($stmt);
@@ -48,6 +52,10 @@ if (empty($email) || empty($password)) {
             $_SESSION["id_account"] = $account["member_id"];
             $_SESSION['role_account'] = $account['role'];
             $_SESSION['email_account'] = $email;
+            // for reservation
+            $_SESSION['customer_id'] = $account['customer_id'];
+            $_SESSION['fname'] = $account['first_name'];
+            $_SESSION['lname'] = $account['last_name'];
             mysqli_stmt_close($stmt);
 
             $_SESSION['loginSuccess'] = "Login successful";

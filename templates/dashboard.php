@@ -139,7 +139,7 @@
           }
         }
         $conn = mysqli_connect($servername, $username, $password, $dbname);
-        $sql = "SELECT r.reserve_id, r.room_type, r.check_in, r.check_out, t.payment_date, t.total_price, t.payment_type FROM `reservation` r JOIN `transaction` t USING(reserve_id) WHERE DATE_FORMAT(r.check_in, '%Y-%m') <= '$desiredMonth' AND DATE_FORMAT(r.check_out, '%Y-%m') >= '$desiredMonth';";
+        $sql = "SELECT r.reserve_id, r.check_in, r.check_out, t.payment_date, t.total_price, t.payment_type FROM `reservation` r JOIN `transaction` t USING(reserve_id) WHERE DATE_FORMAT(r.check_in, '%Y-%m') <= '$desiredMonth' AND DATE_FORMAT(r.check_out, '%Y-%m') >= '$desiredMonth';";
         $sql_salary = "SELECT SUM(salary) AS expenses FROM `reception`;";
         $sql_reser = "SELECT COUNT(reserve_id) AS reserve, COUNT(DISTINCT room_id) AS numroom FROM `reservation` WHERE DATE_FORMAT(check_in, '%Y-%m') <= '$desiredMonth' AND DATE_FORMAT(check_out, '%Y-%m') >= '$desiredMonth';";
         $sql_people = "SELECT role, COUNT(*) as count_of_people FROM member GROUP BY role ORDER BY role;";
@@ -359,12 +359,13 @@
                       <th>Total Price</th>
                       <th>Payment Type</th>
                       <th>Room Type</th>
+                      <th>Bed Type</th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php
                     $number_of_results = mysqli_num_rows($result);
-                    $sql = "SELECT t.payment_id, r.room_type, r.check_in, r.check_out, t.payment_date, t.total_price, t.payment_type FROM `reservation` r JOIN `transaction` t USING(reserve_id);";
+                    $sql = "SELECT t.payment_id, room.room_type, room.bed_type, r.check_in, r.check_out, t.payment_date, t.total_price, t.payment_type FROM `reservation` r JOIN `transaction` t USING(reserve_id) JOIN room USING(room_id);";
                     $result = mysqli_query($conn, $sql);
 
                     if (mysqli_num_rows($result) > 0) {
@@ -391,6 +392,17 @@
                             }  else {
                               echo '<td><span class="badge badge-info rounded-pill d-inline">' . $row["room_type"] . '</span></td>';
                             }
+                            if ($row["bed_type"] == 'Single') {
+                              echo '<td class="text-center"><span class="badge rounded-pill d-inline" style="background-color: #C2185B;">' . $row["bed_type"] . '</span></td>';
+                            } elseif ($row["bed_type"] == 'Double') {
+                              echo '<td class="text-center"><span class="badge rounded-pill d-inline" style="background-color: #D32F2F;">' . $row["bed_type"] . '</span></td>';
+                            } elseif ($row["bed_type"] == 'Twin') {
+                              echo '<td class="text-center"><span class="badge rounded-pill d-inline" style="background-color: #7B1FA2;">' . $row["bed_type"] . '</span></td>';
+                            } elseif ($row["bed_type"] == 'King') {
+                              echo '<td class="text-center"><span class="badge rounded-pill d-inline" style="background-color: #00796B;">' . $row["bed_type"] . '</span></td>';
+                            }  else {
+                              echo '<td class="text-center"><span class="badge rounded-pill d-inline" style="background-color: #00BFA5;">' . $row["bed_type"] . '</span></td>';
+                            }
                             echo '</tr>';
                         }
                     }
@@ -414,9 +426,8 @@
           $password = "";
           $dbname = "9hotel_reservation";
           $conn = mysqli_connect($servername, $username, $password, $dbname);
-          $sql = "SELECT r.room_type, r.check_in, r.check_out, t.payment_date, t.total_price, t.payment_type, m.title FROM `reservation` r JOIN `transaction` t USING(reserve_id) JOIN `guest` g USING(reserve_id) JOIN `customer` c USING(customer_id) JOIN `member` m USING(member_id);";
+          $sql = "SELECT room.room_type, r.check_in, r.check_out, t.payment_date, t.total_price, t.payment_type, m.title FROM `reservation` r JOIN `transaction` t USING(reserve_id) JOIN `guest` g USING(reserve_id) JOIN `customer` c USING(customer_id) JOIN `member` m USING(member_id) JOIN room USING(room_id);";
           $sqlDate = "SELECT MIN(payment_date) as earliest_date1, MAX(payment_date) as earliest_date2 FROM `transaction`;";
-          $sqlSex = "SELECT  FROM `transaction` JOIN `guest` USING(reserve_id) JOIN `customer` USING(customer_id) JOIN `customer` USING(member_id);";
           $result = mysqli_query($conn, $sqlDate);
           $row = mysqli_fetch_assoc($result);
           $startDate = $row['earliest_date1'];
@@ -425,19 +436,19 @@
             $startDate = $_POST['startDate'];
             $endDate = $_POST['endDate'];
             if ($startDate == '') {
-              $sql = "SELECT r.room_type, r.check_in, r.check_out, t.payment_date, t.total_price, t.payment_type, m.title FROM `reservation` r JOIN `transaction` t USING(reserve_id) JOIN `guest` g USING(reserve_id) JOIN `customer` c USING(customer_id) JOIN `member` m USING(member_id) WHERE t.payment_date <= '$endDate' ORDER BY t.payment_date ASC;";
+              $sql = "SELECT room.room_type, r.check_in, r.check_out, t.payment_date, t.total_price, t.payment_type, m.title FROM `reservation` r JOIN `transaction` t USING(reserve_id) JOIN `guest` g USING(reserve_id) JOIN `customer` c USING(customer_id) JOIN `member` m USING(member_id) JOIN room USING(room_id) WHERE t.payment_date <= '$endDate' ORDER BY t.payment_date ASC;";
               $sqlDate = "SELECT MIN(payment_date) as earliest_date FROM `transaction` WHERE payment_date <= '$endDate'";
               $result = mysqli_query($conn, $sqlDate);
               $row = mysqli_fetch_assoc($result);
               $startDate = $row['earliest_date'];
             } elseif ($endDate == '') {
-              $sql = "SELECT r.room_type, r.check_in, r.check_out, t.payment_date, t.total_price, t.payment_type, m.title FROM `reservation` r JOIN `transaction` t USING(reserve_id) JOIN `guest` g USING(reserve_id) JOIN `customer` c USING(customer_id) JOIN `member` m USING(member_id) WHERE t.payment_date >= '$startDate' ORDER BY t.payment_date ASC;";
+              $sql = "SELECT room.room_type, r.check_in, r.check_out, t.payment_date, t.total_price, t.payment_type, m.title FROM `reservation` r JOIN `transaction` t USING(reserve_id) JOIN `guest` g USING(reserve_id) JOIN `customer` c USING(customer_id) JOIN `member` m USING(member_id) JOIN room USING(room_id) WHERE t.payment_date >= '$startDate' ORDER BY t.payment_date ASC;";
               $sqlDate = "SELECT MAX(payment_date) as earliest_date FROM `transaction` WHERE payment_date >= '$startDate'";
               $result = mysqli_query($conn, $sqlDate);
               $row = mysqli_fetch_assoc($result);
               $endDate = $row['earliest_date'];
             } elseif ($startDate != '' && $endDate != '') {
-              $sql = "SELECT r.room_type, r.check_in, r.check_out, t.payment_date, t.total_price, t.payment_type, m.title FROM `reservation` r JOIN `transaction` t USING(reserve_id) JOIN `guest` g USING(reserve_id) JOIN `customer` c USING(customer_id) JOIN `member` m USING(member_id) WHERE t.payment_date >= '$startDate' AND t.payment_date <= '$endDate' ORDER BY t.payment_date ASC;";
+              $sql = "SELECT room.room_type, r.check_in, r.check_out, t.payment_date, t.total_price, t.payment_type, m.title FROM `reservation` r JOIN `transaction` t USING(reserve_id) JOIN `guest` g USING(reserve_id) JOIN `customer` c USING(customer_id) JOIN `member` m USING(member_id) JOIN room USING(room_id) WHERE t.payment_date >= '$startDate' AND t.payment_date <= '$endDate' ORDER BY t.payment_date ASC;";
             }
           }
           $result = mysqli_query($conn, $sql);
