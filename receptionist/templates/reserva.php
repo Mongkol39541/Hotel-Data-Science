@@ -111,15 +111,14 @@
                                 echo '<thead class="bg-info text-light">';
                                 echo "<th>reserve_id</th><th>first_name</th><th>last_name</th>".
                                     "<th>email</th><th>phone</th><th>reserve_time</th>".
-                                    "<th>room_type</th><th>check_in</th><th>check_out</th>".
+                                    "<th>check_in</th><th>check_out</th>".
                                     "<th>room_id</th></thead><tbody>";
                                     // output data of each row
                                 while($row = mysqli_fetch_assoc($result)) {
                                     echo "<tr><td>" . $row["reserve_id"]. "</td><td>" . $row["first_name"] . 
                                     "</td><td>" . $row["last_name"] . "</td><td>" . $row["email"] . "</td><td>" .
-                                    $row["phone"] . "</td><td>" . $row["reserve_time"] . "</td><td>" . 
-                                    $row["room_type"] . "</td><td>" . $row["check_in"] . "</td><td>" . 
-                                    $row["check_out"] . "</td><td>" . $row["room_id"] . "</td></tr>";
+                                    $row["phone"] . "</td><td>" . $row["reserve_time"] . "</td><td>" . $row["check_in"] . 
+                                    "</td><td>" .  $row["check_out"] . "</td><td>" . $row["room_id"] . "</td></tr>";
                                 }
                                 echo "</tbody></table>";
                             } else {
