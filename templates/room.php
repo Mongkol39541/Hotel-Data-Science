@@ -23,12 +23,14 @@ $selectRoomType = mysqli_query($conn, $sql);
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css" rel="stylesheet" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/ScrollMagic.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/plugins/animation.gsap.min.js"></script>
     <script src="../static/main.js" defer></script>
+    <script src="../static/room.js" defer></script>
     <style>
         .btn-outline-dark {
-            border-radius: 0px;
             font-weight: 800;
-            height: 46px;
             font-size: 16px;
             border-width: 1px;
             border-color: #A1887F;
@@ -64,7 +66,7 @@ $selectRoomType = mysqli_query($conn, $sql);
         </div>
     </div>
     <div class="container p-5">
-        <div class="d-flex justify-content-center flex-column text-center mb-5 mt-2">
+        <div class="d-flex justify-content-center flex-column text-center mb-5 mt-2" id="animation2">
             <h5>A comfortable, fuss-free, and functional</h5>
             <p>base of operations with local touches and thoughtful essentials.</p>
         </div>
@@ -72,6 +74,7 @@ $selectRoomType = mysqli_query($conn, $sql);
         <?php
             $selectRoomType = mysqli_query($conn, $sql);
             if (mysqli_num_rows($selectRoomType) > 0) {
+                $num = 3;
                 while($type_row = mysqli_fetch_row($selectRoomType)) {
                     $roomtype = $type_row[0];
 
@@ -83,14 +86,14 @@ $selectRoomType = mysqli_query($conn, $sql);
                     $roomDes = $info_row[1];
                     $roomSize = $info_row[2];
 
-                    echo '<div class="col">
-                        <div class="card shadow-sm border-0 rounded-0">
+                    echo '<div class="col" style="position: relative; z-index: ' . (1000 - $num) . ';">
+                        <div class="card shadow-sm border-0 rounded-0 m-1" id="animation' . $num . '">
                         <img src="'.$roomImg.'" class="card-img-top rounded-0" alt="Room Image" height="300px">
                         <div class="card-body border-0" style="background: #f6f5f5;">
                         <div class="d-flex justify-content-between">
                             <div>
                             <h3 class="card-text">'.$roomtype.'</h3>
-                            <h6 class="card-text">'.$roomSize.'</h6>
+                            <h6 class="card-text">'.$roomSize.' SQM</h6>
                             </div>
                             <p class="card-text small ms-5">'.$roomDes.'</p>
                             </div>
@@ -99,14 +102,14 @@ $selectRoomType = mysqli_query($conn, $sql);
                     $selectBedType = mysqli_query($conn, $bed_sql);
                     echo '<div class="col-md-6 mb-3 me-3"><div class="btn-group shadow-none me-md-2 w-100">';
                     if (mysqli_num_rows($selectBedType) > 1) {
-                            echo '<a role="button" class="dropdown-toggle w-100 btn btn-outline-dark" data-mdb-toggle="dropdown" aria-expanded="false">
+                            echo '<a role="button" class="dropdown-toggle btn btn-outline-dark " data-mdb-toggle="dropdown" aria-expanded="false">
                                     Book Now
                                     </a>
                                     <ul class="dropdown-menu">
                                     <li class="disabled"><span class="dropdown-item-text">-- Select bed type --</span></li>';
                             while($bed = mysqli_fetch_row($selectBedType)) {
                                 $bedtype = $bed[0];
-                                echo '<li><a class="dropdown-item" target="_blank" href="reservation.php?type='.$roomtype.'&bed='.$bedtype.'">'.$bedtype.'</a></li>';
+                                echo '<li><a class="w-100 dropdown-item" target="_blank" href="reservation.php?type='.$roomtype.'&bed='.$bedtype.'">'.$bedtype.'</a></li>';
                             }
                             echo '</ul>';
         
@@ -124,6 +127,7 @@ $selectRoomType = mysqli_query($conn, $sql);
                         </div>
                         </div>
                         </div>';
+                $num += 1;
                 }
             }
         ?>

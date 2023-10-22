@@ -1,18 +1,8 @@
-$(document).ready(function () {
-  var table = $('#tableSearch').DataTable({
-    lengthChange: true,
-    buttons: ['copy', 'excel', 'pdf', 'csv', 'colvis'],
-    lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
-  });
-  table.buttons().container()
-    .appendTo('#tableSearch_wrapper .col-md-6:eq(0)');
-});
-
 document.addEventListener('DOMContentLoaded', function () {
   let controller = new ScrollMagic.Controller();
 
   let timeline1 = gsap.timeline();
-  timeline1.from("#animation1", { duration: 1, x: -1500, opacity: 0 });
+  timeline1.from("#animation1", { duration: 1, x: -200, opacity: 0 });
   new ScrollMagic.Scene({
     triggerElement: "#animation1",
     triggerHook: 1,
@@ -22,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
     .addTo(controller);
 
   let timeline2 = gsap.timeline();
-  timeline2.from("#animation2", { duration: 1, x: 1500, opacity: 0 });
+  timeline2.from("#animation2", { duration: 1, x: 200, opacity: 0 });
   new ScrollMagic.Scene({
     triggerElement: "#animation2",
     triggerHook: 1,
@@ -42,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
     .addTo(controller);
 
   let timeline4 = gsap.timeline();
-  timeline4.from("#animation4", { duration: 1, x: 1500, opacity: 0 });
+  timeline4.from("#animation4", { duration: 1, x: 200, opacity: 0 });
   new ScrollMagic.Scene({
     triggerElement: "#animation4",
     triggerHook: 1,
@@ -52,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
     .addTo(controller);
 
   let timeline5 = gsap.timeline();
-  timeline5.from("#animation5", { duration: 1, x: -1500, opacity: 0 });
+  timeline5.from("#animation5", { duration: 1, x: -200, opacity: 0 });
   new ScrollMagic.Scene({
     triggerElement: "#animation5",
     triggerHook: 1,
@@ -62,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
     .addTo(controller);
 
   let timeline6 = gsap.timeline();
-  timeline6.from("#animation6", { duration: 1, x: 1500, opacity: 0 });
+  timeline6.from("#animation6", { duration: 1, x: 200, opacity: 0 });
   new ScrollMagic.Scene({
     triggerElement: "#animation6",
     triggerHook: 1,
@@ -72,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
     .addTo(controller);
 
   let timeline7 = gsap.timeline();
-  timeline7.from("#animation7", { duration: 1, x: -1500, opacity: 0 });
+  timeline7.from("#animation7", { duration: 1, x: -200, opacity: 0 });
   new ScrollMagic.Scene({
     triggerElement: "#animation7",
     triggerHook: 1,
@@ -82,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function () {
     .addTo(controller);
 
   let timeline8 = gsap.timeline();
-  timeline8.from("#animation8", { duration: 1, x: 1500, opacity: 0 });
+  timeline8.from("#animation8", { duration: 1, x: 200, opacity: 0 });
   new ScrollMagic.Scene({
     triggerElement: "#animation8",
     triggerHook: 1,
@@ -92,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
     .addTo(controller);
 
   let timeline9 = gsap.timeline();
-  timeline9.from("#animation9", { duration: 1, x: -1500, opacity: 0 });
+  timeline9.from("#animation9", { duration: 1, x: -200, opacity: 0 });
   new ScrollMagic.Scene({
     triggerElement: "#animation9",
     triggerHook: 1,
@@ -102,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function () {
     .addTo(controller);
 
   let timeline10 = gsap.timeline();
-  timeline10.from("#animation10", { duration: 1, x: 1500, opacity: 0 });
+  timeline10.from("#animation10", { duration: 1, x: 200, opacity: 0 });
   new ScrollMagic.Scene({
     triggerElement: "#animation10",
     triggerHook: 1,
@@ -130,14 +120,16 @@ document.addEventListener('DOMContentLoaded', function () {
   })
     .setTween(timeline12)
     .addTo(controller);
+});
 
-  let image = document.querySelector('.bg-image');
-  let text = document.querySelector('.text-white');
-  gsap.set([image, text], { autoAlpha: 0, y: 100 });
-  let timeline = gsap.timeline({ defaults: { duration: 1 } });
-  timeline
-    .to(image, { autoAlpha: 1, y: 0 })
-    .to(text, { autoAlpha: 1, y: 0 }, '-=0.5');
+$(document).ready(function () {
+  var table = $('#tableSearch').DataTable({
+    lengthChange: true,
+    buttons: ['copy', 'excel', 'pdf', 'csv', 'colvis'],
+    lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+  });
+  table.buttons().container()
+    .appendTo('#tableSearch_wrapper .col-md-6:eq(0)');
 });
 
 document.addEventListener("DOMContentLoaded", function () {

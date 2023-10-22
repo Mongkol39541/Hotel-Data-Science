@@ -24,7 +24,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Entrepreneur</title>
     <link rel="icon" href="../static/logoimage.png">
-    <link rel="stylesheet" href="../static/style2.css">
+    <link rel="stylesheet" href="../static/style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css" rel="stylesheet" />
@@ -32,47 +32,53 @@
 
 <body>
     <header>
-        <nav class="collapse d-lg-block sidebar collapse bg-white">
+    <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
             <div class="position-sticky">
                 <div class="list-group list-group-flush mx-3 mt-4">
-                <a href="admin.php" class="list-group-item list-group-item-action py-2 ripple">
-                    <i class="fas fa-user-group fa-fw me-3"></i><span>Administrator</span>
-                </a>
-                <a href="reserva.php" class="list-group-item list-group-item-action py-2 ripple">
-                    <i class="fa-solid fa-table-list fa-fw me-3"></i><span>Reservation info.</span>
-                </a>
-                <a href="room_status.php" class="list-group-item list-group-item-action py-2 ripple active">
-                    <i class="fas fa-list-check fa-fw me-3"></i><span>Room info.</span></a>
-                <?php
-                if($_SESSION['role_account'] == "owner") {
-                    echo '<a href="dashboard.php" class="list-group-item list-group-item-action py-2 ripple"><i class="fas fa-chart-line fa-fw me-3"></i><span>Dashboard</span></a>';
-                    echo '<a href="manage_room.php" class="list-group-item list-group-item-action py-2 ripple"><i class="fa-solid fa-network-wired fa-fw me-3"></i><span>Manage Room</span></a>';
-                }
-                ?>
+                    <a href="admin.php" class="list-group-item list-group-item-action py-2 ripple">
+                        <i class="fas fa-user-group fa-fw me-3"></i><span>Administrator</span>
+                    </a>
+                    <a href="reserva.php" class="list-group-item list-group-item-action py-2 ripple">
+                        <i class="fa-solid fa-table-list fa-fw me-3"></i><span>Reservation info.</span>
+                    </a>
+                    <a href="room_status.php" class="list-group-item list-group-item-action py-2 ripple active">
+                        <i class="fas fa-list-check fa-fw me-3"></i><span>Room info.</span></a>
+                    <?php
+                        if($_SESSION['role_account'] == "owner") {
+                            echo '<a href="dashboard.php" class="list-group-item list-group-item-action py-2 ripple"><i class="fas fa-chart-line fa-fw me-3"></i><span>Dashboard</span></a>';
+                            echo '<a href="manage_room.php" class="list-group-item list-group-item-action py-2 ripple"><i class="fa-solid fa-network-wired fa-fw me-3"></i><span>Manage Room</span></a>';
+                        }
+                    ?>
                 </div>
             </div>
         </nav>
-        <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top" id="main-navbar">
             <div class="container">
                 <a class="navbar-brand me-2" href="account.php">
                     <img src="../static/logo.png" height="42" alt="Hotel Logo" loading="lazy" style="margin-top: -1px;" />
                 </a>
-                <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
-                data-mdb-target="#navbarButtonsExample" aria-controls="navbarButtonsExample" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <i class="fas fa-bars"></i>
+                <button
+                class="navbar-toggler"
+                type="button"
+                data-mdb-toggle="collapse"
+                data-mdb-target="#sidebarMenu"
+                aria-controls="sidebarMenu"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+                >
+                    <i class="fas fa-bars"></i>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarButtonsExample">
-                    <div class="d-flex align-items-center">
-                        <div class="btn-group shadow-none me-4 user-nav">
-                            <a role="button" class="dropdown-toggle text-dark" data-mdb-toggle="dropdown" aria-expanded="false">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="userDropdown" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
                                 <img src="../static/<?php echo $menber_id; ?>.jpg" class="rounded-circle" height="25" /> <?php echo $email ?>
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-end">
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                                 <li><a class="dropdown-item" href="account.php?logout=1"><i class="fas fa-arrow-right-to-bracket me-1"></i> Log out</a></li>
                             </ul>
-                        </div>
-                    </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </nav>

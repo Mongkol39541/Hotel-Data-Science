@@ -23,7 +23,11 @@ $selectRoomType = mysqli_query($conn, $sql);
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css" rel="stylesheet" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/ScrollMagic.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/plugins/animation.gsap.min.js"></script>
     <script src="../static/main.js" defer></script>
+    <script src="../static/discover.js" defer></script>
 </head>
 <body>
     <?php
@@ -52,7 +56,7 @@ $selectRoomType = mysqli_query($conn, $sql);
         </div>
         </div>
     </div>
-    <div class="container p-4">
+    <div class="container p-4" id="animation2">
         <div class="heading text-center">
                 <h1 class="text-dark">Discover</h1>
         </div>

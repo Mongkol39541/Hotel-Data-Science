@@ -27,16 +27,13 @@ if(isset($_GET['type'])) {
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css" rel="stylesheet" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/ScrollMagic.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/plugins/animation.gsap.min.js"></script>
     <script src="../static/main.js" defer></script>
+    <script src="../static/roomdetail.js" defer></script>
     <style>
-        .item {
-            width: 50%;
-            float: left;
-        }
-
         .btn-secondary {
-            border-radius: 0px;
-            height: 46px;
             font-size: 16px;
         }
 
@@ -50,11 +47,11 @@ if(isset($_GET['type'])) {
             box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.5);
         }
 
-        .radio1{
+        .radio-0 {
             display: none;
         }
 
-        .label1 {
+        .label-radio {
             position: relative;
             color: #54B4D3;
             font-size: 16px;
@@ -65,26 +62,22 @@ if(isset($_GET['type'])) {
             align-items: center;
         }
 
-        .label1:before{
-            content: "";
-            height: 14px;
-            width: 14px;
-            border: 3px solid #54B4D3;
-            border-radius: 50%;
-            margin-right: 15px;
-            margin-left: 20px;
+        .label-radio:hover {
+            background-color: #54B4D3;
+            border-color: #54B4D3;
+            color: #fff;
         }
 
-        .radio1:checked + .label1 {
+        .radio-0:checked + .label-radio {
             background-color: #54B4D3;
             color: #ffff;
         }
 
-        .radio1:checked + .label1:before{
+        .radio-0:checked + .label-radio:before{
             height: 16px;
             width: 16px;
             border: 10px solid #54B4D3;
-            background-color:#54B4D3;
+            background-color:#ffff;
         }
     </style>
 </head>
@@ -116,8 +109,8 @@ if(isset($_GET['type'])) {
     </div>
 
     <div class="container p-5 mt-3">
-        <div class="row mb-2 mx-5">
-        <div class="col-md-7">
+        <div class="row mb-3 mx-5">
+        <div class="col" id="animation1">
             <div id="carouselExampleControls" class="carousel slide" data-mdb-ride="carousel">
                 <div class="carousel-inner">
                 <?php
@@ -142,7 +135,7 @@ if(isset($_GET['type'])) {
                     $item = $firstImg ? ' active' : '';
 
                     echo '<div class="carousel-item'. $item. '">
-                    <img src="'.$img_row[0].'" class="d-block w-100" height=400px" alt="Room Image"/>
+                    <img src="'.$img_row[0].'" class="d-block" style="height: 400px;" alt="Room Image"/>
                     </div>';
 
                     $firstImg = false;
@@ -159,8 +152,8 @@ if(isset($_GET['type'])) {
                 </button>
             </div>
         </div>
-        <div class="col-md-5 p-5">
-
+        <div class="col" id="animation2">
+            <center>
             <?php
                 $room_sql = "SELECT size, capacity FROM `room` WHERE room_type='$selectedRoom' LIMIT 1;";
                 $selectRoomInfo = mysqli_query($conn, $room_sql);
@@ -184,26 +177,26 @@ if(isset($_GET['type'])) {
                             $checked = '';
                         }
                         echo '
-                            <div class="form-check w-50" style="margin-left: 60px; height:16px; margin-bottom: 30px;">
-                                <input class="radio1 form-check-input" type="radio" onclick="RadioClick(this)"
+                            <div class="btn-group my-3 mx-2">
+                                <input class="btn-check radio-0" type="radio" onclick="RadioClick(this)"
                                     name="bed" id="' . $bedtype . '" value="' . $bedtype . '" ' . $checked . '>
-                                <label class="label1 form-check-label" for="' . $bedtype . '">' . $bedtype . '</label>
+                                <label class="label-radio" for="' . $bedtype . '">' . $bedtype . '</label>
                             </div>';
                         // end
                     }
 
-                    echo '
+                    echo '<div class="row" style="width:75%">
                         <input type="hidden" name="type" value="' . $selectedRoom . '">
-                        <button type="submit" class="btn btn-secondary w-50 mt-3 font-weight-bold">BOOK NOW</button>
+                        <button type="submit" class="btn btn-secondary mt-3">BOOK NOW</button></div>
                     </form>';
                 }
             ?>
-
-        </div>
+            </div>
+        </center>
     </div>
 
 
-    <div class="container d-flex justify-content-center flex-column text-center" style="background: #f6f5f5;">
+    <div class="container d-flex justify-content-center flex-column text-center" style="background: #f6f5f5;" id="animation3">
     <div class="d-flex justify-content-center flex-column text-center">
         <h5 class="mt-5">ROOM FEATURES</h5>
         <p>We offer a fascinating fusion of comfort and cultural experience to ensure you have a flavorful journey.</p>

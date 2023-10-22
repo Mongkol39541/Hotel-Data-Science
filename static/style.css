@@ -1,6 +1,4 @@
 body {
-    width: 100%;
-    height: 100vh;
     background: #fff;
 }
 
@@ -45,6 +43,10 @@ body {
 }
 
 @media (max-width: 991px) {
+    .sidebar {
+        width: 100%;
+    }
+
     .navbar-nav .nav-item.dropdown:hover .dropdown-menu {
         display: block;
     }

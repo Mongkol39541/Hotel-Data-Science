@@ -47,7 +47,11 @@ $selectRoomType = mysqli_query($conn, $sql);
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css" rel="stylesheet" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"></script>
-    <link rel="stylesheet" href="../static/main.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/ScrollMagic.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/plugins/animation.gsap.min.js"></script>
+    <script src="../static/main.js" defer></script>
+    <script src="../static/reservation.js" defer></script>
 </head>
 <body>
     <header>
@@ -197,6 +201,58 @@ $selectRoomType = mysqli_query($conn, $sql);
     }
     ?>
 
+    <div class="modal fade" id="modcalend" tabindex="-1" aria-labelledby="modcalendLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="modcalendLabel">Room booking calender</h2>
+                    <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body"> 
+                    <center>
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="calendarContainer">
+                                <div id="calendarHeader">
+                                    <div class="row">
+                                        <div class="col">
+                                            <button id="prevMonth" class="btn btn-primary">Prev. Month</button>
+                                        </div>
+                                        <div class="col">
+                                            <h3 id="currentMonth"></h3>
+                                        </div>
+                                        <div class="col">
+                                            <button id="nextMonth" class="btn btn-primary">Next Month</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                    <thead>
+                                        <tr class="text-center">
+                                            <th class="table-primary">Sun</th>
+                                            <th class="table-primary">Mon</th>
+                                            <th class="table-primary">Tue</th>
+                                            <th class="table-primary">Wed</th>
+                                            <th class="table-primary">Thu</th>
+                                            <th class="table-primary">Fri</th>
+                                            <th class="table-primary">Sat</th>
+                                        </tr>
+                                    </thead>
+                                        <tbody id="calendarBody" class="text-center">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal top fade" id="DeleteModal" tabindex="-1" aria-hidden="true" data-mdb-backdrop="true" data-mdb-keyboard="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
@@ -221,7 +277,8 @@ $selectRoomType = mysqli_query($conn, $sql);
     <main style="margin-top: 100px">
         <div class='container'>
             <div class='row justify-content-center gap-4'>
-                <div class='card border border-secondary border-1 mb-2 col-md-5'>
+            <div class='mb-2 col-md-5'>
+                <div class="card border border-secondary border-1" id="animation1">
                     <img src="<?php echo $room_img?>" class="card-img-top" alt="room-img"/>
                     <div class='card-body'>
                         <h3 class="card-title mb-2"><?php echo $roomtype . ' ' . $bedtype?></h3>
@@ -242,9 +299,17 @@ $selectRoomType = mysqli_query($conn, $sql);
                         </div>
                     </div>
                 </div>
-                <div class='card border border-secondary border-1 col-md-5 h-50'>
-                    <h3 class='card-header mt-3 text-center'>Your details</h3>
-                    <hr>
+                </div>
+                <div class='card border border-secondary border-1 col h-50 mx-3' id="animation2">
+                    <div class='card-header'>
+                        <h3 class='text-center'>Your details</h3>
+                    </div>
+                    <div class="container mt-4 text-center"> 
+                        <button type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#modcalend">
+                        Show Calender
+                        </button>
+                    </div>
+                    <br>
                     <form method="post" action='' novalidate class='.needs-validation'>
                     <div clas='card-body'>
                         <div class='card-text'>

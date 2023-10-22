@@ -24,7 +24,11 @@ $selectRoomType = mysqli_query($conn, $sql);
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css" rel="stylesheet" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/ScrollMagic.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/plugins/animation.gsap.min.js"></script>
     <script src="../static/main.js" defer></script>
+    <script src="../static/contact.js" defer></script>
 </head>
 <body>
     <?php
@@ -53,7 +57,7 @@ $selectRoomType = mysqli_query($conn, $sql);
         </div>
         </div>
     </div>
-    <div class="transportations p-reg cb-b2 s-combo-default s-combo-default">
+    <div class="transportations p-reg cb-b2 s-combo-default s-combo-default" id="animation3">
         <div class="text-light contained_w" style="background: rgb(16, 35, 95);">
             <div class="heading text-center">
                 <h1 class="py-5">How to Get Here</h1>

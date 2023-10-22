@@ -40,7 +40,11 @@ if(isset($_GET['bed'])) {
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css" rel="stylesheet" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"></script>
-    <link rel="stylesheet" href="../static/main.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/ScrollMagic.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/plugins/animation.gsap.min.js"></script>
+    <script src="../static/main.js" defer></script>
+    <script src="../static/reservation.js" defer></script>
 </head>
 <body>
     <header>
@@ -72,12 +76,6 @@ if(isset($_GET['bed'])) {
         }
     }
     ?>
-
-    <div class="container mt-4 text-center"> 
-        <button type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#modcalend">
-        Show Calender
-        </button>
-    </div>
 
     <div class="modal fade" id="modcalend" tabindex="-1" aria-labelledby="modcalendLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
@@ -218,7 +216,7 @@ if(isset($_GET['bed'])) {
     <div class='container mt-4'>
         <div class='row justify-content-center gap-4'>
             <div class='mb-2 col-md-5'>
-                <div class="card border border-secondary border-1 ">
+                <div class="card border border-secondary border-1" id="animation1">
                     <img src="<?php echo $room_img?>" class="card-img-top" alt="room-img"/>
                     <div class='card-body'>
                         <h3 class="card-title mb-2"><?php echo $roomtype . ' ' . $bedtype?></h3>
@@ -234,9 +232,14 @@ if(isset($_GET['bed'])) {
                     </div>
                 </div>
             </div>
-            <div class='card border border-secondary border-1 col-md-5 h-50'>
+            <div class='card border border-secondary border-1 col h-50 mx-3' id="animation2">
                 <div class='card-header'>
                     <h3 class='text-center'>Your details</h3>
+                </div>
+                <div class="container mt-4 text-center"> 
+                    <button type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#modcalend">
+                    Show Calender
+                    </button>
                 </div>
                 <br>
                 <form id='reservation' method="post" action='payment.php' novalidate class='.needs-validation'>

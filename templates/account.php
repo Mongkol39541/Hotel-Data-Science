@@ -23,16 +23,24 @@ $selectRoomType = mysqli_query($conn, $sql);
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Nine Hotel</title>
     <link rel="icon" href="../static/logoimage.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito&family=Open+Sans&family=Poppins&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
     <link rel="stylesheet" href="../static/main.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css" rel="stylesheet" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/ScrollMagic.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/plugins/animation.gsap.min.js"></script>
     <script src="../static/main.js" defer></script>
+    <script src="../static/index.js" defer></script>
 </head>
 <body>
     <header>
@@ -181,7 +189,7 @@ $selectRoomType = mysqli_query($conn, $sql);
         </button>
     </div>
 
-    <div class="container p-4">
+    <div class="container p-4" id="animation2">
         <div class="heading text-center">
                 <h1 class="text-dark">Discover</h1>
         </div>
@@ -303,7 +311,7 @@ $selectRoomType = mysqli_query($conn, $sql);
         </div>
     </div>
 
-    <div class="transportations p-reg cb-b2 s-combo-default s-combo-default">
+    <div class="transportations p-reg cb-b2 s-combo-default s-combo-default" id="animation3">
         <div class="text-light contained_w" style="background: rgb(16, 35, 95);">
             <div class="heading text-center">
                 <h1 class="py-5">How to Get Here</h1>

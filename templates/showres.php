@@ -28,11 +28,20 @@ $_SESSION['show'] = "show_con";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Nine Hotel</title>
     <link rel="icon" href="../static/logoimage.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito&family=Open+Sans&family=Poppins&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
+    <link rel="stylesheet" href="../static/main.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css" rel="stylesheet" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/ScrollMagic.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/plugins/animation.gsap.min.js"></script>
     <script src="../static/main.js" defer></script>
+    <script src="../static/showres.js" defer></script>
 </head>
 <body>
     <header>
@@ -56,10 +65,10 @@ $_SESSION['show'] = "show_con";
         </div>
     </div>
     <div class='mb-5 text-center'>
-        <button type="button" class="btn btn-primary me-3" onclick="window.location.href='showres.php'" disabled>
+        <button id="animation1" type="button" class="btn btn-primary m-2" onclick="window.location.href='showres.php'" disabled>
             Show upcoming reseravtion
         </button>
-        <button type="button" class="btn btn-primary" onclick="window.location.href='past_showres.php'">
+        <button id="animation2" type="button" class="btn btn-primary m-2" onclick="window.location.href='past_showres.php'">
             Show past reseravtion
         </button>
     </div>
@@ -88,13 +97,13 @@ $_SESSION['show'] = "show_con";
             $result = mysqli_query($conn, $sql);
             while($row = mysqli_fetch_assoc($result)) {
                 echo '<div class="row">';
-                echo '<div class="col-md-4 mb-4">';
+                echo '<div class="col-md-4 mb-4" id="animation3">';
                 echo '<div class="bg-image hover-overlay shadow-1-strong rounded ripple" data-mdb-ripple-color="light">';
                 echo '<img src="' . $row['room_img'] . '" class="img-fluid" />';
                 echo '<div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>';
                 echo '</div>';
                 echo '</div>';
-                echo '<div class="col-md-8 mb-4">';
+                echo '<div class="col-md-8 mb-4" id="animation4">';
                 echo '<h5>'. 'Reservation ID: ' . $row['reserve_id'] .'</h5>';
                 echo '<div>' . $row['room_type'] . ' ' . $row['bed_type'] . '</div>';
                 echo '<div>Check in: ' . $row['check_in'] . '</div>';

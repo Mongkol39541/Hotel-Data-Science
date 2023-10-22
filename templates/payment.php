@@ -24,7 +24,7 @@ if (isset($_POST['use-member-address'])) {
     $res_email = $_POST['email'];
 }
 
-$email = $_SESSION['email_account'];
+$email = $_SESSION['acc_email_account'];
 $roomtype = $_SESSION['roomtype'];
 $bedtype = $_SESSION['bedtype'];
 $designated_room = $_SESSION['designated_room'];
@@ -68,6 +68,11 @@ $total_price = (float)$price_per_night * $interval->format("%a");
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css" rel="stylesheet" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"></script>
     <link rel="stylesheet" href="../static/main.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/ScrollMagic.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/plugins/animation.gsap.min.js"></script>
+    <script src="../static/main.js" defer></script>
+    <script src="../static/reservation.js" defer></script>
 </head>
 <body>
     <header>
@@ -78,7 +83,7 @@ $total_price = (float)$price_per_night * $interval->format("%a");
     <main class='mt-3'>
     <section style="background-color: #eee;">
     <div class="container py-5">
-        <div class="card">
+        <div class="card" id="animation1">
         <div class="card-body">
             <div class="row d-flex justify-content-center pb-5">
             <div class="col-md-7 col-xl-5 mb-4 mb-md-0">
