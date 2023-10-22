@@ -267,6 +267,7 @@ $selectRoomType = mysqli_query($conn, $sql);
 
     <!-- too lazy to write for loop lol -->
     <script src="manage_res.js" type='text/javascript'></script>
+    <script src="terriblefix.js" type='text/javascript'></script>
 
     <!-- copied pasted from docs for validitiy check in bootstrap style -->
     <script src="validitycheckforform.js" type='text/javascript'></script> 
