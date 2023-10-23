@@ -1,0 +1,92 @@
+body {
+    background: #fff;
+}
+
+@media (min-width: 991.98px) {
+    main {
+        padding-left: 240px;
+    }
+
+    footer {
+        padding-left: 240px;
+    }
+}
+
+.navbar-nav li a {
+    color: rgb(72, 72, 72);
+}
+
+.navbar-nav li a:hover {
+    color: #54B4D3;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    padding: 58px 0 0;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
+    width: 240px;
+    z-index: 600;
+}
+
+@media (min-width: 991px) {
+    .dropdown:hover>.dropdown-menu {
+        display: block;
+        margin-top: 0;
+    }
+
+    #navbarButtonsExample {
+        margin-left: 20px;
+    }
+}
+
+@media (max-width: 991px) {
+    .sidebar {
+        width: 100%;
+    }
+
+    .navbar-nav .nav-item.dropdown:hover .dropdown-menu {
+        display: block;
+    }
+
+    .navbar-nav .nav-item.dropdown .dropdown-menu {
+        position: relative;
+        width: 100%;
+        top: 100%;
+        left: 0;
+        z-index: 1000;
+        float: none;
+        box-sizing: border-box;
+        box-shadow: none;
+    }
+
+    .navbar-nav .nav-link {
+        font-size: 1rem;
+        position: relative;
+    }
+
+    #firstmenu {
+        border-top: 1px solid #eee;
+    }
+
+    .login-nav,
+    .signup-nav {
+        margin-bottom: 5px;
+    }
+}
+
+.sidebar .active {
+    border-radius: 5px;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+}
+
+.sidebar-sticky {
+    position: relative;
+    top: 0;
+    height: calc(100vh - 48px);
+    padding-top: 0.5rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
