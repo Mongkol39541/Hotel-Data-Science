@@ -91,12 +91,9 @@ $selectRoomType = mysqli_query($conn, $sql);
 
     <?php
     if(isset($_POST['update'])) {
-        if (!isset($_POST['use-member-address'])) {
-            $fname = $_POST['fname'];
-            $lname = $_POST['lname'];
-            $res_email = $_POST['email'];
-        }
-        
+        $fname = $_POST['fname'];
+        $lname = $_POST['lname'];
+        $res_email = $_POST['email'];
         $phone = $_POST['phone'];
         $check_in_final = $_SESSION['check_in'];
         $check_out_final = $_SESSION['check_out'];
@@ -155,127 +152,101 @@ $selectRoomType = mysqli_query($conn, $sql);
         $sql2 = "DELETE FROM guest WHERE reserve_id = '$res_id';";
         try {
             if ($conn->query($sql) && $conn->query($sql1) && $conn->query($sql2)) {
-                $text = 'ID: ' . $res_id . ' 🎉 <strong>Congratulations, you have successfully delete your room information.</strong>';
                 echo <<<EOT
                     <script>
-                        var alertDiv = document.createElement('div');
-                        alertDiv.classList.add('alert', 'alert-success', 'position-fixed');
-                        alertDiv.style.top = '50%';
-                        alertDiv.style.left = '50%';
-                        alertDiv.style.transform = 'translate(-50%, -50%)';
-                        alertDiv.style.zIndex = '102';
-                        alertDiv.setAttribute('role', 'alert');
-                        alertDiv.setAttribute('data-mdb-color', 'success');
-                        alertDiv.setAttribute('data-mdb-offset', '20');
-                        alertDiv.innerHTML = `
-                            <i class="fas fa-check me-2"></i> {$text}
-                        `;
-                        document.body.appendChild(alertDiv);
-                        setTimeout(function() {
-                            alertDiv.remove();
-                            window.location.href = 'showres.php';
-                        }, 4000);
+                        window.location.href = 'showres.php';
                     </script>
                     EOT;
-            }
+                }
         } catch (mysqli_sql_exception $e) {
-            $text = "Error: " . $sql . "<br>" . $conn->error;
             echo <<<EOT
                     <script>
-                        var alertDiv = document.createElement('div');
-                        alertDiv.classList.add('alert', 'alert-danger', 'position-fixed');
-                        alertDiv.style.top = '50%';
-                        alertDiv.style.left = '50%';
-                        alertDiv.style.transform = 'translate(-50%, -50%)';
-                        alertDiv.style.zIndex = '102';
-                        alertDiv.setAttribute('role', 'alert');
-                        alertDiv.setAttribute('data-mdb-color', 'success');
-                        alertDiv.setAttribute('data-mdb-offset', '20');
-                        alertDiv.innerHTML = `
-                            <i class="fas fa-check me-2"></i> {$text}
-                        `;
-                        document.body.appendChild(alertDiv);
-                        setTimeout(function() {
-                            alertDiv.remove();
-                            window.location.href = 'showres.php';
-                        }, 1);
+                        window.location.href = 'showres.php';
                     </script>
                     EOT;
+                }
+            }
+    ?>
+
+<?php
+    $reservations = array();
+    $sql = "SELECT reservation.check_in, reservation.check_out FROM reservation JOIN room USING (room_id) WHERE room.room_type = '$roomtype' AND room.bed_type = '$bedtype';";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $reservations[] = $row;
         }
     }
     ?>
+    
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const currentMonthElement = document.getElementById("currentMonth");
+        const calendarBody = document.getElementById("calendarBody");
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const currentMonthElement = document.getElementById("currentMonth");
-            const calendarBody = document.getElementById("calendarBody");
-    
-            const prevMonthButton = document.getElementById("prevMonth");
-            const nextMonthButton = document.getElementById("nextMonth");
-    
-            let currentDate = new Date();
-            let currentMonth = currentDate.getMonth();
-            let currentYear = currentDate.getFullYear();
-    
-            function generateCalendar(year, month, reservations) {
-                const firstDay = new Date(year, month, 1);
-                const lastDay = new Date(year, month + 1, 0);
-                let dayCounter = 1;
-                let html = '';
-                for (let i = 0; i < 6; i++) {
-                    html += '<tr>';
-                    for (let j = 0; j < 7; j++) {
-                        const day = (i * 7 + j) - firstDay.getDay() + 1;
-                        if (day > 0 && day <= lastDay.getDate()) {
-                            const current_date = year + '-' + (month + 1).toString().padStart(2, '0') + '-' + day.toString().padStart(2, '0');
-                            let status = 'Avaliable';
-                            let color = 'success';
-    
-                            reservations.forEach(reservation => {
-                                if (reservation.check_in <= current_date && current_date <= reservation.check_out) {
-                                    status = 'Unavaliable';
-                                    color = 'danger';
-                                }
-                            });
-                            html += '<td class="table-' + color + '">' + day + '<br>' + status + '</td>';
-                        } else if (dayCounter == 36) {
-                            break;
-                        } else {
-                            html += '<td></td>';
-                        }
-                        dayCounter += 1;
+        const prevMonthButton = document.getElementById("prevMonth");
+        const nextMonthButton = document.getElementById("nextMonth");
+
+        let currentDate = new Date();
+        let currentMonth = currentDate.getMonth();
+        let currentYear = currentDate.getFullYear();
+
+        function generateCalendar(year, month, reservations) {
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            let dayCounter = 1;
+            let html = '';
+            for (let i = 0; i < 6; i++) {
+                html += '<tr>';
+                for (let j = 0; j < 7; j++) {
+                    const day = (i * 7 + j) - firstDay.getDay() + 1;
+                    if (day > 0 && day <= lastDay.getDate()) {
+                        const current_date = year + '-' + (month + 1).toString().padStart(2, '0') + '-' + day.toString().padStart(2, '0');
+                        let status = 'Avaliable';
+                        let color = 'success';
+
+                        reservations.forEach(reservation => {
+                            if (reservation.check_in <= current_date && current_date <= reservation.check_out) {
+                                status = 'Unavaliable';
+                                color = 'danger';
+                            }
+                        });
+                        html += '<td class="table-' + color + '">' + day + '<br>' + status + '</td>';
+                    } else if (dayCounter == 36) {
+                        break;
+                    } else {
+                        html += '<td></td>';
                     }
-                    html += '</tr>';
+                    dayCounter += 1;
                 }
-    
-                calendarBody.innerHTML = html;
+                html += '</tr>';
             }
-    
-            function changeMonth(change) {
-                currentMonth += change;
-                if (currentMonth > 11) {
-                    currentMonth = 0;
-                    currentYear++;
-                }
-                if (currentMonth < 0) {
-                    currentMonth = 11;
-                    currentYear--;
-                }
-                currentDate.setFullYear(currentYear, currentMonth);
-                generateCalendar(currentYear, currentMonth, <?php echo json_encode($reservations); ?>);
-                currentMonthElement.textContent = currentYear + " - " + (currentMonth + 1);
+
+            calendarBody.innerHTML = html;
+        }
+
+        function changeMonth(change) {
+            currentMonth += change;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
             }
-    
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            currentDate.setFullYear(currentYear, currentMonth);
             generateCalendar(currentYear, currentMonth, <?php echo json_encode($reservations); ?>);
             currentMonthElement.textContent = currentYear + " - " + (currentMonth + 1);
-            prevMonthButton.addEventListener("click", () => changeMonth(-1));
-            nextMonthButton.addEventListener("click", () => changeMonth(1));
-        });
+        }
+
+        generateCalendar(currentYear, currentMonth, <?php echo json_encode($reservations); ?>);
+        currentMonthElement.textContent = currentYear + " - " + (currentMonth + 1);
+        prevMonthButton.addEventListener("click", () => changeMonth(-1));
+        nextMonthButton.addEventListener("click", () => changeMonth(1));
+    });
     </script>
-    <script
-        type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"
-    ></script>
 
     <div class="modal fade" id="modcalend" tabindex="-1" aria-labelledby="modcalendLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
