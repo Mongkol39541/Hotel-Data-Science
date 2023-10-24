@@ -1,7 +1,9 @@
 <?php
-    session_start();
-    error_reporting(E_ALL);
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
     $open_connect = 1;
+    error_reporting(E_ALL);
     require("connect.php");
 
     require("../PHPMailer-master/src/PHPMailer.php");
@@ -42,31 +44,34 @@
     }
 
     function sendMail($send_to, $otp, $name, $time) {
-        $mail = new PHPMailer(true);
-        $mail->isSMTP();
-        $mail->SMTPAuth = true;
-        $mail->SMTPSecure = "tls";
-        $mail->Host = "smtp.gmail.com";
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port = 587;
+        try {
+            $mail = new PHPMailer(true);
+            $mail->isSMTP();
+            $mail->SMTPAuth = true;
+            $mail->SMTPSecure = "tls";
+            $mail->Host = "smtp.gmail.com";
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port = 587;
 
-        // Enter your email ID
-        $mail->Username = "pimdaow03@gmail.com";
-        $mail->Password = "zwidzlvreuwxzlmr";
+            // Enter your email ID
+            $mail->Username = "pimdaow03@gmail.com";
+            $mail->Password = "zwidzlvreuwxzlmr";
 
-        // Your email ID and Email Title
-        $mail->setFrom("pimdaow03@gmail.com", "Hotel Reservation");
+            // Your email ID and Email Title
+            $mail->setFrom("pimdaow03@gmail.com", "Hotel Reservation");
 
-        $mail->addAddress($send_to);
+            $mail->addAddress($send_to);
 
-        // You can change the subject according to your requirement!
-        $mail->Subject = "{$otp} is your security code";
+            // You can change the subject according to your requirement!
+            $mail->Subject = "{$otp} is your security code";
 
-        // You can change the Body Message according to your requirement!
-        $mail->Body = "Hello, {$name} \n\n\t We received a request to update your infomation. This code will expire at {$time}";
-        $mail->send();
+            // You can change the Body Message according to your requirement!
+            $mail->Body = "Hello, {$name} \n\n\t We received a request to update your information. This code will expire at {$time}";
+            $mail->send();
+        } catch (Exception $e) {
+            // Handle the exception here (you can log it or display a user-friendly error message).
+        }
     }
 
     sendMail($send_to_email, $code, $send_to_user, $cookieTime);
-
 ?>
