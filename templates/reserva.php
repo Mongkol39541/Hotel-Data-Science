@@ -104,17 +104,6 @@
                     </div>
                 </div>
                 <?php
-                $servername = "localhost";
-                $username = "root"; // ใช้ตอนดูโค้ดตัวเอง
-                $password = "";
-                // $username = "S083ZMBV";  // ใช้ตอนส่งงาน
-                // $password = "5047OZB122";
-                $dbname = "9hotel_reservation";    //ตามที่กำหนดให้
-                // Create connection
-                $conn = mysqli_connect($servername, $username, $password, $dbname)
-                    or die("Connection failed: " . mysqli_connect_error());
-
-                // --- SQL SELECT statement
                 $sql = "SELECT * FROM reservation
                     JOIN guest USING (reserve_id)
                     ORDER BY reserve_id";
@@ -132,7 +121,6 @@
                                     "<th>email</th><th>phone</th><th>reserve_time</th>".
                                     "<th>check_in</th><th>check_out</th>".
                                     "<th>room_id</th></thead><tbody>";
-                                    // output data of each row
                                 while($row = mysqli_fetch_assoc($result)) {
                                     echo "<tr><td>" . $row["reserve_id"]. "</td><td>" . $row["first_name"] .
                                     "</td><td>" . $row["last_name"] . "</td><td>" . $row["email"] . "</td><td>" .

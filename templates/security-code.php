@@ -1,6 +1,6 @@
 <?php
     session_start();
-    error_reporting(0);
+    error_reporting(E_ALL);
     $open_connect = 1;
     require("connect.php");
 

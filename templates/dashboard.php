@@ -108,10 +108,6 @@
         </div>
 
         <?php
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "9hotel_reservation";
         $desiredMonth = date("Y-m");
         if ($_SERVER["REQUEST_METHOD"] == "POST" and isset($_POST["selectedMonth"])) {
           $desiredMonth = $_POST["selectedMonth"];
@@ -119,7 +115,6 @@
             $desiredMonth = date("Y-m");
           }
         }
-        $conn = mysqli_connect($servername, $username, $password, $dbname);
         $sql = "SELECT r.reserve_id, r.check_in, r.check_out, t.payment_date, t.total_price, t.payment_type FROM `reservation` r JOIN `transaction` t USING(reserve_id) WHERE DATE_FORMAT(r.check_in, '%Y-%m') <= '$desiredMonth' AND DATE_FORMAT(r.check_out, '%Y-%m') >= '$desiredMonth';";
         $sql_salary = "SELECT SUM(salary) AS expenses FROM `reception`;";
         $sql_reser = "SELECT COUNT(reserve_id) AS reserve, COUNT(DISTINCT room_id) AS numroom FROM `reservation` WHERE DATE_FORMAT(check_in, '%Y-%m') <= '$desiredMonth' AND DATE_FORMAT(check_out, '%Y-%m') >= '$desiredMonth';";
@@ -387,7 +382,6 @@
                             echo '</tr>';
                         }
                     }
-                    mysqli_close($conn);
                  ?>
                   </tbody>
                 </table>
@@ -402,11 +396,6 @@
           </div>
 
           <?php
-          $servername = "localhost";
-          $username = "root";
-          $password = "";
-          $dbname = "9hotel_reservation";
-          $conn = mysqli_connect($servername, $username, $password, $dbname);
           $sql = "SELECT room.room_type, r.check_in, r.check_out, t.payment_date, t.total_price, t.payment_type, m.title FROM `reservation` r JOIN `transaction` t USING(reserve_id) JOIN `guest` g USING(reserve_id) JOIN `customer` c USING(customer_id) JOIN `member` m USING(member_id) JOIN room USING(room_id);";
           $sqlDate = "SELECT MIN(payment_date) as earliest_date1, MAX(payment_date) as earliest_date2 FROM `transaction`;";
           $result = mysqli_query($conn, $sqlDate);

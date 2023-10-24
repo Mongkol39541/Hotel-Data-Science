@@ -96,15 +96,6 @@
             </div>
         </div>
         <?php
-        $servername = "localhost";
-        $username = "root"; // ใช้ตอนดูโค้ดตัวเอง
-        $password = "";
-        // $username = "S083ZMBV";  // ใช้ตอนส่งงาน
-        // $password = "5047OZB122";
-        $dbname = "9hotel_reservation";    //ตามที่กำหนดให้
-
-        // Create connection
-        $conn = mysqli_connect($servername, $username, $password, $dbname);
         $sql = "SELECT * FROM room ORDER BY room_id;";
         $result = mysqli_query($conn, $sql);
         ?>

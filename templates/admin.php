@@ -103,11 +103,6 @@
             <center>
                 <div class="row">
                     <?php
-                $servername = "localhost";
-                $username = "root";
-                $password = "";
-                $dbname = "9hotel_reservation";
-                $conn = mysqli_connect($servername, $username, $password, $dbname);
                 $sql = "SELECT m.member_id, m.title, m.first_name, m.last_name, m.email, m.birthdate, o.position FROM member m JOIN owner o USING(member_id);";
                 $result = mysqli_query($conn, $sql);
 

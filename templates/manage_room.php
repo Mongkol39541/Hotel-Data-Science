@@ -99,11 +99,6 @@
         </div>
             <?php
             if(isset($_POST['Chang'])) {
-                $servername = "localhost";
-                $username = "root";
-                $password = "";
-                $dbname = "9hotel_reservation";
-                $conn = mysqli_connect($servername, $username, $password, $dbname);
                 $sql = "SELECT COUNT(room_id) AS num_id FROM `room`;";
                 $result = mysqli_query($conn, $sql);
                 $chang = $_POST['Chang'];
@@ -119,8 +114,7 @@
                     $formImage = $_POST['formImage'];
                     $sql = "INSERT INTO room (room_id, room_type, size, bed_type, capacity, price_per_night, facility, room_description, room_img) VALUES ('$randomID', '$formType', '$formSize', '$formBed', '$formCapacity', '$formPrice', '$formdescription', '$formfacility', '$formImage')";
                     try {
-                        if (preg_match('/^ROOM_00\d+$/', $randomID)) {
-                            $conn->query($sql);
+                        if ($conn->query($sql)) {
                             $text = 'ID: ' . $randomID . ' 🎉 <strong>Congratulations, you have successfully insert your room information.</strong>';
                             echo <<<EOT
                                 <script>
@@ -168,7 +162,6 @@
                             </script>
                             EOT;
                     }
-                    mysqli_close($conn);
                 } elseif ($chang == "Update") {
                     $randomID = $_POST['formID'];
                     $formType = $_POST['formType'];
@@ -229,7 +222,6 @@
                             </script>
                             EOT;
                     }
-                    mysqli_close($conn);
                 } elseif ($chang == "Delete") {
                     $randomID = $_POST['formID'];
                     $sql = "DELETE FROM room WHERE room_id = '$randomID'";
@@ -282,7 +274,6 @@
                             </script>
                             EOT;
                     }
-                    mysqli_close($conn);
                 }
             }
             ?>
@@ -621,11 +612,6 @@
                                 </thead>
                                 <tbody>
                                     <?php
-                                $servername = "localhost";
-                                $username = "root";
-                                $password = "";
-                                $dbname = "9hotel_reservation";
-                                $conn = mysqli_connect($servername, $username, $password, $dbname);
                                 $sql = "SELECT room_id, room_type, size, bed_type, capacity, price_per_night, facility, room_img, room_description FROM `room`;";
                                 $result = mysqli_query($conn, $sql);
 

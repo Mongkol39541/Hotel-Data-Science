@@ -91,9 +91,11 @@ $selectRoomType = mysqli_query($conn, $sql);
 
     <?php
     if(isset($_POST['update'])) {
-        $fname = $_POST['fname'];
-        $lname = $_POST['lname'];
-        $res_email = $_POST['email'];
+        if (!isset($_POST['use-member-address'])) {
+            $fname = $_POST['fname'];
+            $lname = $_POST['lname'];
+            $res_email = $_POST['email'];
+        }
         $phone = $_POST['phone'];
         $check_in_final = $_SESSION['check_in'];
         $check_out_final = $_SESSION['check_out'];
