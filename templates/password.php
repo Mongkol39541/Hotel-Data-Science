@@ -64,7 +64,7 @@ if(
                 </div>
 
                 <!-- Submit button -->
-                <button type="submit" class="btn btn-primary btn-block mb-4 mt-4" name="updatePass" value="forgotaccount">Save Change</button>
+                <button type="submit" class="btn btn-primary btn-block mb-4 mt-4">Save Change</button>
 
                 <!-- Register buttons -->
                 <div class="text-center">
